@@ -1,0 +1,110 @@
+{
+  "model_version": "xgboost_classifier_v1.0",
+  "total_test_samples": 312,
+  "global_importance": [
+    {
+      "feature_name": "vib_kurtosis",
+      "mean_abs_shap": 0.40940892696380615
+    },
+    {
+      "feature_name": "eccentricity_sideband_amp",
+      "mean_abs_shap": 0.38744449615478516
+    },
+    {
+      "feature_name": "vib_1x_shaft_amp",
+      "mean_abs_shap": 0.38545799255371094
+    },
+    {
+      "feature_name": "vib_peak_to_peak",
+      "mean_abs_shap": 0.34292611479759216
+    },
+    {
+      "feature_name": "current_thd",
+      "mean_abs_shap": 0.30713412165641785
+    },
+    {
+      "feature_name": "current_harm_5_ratio",
+      "mean_abs_shap": 0.2997869849205017
+    },
+    {
+      "feature_name": "current_harm_3_ratio",
+      "mean_abs_shap": 0.2915661334991455
+    },
+    {
+      "feature_name": "vib_peak",
+      "mean_abs_shap": 0.1511029601097107
+    },
+    {
+      "feature_name": "temp_rate_of_rise",
+      "mean_abs_shap": 0.14281688630580902
+    },
+    {
+      "feature_name": "current_rms",
+      "mean_abs_shap": 0.13080564141273499
+    },
+    {
+      "feature_name": "vib_rms",
+      "mean_abs_shap": 0.12362241744995117
+    },
+    {
+      "feature_name": "brb_right_sideband_amp",
+      "mean_abs_shap": 0.11644002795219421
+    },
+    {
+      "feature_name": "vib_crest_factor",
+      "mean_abs_shap": 0.11268078535795212
+    },
+    {
+      "feature_name": "brb_left_sideband_amp",
+      "mean_abs_shap": 0.11034180968999863
+    },
+    {
+      "feature_name": "temp_mean",
+      "mean_abs_shap": 0.10191967338323593
+    },
+    {
+      "feature_name": "vib_skewness",
+      "mean_abs_shap": 0.08625148236751556
+    },
+    {
+      "feature_name": "brb_sideband_ratio",
+      "mean_abs_shap": 0.07117028534412384
+    },
+    {
+      "feature_name": "current_fundamental_amp",
+      "mean_abs_shap": 0.0477105937898159
+    },
+    {
+      "feature_name": "vib_bpfi_energy",
+      "mean_abs_shap": 0.03489178046584129
+    },
+    {
+      "feature_name": "vib_std",
+      "mean_abs_shap": 0.034559402614831924
+    },
+    {
+      "feature_name": "vib_bpfo_energy",
+      "mean_abs_shap": 0.032469458878040314
+    },
+    {
+      "feature_name": "temp_max",
+      "mean_abs_shap": 0.013748375698924065
+    },
+    {
+      "feature_name": "load_pct",
+      "mean_abs_shap": 0.0010098291095346212
+    },
+    {
+      "feature_name": "current_dominant_freq",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature_name": "estimated_speed_rpm",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature_name": "estimated_slip",
+      "mean_abs_shap": 0.0
+    }
+  ]
+}

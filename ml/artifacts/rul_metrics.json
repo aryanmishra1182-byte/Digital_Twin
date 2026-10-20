@@ -1,0 +1,21 @@
+{
+  "model_version": "lstm_rul_v1.0",
+  "primary_model": "LSTM_Sequence_Regressor",
+  "sequence_length": 5,
+  "mae_hours": 0.21997062815353274,
+  "rmse_hours": 0.2927085406655687,
+  "baseline_comparison": {
+    "LSTM": {
+      "mae_hours": 0.21997062815353274,
+      "rmse_hours": 0.2927085406655687
+    },
+    "Ridge_Baseline": {
+      "mae_hours": 0.33101463036233286,
+      "rmse_hours": 0.4627368698039222
+    }
+  },
+  "test_sequences": 384,
+  "held_out_runs": 4,
+  "limitations": "Evaluated against simulated degradation trajectories; physical bench calibration required for real operating environments.",
+  "provenance": "Synthetic Simulation Degradation Trajectory"
+}

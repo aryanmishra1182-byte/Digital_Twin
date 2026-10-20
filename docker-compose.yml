@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Python ML Inference Microservice
+  ml-service:
+    build:
+      context: .
+      dockerfile: ml/Dockerfile
+    container_name: motor-twin-ml-service
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+    volumes:
+      - ./ml/artifacts:/app/ml/artifacts
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Spring Boot Digital Twin Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: motor-twin-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_PROFILES_ACTIVE=dev
+      - ML_SERVICE_URL=http://ml-service:8001
+      - MQTT_ENABLED=false
+    depends_on:
+      ml-service:
+        condition: service_healthy
+
+  # React + Vite Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: motor-twin-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  # Optional Mosquitto MQTT Broker
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: motor-twin-mqtt
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
