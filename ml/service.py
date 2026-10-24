@@ -314,6 +314,25 @@ def get_ai4i_benchmark():
         raise HTTPException(status_code=404, detail="AI4I benchmark metrics not found.")
     return ai4i_metrics
 
+@app.get("/metrics/motor")
+def get_motor_metrics():
+    """Return verified induction motor experimental metrics from artifacts."""
+    artifacts_dir = ARTIFACTS_DIR
+    res = {}
+    for fname, key in [
+        ("fault_classifier_metrics.json", "classifier"),
+        ("rul_metrics.json", "rul"),
+        ("anomaly_detector_metrics.json", "anomaly"),
+        ("latency_metrics.json", "latency"),
+        ("robustness_metrics.json", "robustness"),
+        ("hyperparameters.json", "hyperparameters")
+    ]:
+        p = os.path.join(artifacts_dir, fname)
+        if os.path.exists(p):
+            with open(p, "r") as f:
+                res[key] = json.load(f)
+    return res
+
 @app.get("/ai4i/test-cases")
 def get_ai4i_test_cases():
     if ai4i_test_cases is None:

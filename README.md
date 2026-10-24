@@ -74,7 +74,7 @@ All models evaluated with **zero data leakage** using strict run-level partition
 ### Step 1: Clone and Generate Datasets & Train Models
 ```powershell
 # Navigate to repository root
-cd C:\Users\aryan\.gemini\antigravity\scratch\explainable-digital-twin
+cd explainable-digital-twin
 
 # 1. Generate run-level partitioned research dataset
 python scripts/generate_dataset.py

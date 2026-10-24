@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { Navbar } from './components/Navbar';
+import { LeftRail } from './components/LeftRail';
+import { TopHeader } from './components/TopHeader';
 import { SimulatorModal } from './components/SimulatorModal';
 import { LandingPage } from './pages/LandingPage';
 import { AuthPage } from './pages/AuthPage';
@@ -81,87 +82,87 @@ function WorkbenchLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-canvas text-slate-200 flex flex-col font-sans">
-      <Navbar
-        simulatorStatus={simStatus}
+    <div className="min-h-screen bg-bg text-ink flex flex-col md:flex-row font-sans">
+      <LeftRail
         selectedMotorId={selectedMotorId}
-        onSelectMotor={setSelectedMotorId}
+        simulatorStatus={simStatus}
+        activeAlertCount={alerts.filter((a) => a.status === 'ACTIVE').length}
         onOpenSimulator={() => setIsSimModalOpen(true)}
         onToggleSimulator={handleToggleSimulator}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <Routes>
-          <Route path="/" element={<Navigate to="/fleet" replace />} />
-          <Route
-            path="/fleet"
-            element={
-              <FleetOverview
-                twins={twins}
-                alerts={alerts}
-                onOpenSimulator={() => setIsSimModalOpen(true)}
-              />
-            }
-          />
-          <Route
-            path="/motor/:motorId"
-            element={
-              <MotorDetail
-                twin={activeTwin}
-                onOpenSimulator={() => setIsSimModalOpen(true)}
-              />
-            }
-          />
-          <Route
-            path="/predictions"
-            element={<PredictiveMaintenance />}
-          />
-          <Route
-            path="/diagnosis/:motorId"
-            element={<FaultDiagnosis twin={activeTwin} />}
-          />
-          <Route
-            path="/explainability/:motorId"
-            element={<Explainability twin={activeTwin} />}
-          />
-          <Route
-            path="/rul/:motorId"
-            element={
-              <RemainingUsefulLife
-                twin={activeTwin}
-                onOpenSimulator={() => setIsSimModalOpen(true)}
-              />
-            }
-          />
-          <Route
-            path="/alerts"
-            element={<AlertsMaintenance alerts={alerts} onRefresh={refetchAlerts} />}
-          />
-          <Route
-            path="/csv-analysis"
-            element={<CsvAnalysis />}
-          />
-          <Route
-            path="/research"
-            element={<ResearchResults />}
-          />
-          <Route path="/status" element={<ModelStatus />} />
-          <Route path="*" element={<Navigate to="/fleet" replace />} />
-        </Routes>
-      </main>
+      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
+        <main className="flex-1 max-w-[1240px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-10">
+          <Routes>
+            <Route path="/" element={<Navigate to="/fleet" replace />} />
+            <Route
+              path="/fleet"
+              element={
+                <FleetOverview
+                  twins={twins}
+                  alerts={alerts}
+                  onOpenSimulator={() => setIsSimModalOpen(true)}
+                />
+              }
+            />
+            <Route
+              path="/motor/:motorId"
+              element={
+                <MotorDetail
+                  twin={activeTwin}
+                  onOpenSimulator={() => setIsSimModalOpen(true)}
+                />
+              }
+            />
+            <Route
+              path="/predictions"
+              element={<PredictiveMaintenance />}
+            />
+            <Route
+              path="/diagnosis/:motorId"
+              element={<FaultDiagnosis twin={activeTwin} />}
+            />
+            <Route
+              path="/explainability/:motorId"
+              element={<Explainability twin={activeTwin} />}
+            />
+            <Route
+              path="/rul/:motorId"
+              element={
+                <RemainingUsefulLife
+                  twin={activeTwin}
+                  onOpenSimulator={() => setIsSimModalOpen(true)}
+                />
+              }
+            />
+            <Route
+              path="/alerts"
+              element={<AlertsMaintenance alerts={alerts} onRefresh={refetchAlerts} />}
+            />
+            <Route
+              path="/csv-analysis"
+              element={<CsvAnalysis />}
+            />
+            <Route
+              path="/research"
+              element={<ResearchResults />}
+            />
+            <Route path="/status" element={<ModelStatus />} />
+            <Route path="*" element={<Navigate to="/fleet" replace />} />
+          </Routes>
+        </main>
 
-      <footer className="border-t border-panel-border/60 py-4 bg-canvas-subtle text-center text-xs text-slate-400">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <footer className="border-t border-rule py-3 px-6 text-xs text-mute flex flex-col sm:flex-row items-center justify-between gap-2 bg-panel/30">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-200">MACHINA-X</span>
+            <span className="font-serif font-semibold text-ink">MACHINA-X</span>
             <span>·</span>
             <span>Explainable Cyber-Physical Digital Twin Platform</span>
           </div>
-          <div className="text-[11px] text-slate-400">
-            IEEE Research Specification · Aditya Gupta, Aditya Maurya, Ananya Sharma, Aryan Mishra
+          <div className="font-mono text-[11px] text-mute">
+            IEEE Spec 3kW 415V Induction Motor · 10 kHz MCSA Ingestion
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
 
       <SimulatorModal
         isOpen={isSimModalOpen}

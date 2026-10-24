@@ -1,0 +1,45 @@
+{
+  "stage_1_anomaly_detector": {
+    "model": "IsolationForest",
+    "n_estimators": 150,
+    "contamination": 0.05,
+    "random_state": 42,
+    "bootstrap": false
+  },
+  "stage_2_fault_classifier": {
+    "model": "XGBoostClassifier",
+    "n_estimators": 120,
+    "learning_rate": 0.08,
+    "max_depth": 5,
+    "subsample": 0.85,
+    "objective": "multi:softprob",
+    "eval_metric": "mlogloss",
+    "random_state": 42
+  },
+  "stage_3_rul_regressor": {
+    "model": "LSTMRULModel",
+    "architecture": "unidirectional 2-layer LSTM",
+    "input_dim": 26,
+    "hidden_dim": 32,
+    "num_layers": 2,
+    "dropout": 0.1,
+    "fc_layers": "Linear(32, 16) -> ReLU -> Linear(16, 1)",
+    "learning_rate": 0.005,
+    "optimizer": "Adam",
+    "loss": "MSELoss",
+    "epochs": 40,
+    "batch_size": 32,
+    "sequence_length": 5,
+    "random_state": 42
+  },
+  "benchmark_ai4i_classifier": {
+    "model": "XGBoostClassifier",
+    "n_estimators": 120,
+    "learning_rate": 0.08,
+    "max_depth": 5,
+    "subsample": 0.85,
+    "scale_pos_weight": 2.5,
+    "eval_metric": "logloss",
+    "random_state": 42
+  }
+}

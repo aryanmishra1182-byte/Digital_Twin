@@ -27,7 +27,7 @@ This guide provides **exact, drop-in replacement paragraphs and data tables** fo
 | **Table I (Prior Work Comparison)** | Marked column as **P** (Planned / Proposed) | Change **P** to **✓** (Implemented & Evaluated) | Full 5-stage pipeline operational |
 | **Benchmark Track A (AI4I)** | Not mentioned in initial draft | Rigorous validation on UCI AI4I 2020 dataset (10,000 instances) | Champion XGBoost: F1 = 0.7862, ROC-AUC = 0.9808 (28.5:1 imbalance) |
 | **Benchmark Track B (Motor)** | Proposed Simulink model (Table II) | Physics-guided simulation (3 kW, 415 V, 4-pole, 26 features) | XGBoost 5-Class: 94.55% Acc, Macro F1 = 0.8862 |
-| **RUL Estimation (Stage 3)** | Proposed LSTM architecture | 2-layer Bidirectional LSTM Sequence Regressor ($k=5$) | MAE: 0.2199 hrs (~13.2 min), 33.5% gain over Ridge |
+| **RUL Estimation (Stage 3)** | Proposed LSTM architecture | Unidirectional 2-layer LSTM Sequence Regressor ($k=5$) | MAE: 0.2199 hrs (~13.2 min), 33.5% gain over Ridge |
 | **Explainability (SHAP)** | Proposed TreeExplainer application | Exact TreeSHAP local waterfall & global rankings | Rotational Speed (1.3314), Tool Wear (1.2755), Power (1.2263) |
 | **Table VI (Status)** | Placeholder: "claims no numerical results" | **Replace with complete Tables IV-A and IV-B** | Full baseline comparisons and confusion matrices |
 | **Conclusion** | Stated "next phase will generate dataset" | Replaced with concluded findings and testbed recommendations | Conclusive empirical contributions verified |
@@ -43,7 +43,7 @@ This guide provides **exact, drop-in replacement paragraphs and data tables** fo
 ```markdown
 Abstract—Three-phase induction motors are the foundational prime movers of modern industrial manufacturing, where unpredicted catastrophic failures cause substantial operational downtime and economic losses. Conventional maintenance strategies either incur run-to-failure operational risks or result in premature component retirement via fixed-interval preventive servicing. While prior research has investigated digital twins, fault classification, and explainable artificial intelligence (XAI) independently, an integrated cyber-physical framework bridging real-time signal processing, multi-stage machine learning inference, and transparent game-theoretic explainability has remained an open challenge.
 
-This paper presents MACHINA-X, a functional explainable digital twin framework for condition monitoring, multi-fault diagnostics, and remaining useful life (RUL) estimation. The platform incorporates a physics-guided feature extraction engine that computes 26 Motor Current Signature Analysis (MCSA), vibration harmonic, and thermal dynamic indicators. The diagnostic pipeline is validated across two rigorous empirical tracks: (1) a benchmark on the official UCI AI4I 2020 Predictive Maintenance dataset (10,000 physical instances), where our tuned XGBoost classifier achieves 98.45% accuracy, an F1-score of 0.7862, and an ROC-AUC of 0.9808 under extreme 28.5:1 class imbalance, outperforming Logistic Regression, Decision Tree, and Random Forest baselines; and (2) a cyber-physical induction motor simulation modeling a 3 kW, 415 V, four-pole motor across five operating states, attaining 94.55% multi-class accuracy and an RUL prediction Mean Absolute Error (MAE) of 0.2199 hours via a Bidirectional LSTM network.
+This paper presents MACHINA-X, a functional explainable digital twin framework for condition monitoring, multi-fault diagnostics, and remaining useful life (RUL) estimation. The platform incorporates a physics-guided feature extraction engine that computes 26 Motor Current Signature Analysis (MCSA), vibration harmonic, and thermal dynamic indicators. The diagnostic pipeline is validated across two empirical tracks: (1) a benchmark on the official UCI AI4I 2020 Predictive Maintenance dataset (10,000 synthetic milling-machine instances, Stephan Matzka, 2020), where our tuned XGBoost classifier achieves 98.45% accuracy, an F1-score of 0.7862, and an ROC-AUC of 0.9808 under extreme 28.5:1 class imbalance, outperforming Logistic Regression, Decision Tree, and Random Forest baselines; and (2) a cyber-physical induction motor simulation modeling a 3 kW, 415 V, four-pole motor across five operating states, attaining 94.55% multi-class accuracy across 312 windows from 52 held-out runs and an RUL prediction Mean Absolute Error (MAE) of 0.2199 hours via a 2-layer LSTM sequence network across 4 held-out degradation trajectories.
 
 Crucially, local and global TreeSHAP explainability layers are integrated directly into the digital twin, mapping feature attributions to physical machine components on an interactive operator dashboard. An offline dual-mode batch diagnostic engine is also delivered to support non-streaming legacy telemetry. The results demonstrate that coupling physics-informed feature extraction with explainable gradient boosted trees and recurrent networks delivers both high diagnostic fidelity and actionable operator interpretability.
 
@@ -83,9 +83,9 @@ The paper offers four primary contributions:
 
 ```markdown
 C. Staged Machine Learning Pipeline Implementation
-Stage 1 (Anomaly Detection): An unsupervised Isolation Forest with 100 estimators and 10% contamination threshold filters nominal operating telemetry from anomalous drift.
-Stage 2 (Fault Classification): An optimized Gradient Boosted Decision Tree (XGBoost) with 150 estimators, learning rate η = 0.08, maximum depth = 5, and subsample ratio = 0.85 is deployed as the champion classifier. It isolates five discrete states: Healthy, Broken Rotor Bar, Stator Inter-Turn Short, Bearing Defect, and Air-Gap Eccentricity.
-Stage 3 (RUL Prognostics): A 2-layer Bidirectional LSTM network with 64 hidden units, dropout rate of 0.20, and Adam optimizer (learning rate = 1e-3) evaluates sliding sequences of length k = 5 consecutive operational windows to regress remaining operating hours.
+Stage 1 (Anomaly Detection): An unsupervised Isolation Forest with 150 estimators and 0.05 contamination threshold filters nominal operating telemetry from anomalous drift.
+Stage 2 (Fault Classification): An optimized Gradient Boosted Decision Tree (XGBoost) with 120 estimators, learning rate η = 0.08, maximum depth = 5, and subsample ratio = 0.85 is deployed as the champion classifier. It isolates five discrete states: Healthy, Broken Rotor Bar, Stator Inter-Turn Short, Bearing Defect, and Air-Gap Eccentricity.
+Stage 3 (RUL Prognostics): A unidirectional 2-layer LSTM network with 32 hidden units, dropout rate of 0.10, and Adam optimizer (learning rate = 5e-3) evaluates sliding sequences of length k = 5 consecutive operational windows over 40 epochs (batch size 32) to regress remaining operating hours.
 ```
 
 ---
@@ -98,7 +98,7 @@ Stage 3 (RUL Prognostics): A 2-layer Bidirectional LSTM network with 64 hidden u
 VI. Experimental Evaluation and Empirical Results
 
 A. Track A Benchmark: UCI AI4I 2020 Predictive Maintenance Dataset
-To benchmark the classification and explainability architecture against real industrial distributions under extreme class imbalance, the pipeline was evaluated on the official UCI AI4I 2020 dataset (10,000 physical instances, 339 failure events, 28.5:1 imbalance). An 80/20 stratified train/test split was utilized alongside 5-fold cross-validation on the training set. Table IV summarizes the comparative performance across four machine learning paradigms.
+To benchmark the classification and explainability architecture under extreme class imbalance, the pipeline was evaluated on the official UCI AI4I 2020 dataset (10,000 synthetic milling-machine instances, Stephan Matzka, 2020, 339 failure events, 28.5:1 imbalance). An 80/20 stratified train/test split was utilized alongside 5-fold cross-validation on the training set. Table IV summarizes the comparative performance across four machine learning paradigms.
 
 TABLE IV-A. Comparative Model Performance on UCI AI4I 2020 Held-Out Test Set (N=2,000)
 ----------------------------------------------------------------------------------------------------------------
@@ -120,29 +120,41 @@ TreeSHAP global attributions identified the primary drivers of failure across th
 5. Temperature Difference [K] (mean |SHAP| = 0.5015): Heat dissipation gradient signaling thermal failure (HDF).
 
 B. Track B Benchmark: Three-Phase Induction Motor Digital Twin
-Track B evaluates the 26 physics-guided features extracted from the 3 kW, 415 V motor simulation across 312 held-out test runs.
+Track B evaluates the 26 physics-guided features extracted from the 3 kW, 415 V motor simulation across 312 windows from 52 held-out runs (6 windows/run).
 
-TABLE IV-B. Multi-Class Fault Classification Performance (312 Held-Out Test Instances)
+TABLE IV-B. Multi-Class Fault Classification Performance (312 Windows from 52 Held-Out Runs)
 ------------------------------------------------------------------------------------------------
-Fault Mode / Operating State       Precision      Recall      F1-Score      Test Support
+Fault Mode / Operating State       Precision      Recall      F1-Score      Test Windows (Runs)
 ------------------------------------------------------------------------------------------------
-HEALTHY                              76.92%       41.67%       0.5405            24
-BROKEN_ROTOR_BAR                    100.00%      100.00%       1.0000            72
-STATOR_INTER_TURN_SHORT             100.00%      100.00%       1.0000            72
-BEARING_DEFECT                       83.13%       95.83%       0.8903            72
-AIR_GAP_ECCENTRICITY                100.00%      100.00%       1.0000            72
+HEALTHY                              76.92%       41.67%       0.5405            24 (4 runs)
+BROKEN_ROTOR_BAR                    100.00%      100.00%       1.0000            72 (12 runs)
+STATOR_INTER_TURN_SHORT             100.00%      100.00%       1.0000            72 (12 runs)
+BEARING_DEFECT                       83.13%       95.83%       0.8903            72 (12 runs)
+AIR_GAP_ECCENTRICITY                100.00%      100.00%       1.0000            72 (12 runs)
 ------------------------------------------------------------------------------------------------
-Macro Average                        92.01%       87.50%       0.8862           312
-Overall Accuracy                       —            —          94.55%           312
+Macro Average                        92.01%       87.50%       0.8862           312 (52 runs)
+Overall Accuracy                       —            —          94.55%           312 (52 runs)
 ------------------------------------------------------------------------------------------------
 
-The XGBoost classifier achieved an overall multi-class accuracy of 94.55% (Macro F1 = 0.8862), outperforming Random Forest (92.63% accuracy, 0.8018 F1) and Support Vector Machine (87.82% accuracy, 0.7366 F1). Perfect discrimination was achieved for broken rotor bars, stator turn shorts, and eccentricity, owing to the distinctive spectral signatures of MCSA sidebands.
+The XGBoost classifier achieved an overall multi-class accuracy of 94.55% (Macro F1 = 0.8862), outperforming Random Forest (92.63% accuracy, 0.8018 F1) and Support Vector Machine (87.82% accuracy, 0.7366 F1). Perfect discrimination was achieved for broken rotor bars, stator turn shorts, and eccentricity, owing to the distinctive spectral signatures of MCSA sidebands in the simulation model.
 
 C. Remaining Useful Life (RUL) Prognostics
-The 2-layer Bidirectional LSTM regressor was evaluated across 384 degradation sequence windows (sequence length k = 5). The model attained:
+The unidirectional 2-layer LSTM regressor was evaluated across 384 degradation sequence windows (sequence length k = 5) from 4 held-out runs. The model attained:
 - Mean Absolute Error (MAE): 0.2199 hours (~13.2 minutes)
 - Root Mean Squared Error (RMSE): 0.2927 hours (~17.5 minutes)
-Compared to a linear Ridge regression baseline (MAE: 0.3310 hours, RMSE: 0.4627 hours), the recurrent architecture achieved a 33.5% reduction in prediction error, successfully capturing non-linear accelerated degradation trends.
+Compared to a linear Ridge regression baseline (MAE: 0.3310 hours, RMSE: 0.4627 hours) and a naive mean baseline (MAE: 12.02 hours), the recurrent architecture achieved a 33.5% reduction in prediction error. Per-run MAE across the four runs: RUL_BRO_03 (0.2093 h), RUL_STA_03 (0.1885 h), RUL_BEA_03 (0.2453 h), and RUL_AIR_03 (0.2367 h).
+
+D. Robustness and Cross-Load Generalization
+1. Multi-Seed Stability (5 seeds: [42, 101, 2024, 7, 999]):
+   - Classifier Accuracy: 94.87% ± 0.83%
+   - Classifier Macro F1: 0.9001 ± 0.0170
+   - Stage 1 Anomaly F1: 0.1139 ± 0.0063 (at nominal 0.05 contamination on imbalanced test set)
+2. Leave-One-Load-Out Generalization (train on 3 loads, test on held-out load):
+   - 25% Load: 67.31% Acc (Macro F1: 0.6104)
+   - 50% Load: 67.31% Acc (Macro F1: 0.5327)
+   - 75% Load: 75.64% Acc (Macro F1: 0.7220)
+   - 100% Load: 73.08% Acc (Macro F1: 0.5835)
+   - Mean Cross-Load Accuracy: 70.83% (Macro F1: 0.6121)
 ```
 
 ---
@@ -159,8 +171,13 @@ To maintain strict scientific fidelity, the two empirical tracks must be disting
 1. The UCI AI4I 2020 dataset represents milling machine tool wear mechanics and validates the mathematical robustness of the staged pipeline and TreeSHAP under severe class imbalance; it does not model electrical motor current.
 2. The motor telemetry dataset was produced via physics-based mathematical differential simulation conforming to IEEE 3 kW motor specifications. While spectral harmonic signatures and thermal dynamics are accurately synthesized, physical dynamometer testbed measurements are necessary to calibrate the models against ambient industrial electrical noise and sensor drift.
 
-B. Computational Latency & Edge Deployment
-On an x86 edge testbed, end-to-end inference (feature extraction + anomaly filter + XGBoost classification + TreeSHAP computation) required an average of 42.6 ms per 1-second analysis window. Because inference latency is well below the 1,000 ms acquisition window, the architecture satisfies real-time edge processing constraints without requiring cloud offloading.
+B. Measured Hardware Inference Latency
+Over 500 consecutive operational 1-second windows on host hardware (AMD Ryzen 5 4600H, Windows 10, Python 3.10), full end-to-end inference (feature extraction + Stage 1 Isolation Forest + Stage 2 XGBoost + TreeSHAP) averaged 17.43 ms (median p50: 16.68 ms, 95th percentile p95: 21.32 ms). Because inference latency is well below the 1,000 ms acquisition window, the architecture satisfies real-time execution constraints without queuing delay or telemetry backpressure.
+
+C. Known Empirical Weaknesses Disclosed
+1. Healthy Class Recall (41.67%): The Stage 2 classifier achieved 41.67% recall on healthy operation due to a 12:1 imbalance against healthy runs in training (48 healthy vs 576 faulty windows), biasing boundary decisions toward mild bearing defect.
+2. Stage 1 Anomaly Recall (72.57%): Unsupervised Isolation Forest missed 79 faulty windows (recall 72.57%) due to nominal 0.05 contamination.
+3. Idealized Simulation: Perfect scores on rotor bar, stator short, and eccentricity reflect deterministic mathematical simulation without inverter carrier harmonics.
 ```
 
 ---
@@ -174,7 +191,7 @@ IX. Conclusion
 
 This paper has presented and experimentally validated MACHINA-X, an explainable cyber-physical digital twin framework for predictive maintenance of industrial equipment. By combining 26 physics-guided features from Motor Current Signature Analysis (MCSA), vibration harmonics, and thermal dynamics with a staged machine learning pipeline and TreeSHAP explainability, the system delivers trustworthy decision support to maintenance personnel. 
 
-The framework demonstrated 98.45% accuracy and an F1-score of 0.7862 on the official UCI AI4I 2020 benchmark under severe class imbalance, 94.55% multi-class fault classification accuracy on induction motor dynamics, and an RUL prediction MAE of 0.2199 hours via bidirectional LSTM sequence regression. In addition, an offline dual-mode batch diagnostic engine was delivered to bridge legacy telemetry workflows. Future work will focus on deploying the edge inference pipeline onto a physical 3 kW motor dynamometer testbed to evaluate sensor noise resilience and cross-machine domain adaptation.
+The framework demonstrated 98.45% accuracy and an F1-score of 0.7862 on the official UCI AI4I 2020 synthetic benchmark under severe class imbalance, 94.55% multi-class fault classification accuracy across 312 windows from 52 held-out runs of induction motor dynamics, and an RUL prediction MAE of 0.2199 hours via LSTM sequence regression. In addition, an offline dual-mode batch diagnostic engine was delivered to bridge legacy telemetry workflows. Future work will focus on deploying the edge inference pipeline onto a physical 3 kW motor dynamometer testbed to evaluate sensor noise resilience and cross-machine domain adaptation.
 ```
 
 ---

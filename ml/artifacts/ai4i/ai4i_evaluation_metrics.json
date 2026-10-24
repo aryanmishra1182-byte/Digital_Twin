@@ -1,7 +1,7 @@
 {
   "dataset_name": "UCI AI4I 2020 Predictive Maintenance Dataset",
   "source_url": "https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset",
-  "citation": "Mathes, S. (2020). AI4I 2020 Predictive Maintenance Dataset. UCI Machine Learning Repository.",
+  "citation": "Matzka, S. (2020). Explainable Artificial Intelligence for Predictive Maintenance Applications. Third International Conference on Artificial Intelligence for Industries (AI4I 2020). UCI Machine Learning Repository.",
   "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
   "total_instances": 10000,
   "features_count": 9,
@@ -128,5 +128,6 @@
       "feature": "Type_Code",
       "mean_abs_shap": 0.0646
     }
-  ]
+  ],
+  "dataset_note": "Synthetic benchmark modeling milling machine degradation; does not contain physical induction motor current or vibration."
 }

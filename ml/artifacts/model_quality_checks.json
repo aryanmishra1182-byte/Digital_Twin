@@ -1,0 +1,189 @@
+{
+  "provenance": "Synthetic Simulation (IEEE Paper Spec 3kW 415V Motor)",
+  "probability_calibration": {
+    "raw_ece": 0.0122,
+    "calibrated_ece": 0.0412,
+    "ece_reduction_pct": -237.69,
+    "raw_reliability_curve": [
+      {
+        "bin_lower": 0.5,
+        "bin_upper": 0.6,
+        "samples_count": 8,
+        "confidence": 0.5517,
+        "accuracy": 0.5
+      },
+      {
+        "bin_lower": 0.6,
+        "bin_upper": 0.7,
+        "samples_count": 10,
+        "confidence": 0.6552,
+        "accuracy": 0.6
+      },
+      {
+        "bin_lower": 0.7,
+        "bin_upper": 0.8,
+        "samples_count": 13,
+        "confidence": 0.7437,
+        "accuracy": 0.6154
+      },
+      {
+        "bin_lower": 0.8,
+        "bin_upper": 0.9,
+        "samples_count": 12,
+        "confidence": 0.8537,
+        "accuracy": 0.8333
+      },
+      {
+        "bin_lower": 0.9,
+        "bin_upper": 1.0,
+        "samples_count": 269,
+        "confidence": 0.9891,
+        "accuracy": 0.9926
+      }
+    ],
+    "calibrated_reliability_curve": [
+      {
+        "bin_lower": 0.5,
+        "bin_upper": 0.6,
+        "samples_count": 3,
+        "confidence": 0.5507,
+        "accuracy": 0.6667
+      },
+      {
+        "bin_lower": 0.6,
+        "bin_upper": 0.7,
+        "samples_count": 4,
+        "confidence": 0.6486,
+        "accuracy": 0.5
+      },
+      {
+        "bin_lower": 0.7,
+        "bin_upper": 0.8,
+        "samples_count": 12,
+        "confidence": 0.7501,
+        "accuracy": 0.5833
+      },
+      {
+        "bin_lower": 0.8,
+        "bin_upper": 0.9,
+        "samples_count": 12,
+        "confidence": 0.8686,
+        "accuracy": 0.75
+      },
+      {
+        "bin_lower": 0.9,
+        "bin_upper": 1.0,
+        "samples_count": 281,
+        "confidence": 0.9556,
+        "accuracy": 0.9858
+      }
+    ]
+  },
+  "unknown_fault_handling": {
+    "rejection_threshold": 0.7458,
+    "combined_fault_samples": 50,
+    "unclassified_or_uncertain_samples": 10,
+    "unclassified_rate": 0.2,
+    "mean_confidence_on_combined": 0.7749
+  },
+  "unseen_severity_generalization": {
+    "held_out_severity": 0.6,
+    "training_severities": [
+      0.0,
+      0.3,
+      0.9
+    ],
+    "test_windows": 384,
+    "accuracy_on_unseen_severity": 0.987,
+    "macro_f1_on_unseen_severity": 0.7947
+  },
+  "noise_robustness_snr_curve": [
+    {
+      "snr_db": 30,
+      "accuracy": 0.9231,
+      "macro_f1": 0.8808
+    },
+    {
+      "snr_db": 25,
+      "accuracy": 0.8814,
+      "macro_f1": 0.8467
+    },
+    {
+      "snr_db": 20,
+      "accuracy": 0.8205,
+      "macro_f1": 0.762
+    },
+    {
+      "snr_db": 15,
+      "accuracy": 0.7788,
+      "macro_f1": 0.704
+    },
+    {
+      "snr_db": 10,
+      "accuracy": 0.7147,
+      "macro_f1": 0.6277
+    },
+    {
+      "snr_db": 5,
+      "accuracy": 0.6571,
+      "macro_f1": 0.5646
+    }
+  ],
+  "feature_modality_ablation": {
+    "Current_Only": {
+      "feature_count": 10,
+      "accuracy": 0.8974,
+      "macro_f1": 0.79
+    },
+    "Vibration_Only": {
+      "feature_count": 10,
+      "accuracy": 0.8686,
+      "macro_f1": 0.7592
+    },
+    "Temperature_Only": {
+      "feature_count": 3,
+      "accuracy": 0.3237,
+      "macro_f1": 0.3048
+    },
+    "Current_and_Vibration": {
+      "feature_count": 20,
+      "accuracy": 0.9071,
+      "macro_f1": 0.7769
+    },
+    "All_Three_Sensors_Full_Model": {
+      "feature_count": 26,
+      "accuracy": 0.9423,
+      "macro_f1": 0.888
+    }
+  },
+  "statistical_significance_and_confidence_intervals": {
+    "bootstrap_samples": 1000,
+    "accuracy_95_ci": [
+      0.9199,
+      0.9679
+    ],
+    "macro_f1_95_ci": [
+      0.8371,
+      0.9284
+    ],
+    "mcnemar_vs_random_forest": {
+      "b_xgb_correct_baseline_wrong": 8,
+      "c_xgb_wrong_baseline_correct": 2,
+      "chi2": 2.5,
+      "p_value": 0.11385
+    },
+    "mcnemar_vs_svm": {
+      "b_xgb_correct_baseline_wrong": 13,
+      "c_xgb_wrong_baseline_correct": 13,
+      "chi2": 0.0385,
+      "p_value": 0.84452
+    }
+  },
+  "measurable_explainability": {
+    "physics_consistency_score": 0.9097,
+    "fault_test_windows_evaluated": 288,
+    "fidelity_top2_deletion_accuracy_drop": 0.4359,
+    "fidelity_random2_deletion_accuracy_drop": 0.0192,
+    "fidelity_ratio_shap_vs_random": 22.7
+  }
+}

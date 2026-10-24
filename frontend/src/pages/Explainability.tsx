@@ -27,6 +27,8 @@ import {
 import { DigitalTwinState, ShapAttribution } from '../types';
 import { api } from '../api/client';
 import { SectionHeader } from '../components/ui/SectionHeader';
+import { DivergingShapSection } from '../components/DivergingShapSection';
+import { ModelProvenanceTable } from '../components/ModelProvenanceTable';
 
 interface ExplainabilityProps {
   twin?: DigitalTwinState;
@@ -171,6 +173,20 @@ export const Explainability: React.FC<ExplainabilityProps> = ({ twin }) => {
       {/* Main Tab Content */}
       {activeTab === 'LOCAL' && (
         <div className="space-y-6">
+          {/* Zero-Axis Diverging SHAP Section */}
+          <DivergingShapSection
+            predictedClass={twin?.predictedFaultClass}
+            attributions={
+              localChartData.length > 0
+                ? localChartData.map((d) => ({
+                    feature: d.rawFeature,
+                    name: d.feature,
+                    value: d.featureValue,
+                    shapValue: d.shapValue
+                  }))
+                : undefined
+            }
+          />
           {/* Waterfall Divergence Bar Chart */}
           <div className="bg-panel border border-panel-border rounded-lg p-5">
             <div className="flex items-center justify-between mb-4">

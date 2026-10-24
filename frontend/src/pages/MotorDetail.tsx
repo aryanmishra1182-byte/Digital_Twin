@@ -29,6 +29,10 @@ import { api } from '../api/client';
 import { StateBadge } from '../components/ui/Badge';
 import { SectionHeader } from '../components/ui/SectionHeader';
 import { EquipmentSchematic } from '../components/EquipmentSchematic';
+import { InstrumentHero } from '../components/InstrumentHero';
+import { SparklineMetricsRow } from '../components/SparklineMetricsRow';
+import { DivergingShapSection } from '../components/DivergingShapSection';
+import { ModelProvenanceTable } from '../components/ModelProvenanceTable';
 
 interface MotorDetailProps {
   twin?: DigitalTwinState;
@@ -98,92 +102,62 @@ export const MotorDetail: React.FC<MotorDetailProps> = ({ twin, onOpenSimulator 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SectionHeader
-        title={`${id} Telemetry & Digital State`}
-        subtitle="Continuous 10,000 samples/sec windowing with FFT spectral current, vibration band decomposition, and thermal tracking."
-        tag="Twin Replica"
-        actions={
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => navigate(`/diagnosis/${id}`)}
-              className="px-3 py-1.5 rounded-md bg-surface hover:bg-surface-elevated text-slate-200 border border-panel-border font-medium text-xs inline-flex items-center gap-1.5 transition-colors"
-            >
-              <Cpu className="w-3.5 h-3.5 text-brand-400" />
-              <span>Fault Diagnostics</span>
-            </button>
-            <button
-              onClick={onOpenSimulator}
-              className="px-3 py-1.5 rounded-md bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs inline-flex items-center gap-1.5 shadow-subtle transition-colors"
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Signal Generator</span>
-            </button>
+      <div className="pb-4 border-b border-rule flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <div className="text-xs text-mute font-mono uppercase tracking-wider mb-1">
+            Cyber-Physical Digital Twin · Unit {id}
           </div>
-        }
-      />
-
-      {/* Asset Specifications Placard & Live Health Status */}
-      <div className="bg-panel border border-panel-border rounded-lg p-5">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 border-b border-panel-border/60">
-          <div>
-            <div className="flex items-center gap-2.5">
-              <span className="font-mono text-lg font-bold text-slate-100">{id}</span>
-              {twin && <StateBadge state={twin.operationalState} />}
-              <span className="text-xs text-slate-400 font-mono">
-                {twin?.motorName || '3-Phase Squirrel Cage Induction Motor'}
-              </span>
-            </div>
-            <div className="text-xs text-slate-400 mt-1 flex flex-wrap gap-x-4 gap-y-1">
-              <span>Location: <strong className="text-slate-300 font-normal">{twin?.configuration?.location || 'Line A - Feed Pump'}</strong></span>
-              <span>Class: <strong className="text-slate-300 font-normal">Squirrel-Cage Induction</strong></span>
-              <span>Updated: <strong className="text-slate-300 font-normal font-mono">{twin?.lastUpdated ? new Date(twin.lastUpdated).toLocaleTimeString() : 'Live'}</strong></span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="bg-surface/80 border border-panel-border rounded-lg px-3.5 py-1.5 text-right">
-              <div className="text-[10px] font-mono uppercase text-slate-400">Health Index</div>
-              <div className="text-xl font-mono font-bold text-brand-400">
-                {twin?.healthScore.toFixed(0) || 85}%
-              </div>
-            </div>
-            <div className="bg-surface/80 border border-panel-border rounded-lg px-3.5 py-1.5 text-right">
-              <div className="text-[10px] font-mono uppercase text-slate-400">Anomaly Score</div>
-              <div className="text-xl font-mono font-bold text-amber-400">
-                {twin?.anomalyScore.toFixed(3) || '0.042'}
-              </div>
-            </div>
-          </div>
+          <h1 className="text-3xl sm:text-4xl font-serif font-normal text-ink">
+            Motor {id} Instrument Panel
+          </h1>
         </div>
 
-        {/* Nameplate Specifications Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mt-4 text-xs">
-          <div className="bg-surface/30 p-2.5 rounded border border-panel-border/40">
-            <span className="text-[10px] uppercase font-mono text-slate-400 block">Rated Power</span>
-            <span className="font-mono font-semibold text-slate-200 mt-0.5 block">3.0 kW</span>
-          </div>
-          <div className="bg-surface/30 p-2.5 rounded border border-panel-border/40">
-            <span className="text-[10px] uppercase font-mono text-slate-400 block">Supply Voltage</span>
-            <span className="font-mono font-semibold text-slate-200 mt-0.5 block">415 V (3-Phase)</span>
-          </div>
-          <div className="bg-surface/30 p-2.5 rounded border border-panel-border/40">
-            <span className="text-[10px] uppercase font-mono text-slate-400 block">Line Frequency</span>
-            <span className="font-mono font-semibold text-slate-200 mt-0.5 block">50.0 Hz</span>
-          </div>
-          <div className="bg-surface/30 p-2.5 rounded border border-panel-border/40">
-            <span className="text-[10px] uppercase font-mono text-slate-400 block">Poles / Speed</span>
-            <span className="font-mono font-semibold text-slate-200 mt-0.5 block">4-Pole / 1440 RPM</span>
-          </div>
-          <div className="bg-surface/30 p-2.5 rounded border border-panel-border/40">
-            <span className="text-[10px] uppercase font-mono text-slate-400 block">Nominal Slip</span>
-            <span className="font-mono font-semibold text-slate-200 mt-0.5 block">s = 0.04 (4%)</span>
-          </div>
-          <div className="bg-surface/30 p-2.5 rounded border border-panel-border/40">
-            <span className="text-[10px] uppercase font-mono text-slate-400 block">Current Window</span>
-            <span className="font-mono font-semibold text-slate-200 mt-0.5 block">10k samples @ 10kHz</span>
-          </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => navigate(`/diagnosis/${id}`)}
+            className="px-3 py-1.5 rounded-full bg-panel hover:bg-track text-ink border border-rule font-medium text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <Cpu className="w-3.5 h-3.5" />
+            <span>Diagnostics</span>
+          </button>
+          <button
+            onClick={() => navigate(`/explainability/${id}`)}
+            className="px-3 py-1.5 rounded-full bg-panel hover:bg-track text-ink border border-rule font-medium text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>SHAP</span>
+          </button>
+          <button
+            onClick={onOpenSimulator}
+            className="px-3.5 py-1.5 rounded-full bg-ink text-bg font-medium text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5" />
+            <span>Inject Telemetry</span>
+          </button>
         </div>
       </div>
+
+      {/* SVG Health Ring & Verdict Hero */}
+      <InstrumentHero twin={twin} onOpenSimulator={onOpenSimulator} />
+
+      {/* 4-Metric Sparklines Separated by Hairline Rules */}
+      <SparklineMetricsRow twin={twin} />
+
+      {/* Diverging SHAP Attribution Section */}
+      <DivergingShapSection
+        predictedClass={twin?.predictedFaultClass}
+        attributions={
+          twin?.topShapAttributions && twin.topShapAttributions.length > 0
+            ? twin.topShapAttributions.map((a: any) => ({
+                feature: a.feature_name,
+                name: a.feature_name.replace(/_/g, ' '),
+                value: a.feature_value ?? 0.05,
+                shapValue: a.shap_value ?? 0.25,
+                physicsReason: `Marginal SHAP contribution towards ${twin.predictedFaultClass} state.`
+              }))
+            : undefined
+        }
+      />
 
       {/* Interactive Equipment Subsystem Schematic */}
       <EquipmentSchematic twin={twin} onOpenSimulator={onOpenSimulator} />
@@ -341,6 +315,9 @@ export const MotorDetail: React.FC<MotorDetailProps> = ({ twin, onOpenSimulator 
           </div>
         </div>
       </div>
+
+      {/* Model Provenance & Architecture Verification */}
+      <ModelProvenanceTable />
     </div>
   );
 };

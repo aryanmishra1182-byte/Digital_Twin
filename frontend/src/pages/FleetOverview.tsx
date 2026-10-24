@@ -17,6 +17,8 @@ import { DigitalTwinState, AlertRecord } from '../types';
 import { StateBadge, SeverityBadge } from '../components/ui/Badge';
 import { SectionHeader } from '../components/ui/SectionHeader';
 
+import { ModelProvenanceTable } from '../components/ModelProvenanceTable';
+
 interface FleetOverviewProps {
   twins: DigitalTwinState[];
   alerts: AlertRecord[];
@@ -329,6 +331,9 @@ export const FleetOverview: React.FC<FleetOverviewProps> = ({ twins, alerts, onO
           </div>
         </div>
       )}
+
+      {/* Verified Machine Learning Pipeline Architecture */}
+      <ModelProvenanceTable />
     </div>
   );
 };

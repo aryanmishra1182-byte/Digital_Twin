@@ -1,0 +1,262 @@
+{
+  "provenance": "Synthetic Simulation (IEEE Paper Spec 3kW 415V Motor)",
+  "multi_seed_evaluation": {
+    "seeds_evaluated": [
+      42,
+      101,
+      2024,
+      7,
+      999
+    ],
+    "runs": [
+      {
+        "seed": 42,
+        "stage_1_anomaly": {
+          "precision": 1.0,
+          "recall": 0.066,
+          "f1_score": 0.1238
+        },
+        "stage_2_classifier": {
+          "accuracy": 0.9423,
+          "macro_precision": 0.9125,
+          "macro_recall": 0.8778,
+          "macro_f1": 0.888
+        }
+      },
+      {
+        "seed": 101,
+        "stage_1_anomaly": {
+          "precision": 1.0,
+          "recall": 0.0625,
+          "f1_score": 0.1176
+        },
+        "stage_2_classifier": {
+          "accuracy": 0.9391,
+          "macro_precision": 0.8994,
+          "macro_recall": 0.8806,
+          "macro_f1": 0.8874
+        }
+      },
+      {
+        "seed": 2024,
+        "stage_1_anomaly": {
+          "precision": 1.0,
+          "recall": 0.0556,
+          "f1_score": 0.1053
+        },
+        "stage_2_classifier": {
+          "accuracy": 0.9615,
+          "macro_precision": 0.9509,
+          "macro_recall": 0.9167,
+          "macro_f1": 0.929
+        }
+      },
+      {
+        "seed": 7,
+        "stage_1_anomaly": {
+          "precision": 1.0,
+          "recall": 0.059,
+          "f1_score": 0.1115
+        },
+        "stage_2_classifier": {
+          "accuracy": 0.9551,
+          "macro_precision": 0.9526,
+          "macro_recall": 0.8944,
+          "macro_f1": 0.9102
+        }
+      },
+      {
+        "seed": 999,
+        "stage_1_anomaly": {
+          "precision": 1.0,
+          "recall": 0.059,
+          "f1_score": 0.1115
+        },
+        "stage_2_classifier": {
+          "accuracy": 0.9455,
+          "macro_precision": 0.9194,
+          "macro_recall": 0.875,
+          "macro_f1": 0.8859
+        }
+      }
+    ],
+    "summary": {
+      "stage_2_accuracy_mean": 0.9487,
+      "stage_2_accuracy_std": 0.0083,
+      "stage_2_macro_f1_mean": 0.9001,
+      "stage_2_macro_f1_std": 0.017,
+      "stage_1_anomaly_f1_mean": 0.1139,
+      "stage_1_anomaly_f1_std": 0.0063
+    }
+  },
+  "leave_one_load_out_evaluation": {
+    "per_load": {
+      "load_25pct": {
+        "held_out_load_pct": 25.0,
+        "train_samples": 936,
+        "test_samples": 312,
+        "accuracy": 0.6731,
+        "macro_precision": 0.7712,
+        "macro_recall": 0.7056,
+        "macro_f1": 0.6104,
+        "per_class": {
+          "HEALTHY": {
+            "precision": 0.2716,
+            "recall": 0.9167,
+            "f1": 0.419,
+            "support": 24
+          },
+          "BROKEN_ROTOR_BAR": {
+            "precision": 1.0,
+            "recall": 0.1111,
+            "f1": 0.2,
+            "support": 72
+          },
+          "STATOR_INTER_TURN_SHORT": {
+            "precision": 0.6372,
+            "recall": 1.0,
+            "f1": 0.7784,
+            "support": 72
+          },
+          "BEARING_DEFECT": {
+            "precision": 0.9474,
+            "recall": 0.5,
+            "f1": 0.6545,
+            "support": 72
+          },
+          "AIR_GAP_ECCENTRICITY": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 72
+          }
+        }
+      },
+      "load_50pct": {
+        "held_out_load_pct": 50.0,
+        "train_samples": 936,
+        "test_samples": 312,
+        "accuracy": 0.6731,
+        "macro_precision": 0.6582,
+        "macro_recall": 0.5833,
+        "macro_f1": 0.5327,
+        "per_class": {
+          "HEALTHY": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 24
+          },
+          "BROKEN_ROTOR_BAR": {
+            "precision": 0.4162,
+            "recall": 1.0,
+            "f1": 0.5878,
+            "support": 72
+          },
+          "STATOR_INTER_TURN_SHORT": {
+            "precision": 1.0,
+            "recall": 0.8194,
+            "f1": 0.9008,
+            "support": 72
+          },
+          "BEARING_DEFECT": {
+            "precision": 0.875,
+            "recall": 0.0972,
+            "f1": 0.175,
+            "support": 72
+          },
+          "AIR_GAP_ECCENTRICITY": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 72
+          }
+        }
+      },
+      "load_75pct": {
+        "held_out_load_pct": 75.0,
+        "train_samples": 936,
+        "test_samples": 312,
+        "accuracy": 0.7564,
+        "macro_precision": 0.7653,
+        "macro_recall": 0.7722,
+        "macro_f1": 0.722,
+        "per_class": {
+          "HEALTHY": {
+            "precision": 0.2625,
+            "recall": 0.875,
+            "f1": 0.4038,
+            "support": 24
+          },
+          "BROKEN_ROTOR_BAR": {
+            "precision": 1.0,
+            "recall": 0.6806,
+            "f1": 0.8099,
+            "support": 72
+          },
+          "STATOR_INTER_TURN_SHORT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 72
+          },
+          "BEARING_DEFECT": {
+            "precision": 0.5641,
+            "recall": 0.3056,
+            "f1": 0.3964,
+            "support": 72
+          },
+          "AIR_GAP_ECCENTRICITY": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 72
+          }
+        }
+      },
+      "load_100pct": {
+        "held_out_load_pct": 100.0,
+        "train_samples": 936,
+        "test_samples": 312,
+        "accuracy": 0.7308,
+        "macro_precision": 0.6923,
+        "macro_recall": 0.6333,
+        "macro_f1": 0.5835,
+        "per_class": {
+          "HEALTHY": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 24
+          },
+          "BROKEN_ROTOR_BAR": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 72
+          },
+          "STATOR_INTER_TURN_SHORT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 72
+          },
+          "BEARING_DEFECT": {
+            "precision": 1.0,
+            "recall": 0.1667,
+            "f1": 0.2857,
+            "support": 72
+          },
+          "AIR_GAP_ECCENTRICITY": {
+            "precision": 0.4615,
+            "recall": 1.0,
+            "f1": 0.6316,
+            "support": 72
+          }
+        }
+      }
+    },
+    "mean_accuracy_across_loads": 0.7083,
+    "mean_macro_f1_across_loads": 0.6121
+  }
+}

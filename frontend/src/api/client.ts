@@ -74,6 +74,16 @@ export const api = {
   // System Status
   getSystemStatus: () => fetchJson<SystemStatus>(`${API_BASE}/status`),
 
+  // Verified Motor Metrics from ML Microservice
+  getMotorMetrics: () => fetchJson<{
+    classifier?: any;
+    rul?: any;
+    anomaly?: any;
+    latency?: any;
+    robustness?: any;
+    hyperparameters?: any;
+  }>('/ml-api/metrics/motor'),
+
   // UCI AI4I 2020 Predictive Maintenance Benchmark
   getAi4iBenchmark: () => fetchJson<import('../types').Ai4iBenchmarkMetrics>('/ml-api/ai4i/benchmark'),
   getAi4iTestCases: () => fetchJson<import('../types').Ai4iTestCase[]>('/ml-api/ai4i/test-cases'),

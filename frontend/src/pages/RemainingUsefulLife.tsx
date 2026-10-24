@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { DigitalTwinState } from '../types';
 import { SectionHeader } from '../components/ui/SectionHeader';
+import { ModelProvenanceTable } from '../components/ModelProvenanceTable';
 
 interface RemainingUsefulLifeProps {
   twin?: DigitalTwinState;
@@ -203,6 +204,9 @@ export const RemainingUsefulLife: React.FC<RemainingUsefulLifeProps> = ({ twin, 
           </ResponsiveContainer>
         </div>
       </div>
+
+      {/* Model Provenance & Verification Architecture */}
+      <ModelProvenanceTable />
     </div>
   );
 };

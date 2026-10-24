@@ -18,6 +18,7 @@ import {
 import { SystemStatus } from '../types';
 import { api } from '../api/client';
 import { SectionHeader } from '../components/ui/SectionHeader';
+import { ModelProvenanceTable } from '../components/ModelProvenanceTable';
 
 export const ModelStatus: React.FC = () => {
   const [status, setStatus] = useState<SystemStatus | null>(null);
@@ -275,6 +276,9 @@ export const ModelStatus: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Verified Machine Learning Pipeline Architecture */}
+      <ModelProvenanceTable />
     </div>
   );
 };

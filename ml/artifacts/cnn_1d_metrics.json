@@ -1,0 +1,11 @@
+{
+  "model": "1D_CNN_Raw_Waveforms",
+  "input_channels": 2,
+  "input_samples_per_channel": 10000,
+  "parameters": 53781,
+  "test_windows": 312,
+  "accuracy": 0.9231,
+  "macro_precision": 0.75,
+  "macro_recall": 0.8,
+  "macro_f1": 0.7714
+}

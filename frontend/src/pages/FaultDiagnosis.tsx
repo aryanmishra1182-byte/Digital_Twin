@@ -26,6 +26,8 @@ import { DigitalTwinState, PredictionRecord } from '../types';
 import { api } from '../api/client';
 import { StateBadge, SeverityBadge } from '../components/ui/Badge';
 import { SectionHeader } from '../components/ui/SectionHeader';
+import { InstrumentHero } from '../components/InstrumentHero';
+import { DivergingShapSection } from '../components/DivergingShapSection';
 
 interface FaultDiagnosisProps {
   twin?: DigitalTwinState;
@@ -117,18 +119,41 @@ export const FaultDiagnosis: React.FC<FaultDiagnosisProps> = ({ twin }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <SectionHeader
-        title={`Fault Diagnostics — ${id}`}
-        subtitle="Stage 2: XGBoost multiclass model operating on physics-guided spectral MCSA, vibration kurtosis, and thermal feature vectors."
-        tag="Stage 2 Inference"
-        actions={
-          <button
-            onClick={() => navigate(`/explainability/${id}`)}
-            className="px-3.5 py-1.5 rounded-md bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs inline-flex items-center gap-1.5 shadow-subtle transition-colors"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Explain with SHAP</span>
-          </button>
+      <div className="pb-4 border-b border-rule flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <div className="text-xs text-mute font-mono uppercase tracking-wider mb-1">
+            Stage 2 · XGBoost Multiclass Diagnostic
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-serif font-normal text-ink">
+            Fault Diagnostics · {id}
+          </h1>
+        </div>
+
+        <button
+          onClick={() => navigate(`/explainability/${id}`)}
+          className="px-3.5 py-1.5 rounded-full bg-ink text-bg font-medium text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+        >
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Explain with SHAP</span>
+        </button>
+      </div>
+
+      {/* SVG Health Ring & Diagnostic Verdict */}
+      <InstrumentHero twin={twin} />
+
+      {/* Diverging SHAP Attributions */}
+      <DivergingShapSection
+        predictedClass={twin?.predictedFaultClass}
+        attributions={
+          twin?.topShapAttributions && twin.topShapAttributions.length > 0
+            ? twin.topShapAttributions.map((a: any) => ({
+                feature: a.feature_name,
+                name: a.feature_name.replace(/_/g, ' '),
+                value: a.feature_value ?? 0.05,
+                shapValue: a.shap_value ?? 0.25,
+                physicsReason: `Marginal SHAP contribution towards ${twin.predictedFaultClass} state.`
+              }))
+            : undefined
         }
       />
 

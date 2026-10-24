@@ -12,10 +12,36 @@
     "Ridge_Baseline": {
       "mae_hours": 0.33101463036233286,
       "rmse_hours": 0.4627368698039222
+    },
+    "Mean_Baseline": {
+      "mae_hours": 12.0208,
+      "rmse_hours": 13.8917
     }
   },
   "test_sequences": 384,
   "held_out_runs": 4,
   "limitations": "Evaluated against simulated degradation trajectories; physical bench calibration required for real operating environments.",
-  "provenance": "Synthetic Simulation Degradation Trajectory"
+  "provenance": "Synthetic Simulation Degradation Trajectory",
+  "per_run_evaluation": {
+    "RUL_BRO_03": {
+      "sequences": 96,
+      "mae_hours": 0.2093,
+      "rmse_hours": 0.2632
+    },
+    "RUL_STA_03": {
+      "sequences": 96,
+      "mae_hours": 0.1885,
+      "rmse_hours": 0.2421
+    },
+    "RUL_BEA_03": {
+      "sequences": 96,
+      "mae_hours": 0.2453,
+      "rmse_hours": 0.3307
+    },
+    "RUL_AIR_03": {
+      "sequences": 96,
+      "mae_hours": 0.2367,
+      "rmse_hours": 0.3247
+    }
+  }
 }

@@ -111,11 +111,20 @@ public class DigitalTwinService {
             }
         }
 
-        // 4. Calculate Health Score
+        // 4. Calculate Health Score with EWMA smoothing
         double probHealthy = classProbs.getOrDefault("HEALTHY", 1.0);
         double tempPenalty = Math.max(0.0, (request.getTemperatureC() - 65.0) * 0.8);
-        double rawHealth = 100.0 - (anomalyScore * 35.0 + (1.0 - probHealthy) * 45.0 + tempPenalty);
-        double healthScore = Math.max(0.0, Math.min(100.0, Math.round(rawHealth * 10.0) / 10.0));
+        double rawHealth = Math.max(0.0, Math.min(100.0, 100.0 - (anomalyScore * 35.0 + (1.0 - probHealthy) * 45.0 + tempPenalty)));
+
+        MotorTwinState existingTwinState = twinStateRepository.findByMotorId(motorId).orElse(null);
+        double healthScore;
+        if (existingTwinState != null && existingTwinState.getHealthScore() > 0) {
+            double prevHealth = existingTwinState.getHealthScore();
+            // Alpha = 0.3 for monotonic, jitter-free EWMA smoothing
+            healthScore = Math.max(0.0, Math.min(100.0, Math.round((0.3 * rawHealth + 0.7 * prevHealth) * 10.0) / 10.0));
+        } else {
+            healthScore = Math.round(rawHealth * 10.0) / 10.0;
+        }
 
         // 5. Determine Operational State
         OperationalState operationalState;

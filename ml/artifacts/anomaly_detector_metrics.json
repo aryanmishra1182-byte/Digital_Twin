@@ -18,5 +18,18 @@
   "test_samples": 312,
   "healthy_samples": 24,
   "faulty_samples": 288,
-  "provenance": "Synthetic Simulation (IEEE Motor Benchmark)"
+  "provenance": "Synthetic Simulation (IEEE Motor Benchmark)",
+  "test_windows": 312,
+  "test_runs": 52,
+  "windows_per_run": 6,
+  "runs_per_split": {
+    "train": 104,
+    "val": 52,
+    "test": 52
+  },
+  "windows_per_split": {
+    "train": 624,
+    "val": 312,
+    "test": 312
+  }
 }

@@ -1,0 +1,11 @@
+{
+  "model": "PyTorch_Autoencoder",
+  "optimal_threshold_val": 0.1752,
+  "val_f1_at_threshold": 0.9384,
+  "test_precision": 0.939,
+  "test_recall": 0.9618,
+  "test_f1": 0.9503,
+  "test_roc_auc": 0.9018,
+  "test_windows": 312,
+  "training_samples_healthy_only": 48
+}

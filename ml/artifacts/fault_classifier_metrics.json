@@ -94,5 +94,18 @@
     "BEARING_DEFECT": 3,
     "AIR_GAP_ECCENTRICITY": 4
   },
-  "provenance": "Synthetic Simulation (IEEE Paper Spec 3kW 415V Motor)"
+  "provenance": "Synthetic Simulation (IEEE Paper Spec 3kW 415V Motor)",
+  "test_windows": 312,
+  "test_runs": 52,
+  "windows_per_run": 6,
+  "runs_per_split": {
+    "train": 104,
+    "val": 52,
+    "test": 52
+  },
+  "windows_per_split": {
+    "train": 624,
+    "val": 312,
+    "test": 312
+  }
 }

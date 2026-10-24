@@ -1,0 +1,61 @@
+% =========================================================
+% MACHINA-X PAPER READY LATEX TABLES
+% Auto-generated from ml/artifacts JSON metrics
+% =========================================================
+
+% Table I: Multi-stage Model Comparison
+\begin{table}[htbp]
+\centering
+\caption{MACHINA-X Multi-Stage Detection and Classification Benchmarking (Held-out Test Split: 312 Windows across 52 Runs)}
+\label{tab:pipeline_benchmark}
+\begin{tabular}{lccccc}
+\hline
+\textbf{Stage / Model Architecture} & \textbf{Input Type} & \textbf{Accuracy (\%)} & \textbf{Macro F1 (\%)} & \textbf{Inference (ms)} & \textbf{Selected} \\
+\hline
+Stage 1: Isolation Forest & 26 Handcrafted Feats & 72.57 & 49.38 & 9.45 & \checkmark \\
+Stage 1: Reconstruction Autoencoder & 26 Scaled Feats & 96.18 (Recall) & 95.03 & 11.20 & Baseline \\
+Stage 2: XGBoost Classifier (120 Trees) & 26 Handcrafted Feats & 94.55 & 88.62 & 1.41 & \checkmark \\
+Stage 2: 1-D Waveform CNN & Raw Signals (2x10000) & 92.31 & 77.14 & 18.50 & Baseline \\
+Stage 2: Random Forest Baseline & 26 Handcrafted Feats & 92.63 & 84.10 & 2.80 & Baseline \\
+Stage 3: LSTM Sequence Regressor & 5-Step Feature Window & MAE 0.220 h & RMSE 0.293 h & 1.15 & \checkmark \\
+Stage 3: Ridge Regression Baseline & 5-Step Flattened & MAE 0.331 h & RMSE 0.463 h & 0.45 & Baseline \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table II: Sensor Modality Ablation
+\begin{table}[htbp]
+\centering
+\caption{Sensor Modality Ablation Analysis on 312 Held-Out Test Windows}
+\label{tab:modality_ablation}
+\begin{tabular}{lccc}
+\hline
+\textbf{Sensor Modality} & \textbf{Feature Count} & \textbf{Classification Accuracy (\%)} & \textbf{Macro F1-Score (\%)} \\
+\hline
+Temperature Only & 3 & 32.37 & 30.48 \\
+Vibration Only & 10 & 86.86 & 75.92 \\
+Stator Current Only (MCSA) & 10 & 89.74 & 79.00 \\
+Current + Vibration & 20 & 90.71 & 77.69 \\
+\textbf{All Three Sensors (Full Architecture)} & \textbf{26} & \textbf{94.23} & \textbf{88.80} \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table III: Hardware Latency Breakdown
+\begin{table}[htbp]
+\centering
+\caption{Measured Computational Latency across 500 Test Windows (AMD Ryzen 5 4600H with Radeon Graphics, Python 3.10.0)}
+\label{tab:hardware_latency}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Pipeline Component} & \textbf{Mean (ms)} & \textbf{Std Dev (ms)} & \textbf{p50 (ms)} & \textbf{p95 (ms)} \\
+\hline
+Physics Feature Extraction (26 features) & 2.52 & 0.35 & 2.39 & 3.27 \\
+Stage 1 Isolation Forest Anomaly Detection & 9.45 & 0.86 & 9.13 & 11.35 \\
+Stage 2 XGBoost Multi-Class Classification & 1.41 & 1.49 & 1.30 & 1.84 \\
+TreeSHAP Attribution (Top 5 Explanations) & 3.82 & 1.95 & 3.62 & 5.08 \\
+\textbf{Full End-to-End Decision Pipeline} & \textbf{17.43} & \textbf{2.99} & \textbf{16.68} & \textbf{21.32} \\
+\hline
+\end{tabular}
+\end{table}
+

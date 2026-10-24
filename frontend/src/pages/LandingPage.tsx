@@ -33,36 +33,36 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-canvas text-slate-200 flex flex-col font-sans selection:bg-brand-500 selection:text-white">
+    <div className="min-h-screen bg-bg text-ink flex flex-col font-sans selection:bg-brand-500 selection:text-white">
       {/* Top Navigation Header */}
-      <header className="border-b border-panel-border/80 sticky top-0 z-50 bg-canvas/95 backdrop-blur-md">
+      <header className="border-b border-rule sticky top-0 z-50 bg-bg/95 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-brand-600/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
-              <Activity className="w-4 h-4" />
+            <div className="w-9 h-9 border border-ink flex items-center justify-center font-serif font-bold text-lg">
+              MX
             </div>
             <div>
-              <span className="font-bold text-sm text-slate-100 tracking-tight">MACHINA-X</span>
-              <span className="hidden sm:inline text-xs text-slate-400 ml-2">Explainable Digital Twin</span>
+              <span className="font-serif font-semibold text-base text-ink tracking-tight">MACHINA-X</span>
+              <span className="hidden sm:inline text-xs text-mute ml-2">Explainable Cyber-Physical Digital Twin</span>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/research')}
-              className="px-3 py-1.5 rounded text-xs font-medium text-slate-300 hover:text-white transition-colors"
+              className="px-3 py-1.5 rounded-full text-xs font-medium text-mute hover:text-ink transition-colors cursor-pointer"
             >
               Research Paper
             </button>
             <button
               onClick={() => navigate('/login')}
-              className="px-3.5 py-1.5 rounded border border-panel-border bg-surface hover:bg-surface-elevated text-xs font-medium text-slate-200 transition-colors"
+              className="px-3.5 py-1.5 rounded-full border border-rule bg-panel hover:bg-track text-xs font-medium text-ink transition-colors cursor-pointer"
             >
               Sign In
             </button>
             <button
               onClick={handleGuestEntry}
-              className="px-4 py-1.5 rounded bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-subtle transition-colors flex items-center gap-1.5"
+              className="px-4 py-1.5 rounded-full bg-ink text-bg text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <span>Explore Platform</span>
               <ArrowRight className="w-3 h-3" />
@@ -73,32 +73,32 @@ export const LandingPage: React.FC = () => {
 
       {/* Hero Section */}
       <section className="pt-16 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-surface border border-panel-border text-slate-300 mb-6">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-panel border border-rule text-mute mb-6 font-mono">
+          <span className="w-2 h-2 rounded-full bg-ok animate-pulse" />
           <span>Explainable Digital Twin Platform for Rotating Industrial Machinery</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-100 max-w-4xl leading-tight">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-normal text-ink max-w-4xl leading-[1.08]">
           Closed-Loop Physical Modeling meets Explainable Machine Learning
         </h1>
 
-        <p className="mt-5 text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed">
+        <p className="mt-5 text-base sm:text-lg text-mute max-w-2xl leading-relaxed font-sans">
           Monitor induction motors, detect incipient mechanical and electrical wear, forecast remaining useful life, and understand every prediction with game-theoretic SHAP explainability.
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
           <button
             onClick={handleGuestEntry}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold shadow-elevated transition-colors flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-ink text-bg text-sm font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>Launch Operator Workbench</span>
             <ArrowRight className="w-4 h-4" />
           </button>
           <button
             onClick={() => navigate('/research')}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-lg border border-panel-border bg-panel hover:bg-surface text-slate-200 text-sm font-medium transition-colors flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-rule bg-panel hover:bg-track text-ink text-sm font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
-            <FileText className="w-4 h-4 text-brand-400" />
+            <FileText className="w-4 h-4 text-mute" />
             <span>View Experimental Results</span>
           </button>
         </div>
