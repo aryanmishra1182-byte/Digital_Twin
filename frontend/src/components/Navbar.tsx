@@ -9,7 +9,10 @@ import {
   Sparkles,
   Server,
   Play,
-  Square
+  Square,
+  Radio,
+  SlidersHorizontal,
+  ChevronDown
 } from 'lucide-react';
 import { SimulatorStatus } from '../types';
 
@@ -30,85 +33,106 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const navItems = [
     { to: '/', label: 'Fleet Overview', icon: Layers },
-    { to: `/motor/${selectedMotorId}`, label: 'Motor Detail', icon: Activity },
-    { to: `/diagnosis/${selectedMotorId}`, label: 'Fault Diagnosis', icon: Cpu },
-    { to: `/explainability/${selectedMotorId}`, label: 'SHAP Explainability', icon: Sparkles },
-    { to: `/rul/${selectedMotorId}`, label: 'Remaining Useful Life', icon: Clock },
-    { to: '/alerts', label: 'Alerts & Maintenance', icon: AlertTriangle },
-    { to: '/status', label: 'Model & System Status', icon: Server }
+    { to: `/motor/${selectedMotorId}`, label: 'Live Telemetry', icon: Activity },
+    { to: `/diagnosis/${selectedMotorId}`, label: 'Fault Diagnostics', icon: Cpu },
+    { to: `/explainability/${selectedMotorId}`, label: 'SHAP Attribution', icon: Sparkles },
+    { to: `/rul/${selectedMotorId}`, label: 'Remaining Life (RUL)', icon: Clock },
+    { to: '/alerts', label: 'Maintenance Alerts', icon: AlertTriangle },
+    { to: '/status', label: 'Models & Provenance', icon: Server }
   ];
 
+  const scenarioLabels: Record<string, string> = {
+    HEALTHY: 'Healthy Baseline',
+    BROKEN_ROTOR_BAR: 'Broken Rotor Bar',
+    STATOR_INTER_TURN_SHORT: 'Stator Turn Short',
+    BEARING_DEFECT: 'Bearing Defect',
+    AIR_GAP_ECCENTRICITY: 'Air-Gap Eccentricity'
+  };
+
   return (
-    <header className="bg-[#111827] border-b border-[#243247] sticky top-0 z-50">
+    <header className="bg-canvas border-b border-panel-border/80 sticky top-0 z-40 backdrop-blur-md bg-opacity-95">
+      {/* Top Utility Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo & Title */}
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-mono font-bold text-lg">
-              DT
+        <div className="flex items-center justify-between h-14 border-b border-panel-border/40">
+          {/* Brand Identity */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-md bg-brand-600/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+              <Activity className="w-4 h-4 stroke-[2.2]" />
             </div>
-            <div>
-              <div className="font-bold text-slate-100 text-sm tracking-wide flex items-center gap-2">
-                EXPLAINABLE DIGITAL TWIN
-                <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
-                  IEEE 3kW Motor
-                </span>
-              </div>
-              <div className="text-xs text-slate-400">Predictive Maintenance Framework</div>
+            <div className="flex items-baseline gap-2">
+              <span className="font-semibold text-sm tracking-tight text-slate-100">
+                TwinSync
+              </span>
+              <span className="hidden sm:inline text-xs text-slate-400 font-normal">
+                Induction Motor Digital Twin
+              </span>
+              <span className="hidden md:inline font-mono text-[10px] text-slate-400 px-1.5 py-0.2 border border-panel-border rounded bg-surface">
+                IEEE 3kW · 415V
+              </span>
             </div>
           </div>
 
-          {/* Center Motor Selector & Simulator Quick Action */}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center bg-[#182235] rounded-lg px-3 py-1.5 border border-[#243247] text-xs">
-              <span className="text-slate-400 mr-2 font-mono">ASSET:</span>
+          {/* Right Controls: Asset Selector & Simulator Workbench */}
+          <div className="flex items-center gap-2.5">
+            {/* Asset Selector */}
+            <div className="relative flex items-center bg-panel border border-panel-border rounded-md px-2.5 py-1 text-xs transition-colors hover:border-panel-border-strong">
+              <span className="text-[10px] uppercase font-mono text-slate-400 mr-2">Asset:</span>
               <select
+                aria-label="Select Monitored Motor Asset"
                 value={selectedMotorId}
                 onChange={(e) => onSelectMotor(e.target.value)}
-                className="bg-transparent text-slate-200 font-semibold focus:outline-none cursor-pointer"
+                className="bg-transparent text-slate-200 font-mono font-medium focus:outline-none cursor-pointer pr-4 appearance-none"
               >
-                <option value="MOTOR-001" className="bg-[#182235]">MOTOR-001 (Feed Pump)</option>
-                <option value="MOTOR-002" className="bg-[#182235]">MOTOR-002 (Cooling Fan)</option>
+                <option value="MOTOR-001" className="bg-panel text-slate-200">MOTOR-001 (Feed Pump)</option>
+                <option value="MOTOR-002" className="bg-panel text-slate-200">MOTOR-002 (Cooling Fan)</option>
               </select>
+              <ChevronDown className="w-3 h-3 text-slate-400 absolute right-2 pointer-events-none" />
             </div>
 
-            {/* Simulator Pill */}
-            <div className="flex items-center space-x-2">
+            {/* Live Telemetry / Simulator Status */}
+            <div className="flex items-center gap-1.5">
               <button
                 onClick={onOpenSimulator}
-                className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                title="Configure Telemetry Simulator Parameters"
+                className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-xs font-medium border transition-all ${
                   simulatorStatus?.isRunning
-                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
-                    : 'bg-[#182235] border-[#243247] text-slate-300 hover:border-slate-500'
+                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-300 hover:bg-amber-500/20'
+                    : 'bg-panel border-panel-border text-slate-300 hover:border-panel-border-strong'
                 }`}
               >
                 <span
                   className={`w-2 h-2 rounded-full ${
-                    simulatorStatus?.isRunning ? 'bg-amber-400 animate-pulse' : 'bg-slate-500'
+                    simulatorStatus?.isRunning ? 'bg-amber-400 animate-pulse' : 'bg-emerald-500'
                   }`}
                 />
-                <span>
-                  Sim: {simulatorStatus?.isRunning ? `${simulatorStatus.scenario}` : 'Idle'}
+                <span className="hidden sm:inline font-mono text-[11px]">
+                  {simulatorStatus?.isRunning
+                    ? `Sim: ${scenarioLabels[simulatorStatus.scenario] || simulatorStatus.scenario}`
+                    : 'Telemetry: Live'}
                 </span>
+                <span className="sm:hidden font-mono text-[11px]">
+                  {simulatorStatus?.isRunning ? 'Sim Active' : 'Live'}
+                </span>
+                <SlidersHorizontal className="w-3 h-3 text-slate-400" />
               </button>
 
               <button
                 onClick={onToggleSimulator}
-                title={simulatorStatus?.isRunning ? 'Stop Simulator' : 'Start Simulator'}
-                className={`p-1.5 rounded-lg border text-xs font-semibold flex items-center justify-center transition-colors ${
+                title={simulatorStatus?.isRunning ? 'Pause Telemetry Simulator' : 'Start Telemetry Simulation'}
+                className={`p-1.5 rounded-md border text-xs font-semibold flex items-center justify-center transition-all ${
                   simulatorStatus?.isRunning
-                    ? 'bg-rose-500/20 border-rose-500/40 text-rose-300 hover:bg-rose-500/30'
-                    : 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30'
+                    ? 'bg-rose-950/40 border-rose-800/60 text-rose-300 hover:bg-rose-900/50'
+                    : 'bg-emerald-950/40 border-emerald-800/60 text-emerald-300 hover:bg-emerald-900/50'
                 }`}
               >
-                {simulatorStatus?.isRunning ? <Square className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                {simulatorStatus?.isRunning ? <Square className="w-3 h-3" /> : <Play className="w-3 h-3" />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <nav className="flex space-x-1 overflow-x-auto pb-2 scrollbar-none">
+        {/* Primary Navigation Tabs */}
+        <nav className="flex space-x-1 sm:space-x-2 overflow-x-auto py-2 -mb-px scrollbar-none">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -116,14 +140,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex items-center space-x-2 px-3 py-2 rounded-md text-xs font-medium whitespace-nowrap transition-colors ${
+                  `inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all ${
                     isActive
-                      ? 'bg-sky-500/15 text-sky-400 border border-sky-500/30'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                      ? 'bg-surface text-slate-100 font-semibold border border-panel-border shadow-subtle'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-surface/50 border border-transparent'
                   }`
                 }
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-200" />
                 <span>{item.label}</span>
               </NavLink>
             );

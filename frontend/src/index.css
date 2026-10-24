@@ -3,28 +3,48 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-[#0b0f17] text-slate-200 antialiased font-sans selection:bg-sky-500 selection:text-white;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  :root {
+    color-scheme: dark;
   }
-  
-  code, pre {
+
+  body {
+    @apply bg-canvas text-slate-200 antialiased font-sans selection:bg-brand-500 selection:text-white;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
+    font-feature-settings: "tnum" 1, "zero" 1;
   }
 }
 
-/* Custom scrollbars */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #090d16;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 3px;
+  background: #1e293b;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #334155;
+}
+
+/* Recharts Custom Dark Tooltip */
+.custom-recharts-tooltip {
+  @apply bg-panel border border-panel-border rounded-lg px-3 py-2 text-xs shadow-elevated;
+  backdrop-filter: blur(8px);
+}
+
+/* Animation utilities */
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-subtle {
+  animation: pulseSubtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

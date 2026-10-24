@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { Navbar } from './components/Navbar';
@@ -76,7 +76,7 @@ function DashboardContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f17] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-canvas text-slate-200 flex flex-col font-sans">
       <Navbar
         simulatorStatus={simStatus}
         selectedMotorId={selectedMotorId}
@@ -132,8 +132,17 @@ function DashboardContent() {
         </Routes>
       </main>
 
-      <footer className="border-t border-[#243247]/60 py-4 bg-[#111827] text-center text-xs text-slate-500">
-        Explainable Digital Twin Framework for Three-Phase Induction Motors | IEEE Research Specification
+      <footer className="border-t border-panel-border/60 py-4 bg-canvas-subtle text-center text-xs text-slate-400">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-slate-300">TwinSync</span>
+            <span>·</span>
+            <span>Explainable Digital Twin Framework</span>
+          </div>
+          <div className="text-[11px] text-slate-400">
+            IEEE Research Specification · Aditya Gupta, Aditya Maurya, Ananya Sharma, Aryan Mishra
+          </div>
+        </div>
       </footer>
 
       <SimulatorModal

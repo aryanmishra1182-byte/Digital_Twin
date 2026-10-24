@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Play, Square, Activity, AlertCircle } from 'lucide-react';
+import { X, Play, Square, Activity, Info, Sliders, Zap, Thermometer } from 'lucide-react';
 import { SimulatorStatus } from '../types';
 
 interface SimulatorModalProps {
@@ -12,11 +12,36 @@ interface SimulatorModalProps {
 }
 
 const SCENARIOS = [
-  { id: 'HEALTHY', name: 'Healthy Operation (Normal)', desc: 'Nominal 50 Hz fundamental current, low vibration, steady temp' },
-  { id: 'BROKEN_ROTOR_BAR', name: 'Broken Rotor Bar', desc: 'Current sidebands at fs*(1 +/- 2s) ~ 46 Hz and 54 Hz' },
-  { id: 'STATOR_INTER_TURN_SHORT', name: 'Stator Turn Short', desc: 'Elevated 3rd harmonic (150 Hz), negative sequence, hotspot heating' },
-  { id: 'BEARING_DEFECT', name: 'Bearing Race Defect', desc: 'Impulsive vibration at BPFO (~80 Hz) and BPFI, high kurtosis' },
-  { id: 'AIR_GAP_ECCENTRICITY', name: 'Air-Gap Eccentricity', desc: '1x shaft rotational vibration, fs +/- fr current sidebands' },
+  {
+    id: 'HEALTHY',
+    name: 'Healthy Baseline',
+    desc: 'Pure 50 Hz fundamental stator current, nominal vibration (<0.3 mm/s RMS), thermal equilibrium.',
+    physics: 'fs = 50.0 Hz, slip s ≈ 0.04'
+  },
+  {
+    id: 'BROKEN_ROTOR_BAR',
+    name: 'Broken Rotor Bar',
+    desc: 'Motor current signature analysis (MCSA) sidebands appear around fundamental.',
+    physics: 'f_br = fs(1 ± 2s) → ~46.0 Hz and ~54.0 Hz'
+  },
+  {
+    id: 'STATOR_INTER_TURN_SHORT',
+    name: 'Stator Turn Short',
+    desc: 'Localized insulation breakdown causing 3rd harmonic current distortion and thermal rise.',
+    physics: '3rd harmonic (150 Hz), ΔT > 25°C rise'
+  },
+  {
+    id: 'BEARING_DEFECT',
+    name: 'Bearing Race Defect',
+    desc: 'Impulsive vibration shocks as rolling elements pass flaked raceways.',
+    physics: 'BPFO (~80 Hz), kurtosis > 3.0'
+  },
+  {
+    id: 'AIR_GAP_ECCENTRICITY',
+    name: 'Air-Gap Eccentricity',
+    desc: 'Rotor-stator asymmetry inducing 1x shaft rotational speed vibration and flux distortion.',
+    physics: 'fr = 24.0 Hz shaft harmonic'
+  },
 ];
 
 export const SimulatorModal: React.FC<SimulatorModalProps> = ({
@@ -39,89 +64,113 @@ export const SimulatorModal: React.FC<SimulatorModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="bg-[#151d2e] border border-[#243247] rounded-xl max-w-lg w-full shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 sm:p-6 overflow-y-auto">
+      <div className="bg-panel border border-panel-border rounded-xl max-w-xl w-full shadow-elevated overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#243247] bg-[#111827]">
-          <div className="flex items-center space-x-2">
-            <Activity className="w-5 h-5 text-sky-400" />
-            <h3 className="font-semibold text-slate-100 text-sm">Motor Telemetry Simulator Panel</h3>
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-panel-border bg-canvas-subtle">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+              <Activity className="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-100 text-sm">Telemetry Signal Generator</h3>
+              <p className="text-[11px] text-slate-400">10 kHz Physics-Guided Sensor Streamer</p>
+            </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-200">
-            <X className="w-5 h-5" />
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-200 p-1 rounded hover:bg-surface transition-colors"
+          >
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Body */}
-        <div className="p-6 space-y-5">
-          {/* Status Banner */}
-          <div className={`p-3 rounded-lg border flex items-center justify-between text-xs ${
+        <div className="p-5 space-y-4 text-xs">
+          {/* Active Status Ribbon */}
+          <div className={`p-3 rounded-lg border flex items-center justify-between ${
             status?.isRunning
-              ? 'bg-amber-500/10 border-amber-500/30 text-amber-200'
-              : 'bg-slate-800/40 border-slate-700/50 text-slate-400'
+              ? 'bg-amber-950/20 border-amber-800/40 text-amber-200'
+              : 'bg-surface/60 border-panel-border text-slate-400'
           }`}>
-            <div className="flex items-center space-x-2">
-              <span className={`w-2.5 h-2.5 rounded-full ${status?.isRunning ? 'bg-amber-400 animate-pulse' : 'bg-slate-500'}`} />
-              <span className="font-medium">
+            <div className="flex items-center gap-2">
+              <span className={`w-2 h-2 rounded-full ${status?.isRunning ? 'bg-amber-400 animate-pulse' : 'bg-slate-500'}`} />
+              <span className="font-medium text-slate-200">
                 {status?.isRunning
-                  ? `Active Scenario: ${status.scenario} (${status.ticksEmitted} windows emitted)`
-                  : 'Simulator is currently Idle'}
+                  ? `Simulating ${status.scenario} on ${status.motorId}`
+                  : 'Engine is idle'}
               </span>
             </div>
             {status?.isRunning && (
-              <span className="font-mono text-amber-300">Temp: {status.currentTempC}°C</span>
+              <div className="flex items-center gap-3 font-mono text-[11px]">
+                <span className="text-slate-400">{status.ticksEmitted} windows</span>
+                <span className="text-amber-300 font-semibold">{status.currentTempC.toFixed(1)}°C</span>
+              </div>
             )}
           </div>
 
-          {/* Motor Select */}
+          {/* Motor Target Selector */}
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1.5">Target Motor Asset</label>
-            <select
-              value={motorId}
-              onChange={(e) => setMotorId(e.target.value)}
-              className="w-full bg-[#182235] border border-[#243247] rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
-            >
-              <option value="MOTOR-001">MOTOR-001 (Primary Feed Pump - 3kW)</option>
-              <option value="MOTOR-002">MOTOR-002 (Cooling Fan Drive - 3kW)</option>
-            </select>
-          </div>
-
-          {/* Fault Scenario */}
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1.5">Fault Injection Scenario</label>
-            <div className="space-y-2">
-              {SCENARIOS.map((sc) => (
-                <label
-                  key={sc.id}
-                  className={`flex items-start p-2.5 rounded-lg border cursor-pointer transition-colors ${
-                    scenario === sc.id
-                      ? 'bg-sky-500/15 border-sky-500/50 text-slate-100'
-                      : 'bg-[#182235]/60 border-[#243247] text-slate-300 hover:border-slate-600'
+            <label className="block text-[11px] font-medium uppercase tracking-wider text-slate-400 mb-1.5">
+              Target Asset Replica
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {['MOTOR-001', 'MOTOR-002'].map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setMotorId(id)}
+                  className={`px-3 py-2 rounded-lg border text-left transition-all ${
+                    motorId === id
+                      ? 'bg-brand-600/10 border-brand-500/50 text-slate-100 font-medium'
+                      : 'bg-surface/40 border-panel-border text-slate-400 hover:border-panel-border-strong hover:text-slate-300'
                   }`}
                 >
-                  <input
-                    type="radio"
-                    name="scenario"
-                    value={sc.id}
-                    checked={scenario === sc.id}
-                    onChange={(e) => setScenario(e.target.value)}
-                    className="mt-0.5 mr-2.5 text-sky-500 focus:ring-0"
-                  />
-                  <div>
-                    <div className="font-medium text-xs">{sc.name}</div>
-                    <div className="text-[11px] text-slate-400">{sc.desc}</div>
+                  <div className="font-mono text-xs text-slate-200">{id}</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">
+                    {id === 'MOTOR-001' ? 'Line A - Feed Pump' : 'Unit 2 - Cooling Fan'}
                   </div>
-                </label>
+                </button>
               ))}
             </div>
           </div>
 
-          {/* Severity & Load Controls */}
-          {scenario !== 'HEALTHY' && (
-            <div>
-              <div className="flex justify-between text-xs mb-1.5">
-                <span className="text-slate-300 font-medium">Fault Severity Level</span>
-                <span className="text-sky-400 font-mono font-semibold">{Math.round(severity * 100)}%</span>
+          {/* Scenario Selector */}
+          <div>
+            <label className="block text-[11px] font-medium uppercase tracking-wider text-slate-400 mb-1.5">
+              Fault Injection Mode
+            </label>
+            <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+              {SCENARIOS.map((sc) => (
+                <div
+                  key={sc.id}
+                  onClick={() => setScenario(sc.id)}
+                  className={`p-2.5 rounded-lg border cursor-pointer transition-all ${
+                    scenario === sc.id
+                      ? 'bg-brand-600/10 border-brand-500/50 text-slate-100'
+                      : 'bg-surface/30 border-panel-border text-slate-400 hover:bg-surface/60 hover:text-slate-300'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-xs text-slate-200">{sc.name}</span>
+                    <span className="font-mono text-[10px] text-brand-400 px-1.5 py-0.5 rounded bg-brand-950/40 border border-brand-800/40">
+                      {sc.physics}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">{sc.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Fault Severity & Load Controls */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div className="bg-surface/40 border border-panel-border rounded-lg p-3">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[11px] font-medium text-slate-300">Fault Severity</span>
+                <span className="font-mono text-xs font-semibold text-brand-400">
+                  {(severity * 100).toFixed(0)}%
+                </span>
               </div>
               <input
                 type="range"
@@ -130,59 +179,67 @@ export const SimulatorModal: React.FC<SimulatorModalProps> = ({
                 step="0.05"
                 value={severity}
                 onChange={(e) => setSeverity(parseFloat(e.target.value))}
-                className="w-full accent-sky-500 cursor-pointer"
+                className="w-full accent-brand-500 cursor-pointer h-1.5 bg-panel-border rounded-lg"
               />
+              <div className="flex justify-between text-[10px] text-slate-400 mt-1 font-mono">
+                <span>Incipient (10%)</span>
+                <span>Critical (100%)</span>
+              </div>
             </div>
-          )}
 
-          <div>
-            <div className="flex justify-between text-xs mb-1.5">
-              <span className="text-slate-300 font-medium">Operating Load Point</span>
-              <span className="text-sky-400 font-mono font-semibold">{loadPct}%</span>
-            </div>
-            <div className="grid grid-cols-4 gap-2">
-              {[25, 50, 75, 100].map((ld) => (
-                <button
-                  key={ld}
-                  type="button"
-                  onClick={() => setLoadPct(ld)}
-                  className={`py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-                    loadPct === ld
-                      ? 'bg-sky-500/20 border-sky-500 text-sky-300'
-                      : 'bg-[#182235] border-[#243247] text-slate-400 hover:border-slate-600'
-                  }`}
-                >
-                  {ld}%
-                </button>
-              ))}
+            <div className="bg-surface/40 border border-panel-border rounded-lg p-3">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[11px] font-medium text-slate-300">Operating Load</span>
+                <span className="font-mono text-xs font-semibold text-brand-400">
+                  {loadPct}%
+                </span>
+              </div>
+              <div className="grid grid-cols-4 gap-1 mt-1">
+                {[25, 50, 75, 100].map((l) => (
+                  <button
+                    key={l}
+                    type="button"
+                    onClick={() => setLoadPct(l)}
+                    className={`py-1 rounded font-mono text-[11px] border transition-colors ${
+                      loadPct === l
+                        ? 'bg-brand-600 text-white border-brand-500 font-semibold'
+                        : 'bg-panel border-panel-border text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    {l}%
+                  </button>
+                ))}
+              </div>
+              <div className="text-[10px] text-slate-400 mt-1.5 text-center">
+                Rated 3kW Shaft Load
+              </div>
             </div>
           </div>
         </div>
 
         {/* Footer Actions */}
-        <div className="px-6 py-4 bg-[#111827] border-t border-[#243247] flex items-center justify-between">
-          <div className="flex items-center text-[11px] text-slate-400">
-            <AlertCircle className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
-            Synthesizes 10 kHz current & vibration streams
+        <div className="px-5 py-3.5 border-t border-panel-border bg-canvas-subtle flex items-center justify-between gap-3">
+          <div className="text-[11px] text-slate-400">
+            Synthesizes 10,000 samples/sec
           </div>
-          <div className="flex space-x-3">
-            {status?.isRunning ? (
+          <div className="flex items-center gap-2">
+            {status?.isRunning && (
               <button
+                type="button"
                 onClick={onStop}
-                className="flex items-center space-x-1.5 px-4 py-2 rounded-lg bg-rose-500/20 border border-rose-500/40 text-rose-300 hover:bg-rose-500/30 text-xs font-semibold"
+                className="px-3.5 py-1.5 rounded-lg border border-rose-800/60 bg-rose-950/40 text-rose-300 hover:bg-rose-900/40 font-medium text-xs inline-flex items-center gap-1.5 transition-colors"
               >
-                <Square className="w-3.5 h-3.5" />
-                <span>Stop Stream</span>
-              </button>
-            ) : (
-              <button
-                onClick={handleStart}
-                className="flex items-center space-x-1.5 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold shadow-lg shadow-sky-600/30"
-              >
-                <Play className="w-3.5 h-3.5" />
-                <span>Start Scenario</span>
+                <Square className="w-3 h-3" /> Stop Stream
               </button>
             )}
+            <button
+              type="button"
+              onClick={handleStart}
+              className="px-4 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs inline-flex items-center gap-1.5 shadow-subtle transition-colors"
+            >
+              <Play className="w-3 h-3 fill-white" />
+              {status?.isRunning ? 'Update & Re-inject' : 'Inject Telemetry'}
+            </button>
           </div>
         </div>
       </div>
