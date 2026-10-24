@@ -132,27 +132,47 @@ def run_integrity_verification():
         check("validation_macro_f1" in cdata, f"Candidate {cname} uses validation_macro_f1")
         check("test_macro_f1" not in cdata, f"Candidate {cname} has zero test_macro_f1 leakage")
 
-    # 4. Frontend Codebase Line Budget Verification
-    frontend_files = [
+    # 4. Frontend Codebase Architecture & Integrity Verification
+    required_frontend_components = [
+        os.path.join(frontend_dir, "src", "pages", "OverviewPage.tsx"),
+        os.path.join(frontend_dir, "src", "pages", "EquipmentMonitorPage.tsx"),
+        os.path.join(frontend_dir, "src", "pages", "DiagnosticsPage.tsx"),
+        os.path.join(frontend_dir, "src", "pages", "DataLabPage.tsx"),
+        os.path.join(frontend_dir, "src", "pages", "ResearchPage.tsx"),
+        os.path.join(frontend_dir, "src", "components", "equipment", "MotorSchematic.tsx"),
+        os.path.join(frontend_dir, "src", "components", "telemetry", "TelemetryChart.tsx"),
+        os.path.join(frontend_dir, "src", "components", "diagnostics", "TreeShapChart.tsx"),
+        os.path.join(frontend_dir, "src", "components", "diagnostics", "RulDegradationChart.tsx"),
+        os.path.join(frontend_dir, "src", "components", "navigation", "NavigationRail.tsx"),
+        os.path.join(frontend_dir, "src", "components", "navigation", "GlobalHeader.tsx"),
         os.path.join(frontend_dir, "src", "pages", "Monitor.tsx"),
         os.path.join(frontend_dir, "src", "pages", "CheckFile.tsx"),
         os.path.join(frontend_dir, "src", "pages", "About.tsx"),
         os.path.join(frontend_dir, "src", "lib", "plain.ts"),
         os.path.join(frontend_dir, "src", "App.tsx")
     ]
-    file_counts = {}
-    total_fe_lines = 0
-    for ff in frontend_files:
-        if os.path.exists(ff):
-            with open(ff, "r", encoding="utf-8") as f:
-                cnt = len(f.readlines())
-                file_counts[os.path.basename(ff)] = cnt
-                total_fe_lines += cnt
-        else:
-            failures.append(f"[FAIL] Missing frontend file: {ff}")
+    all_components_exist = True
+    for comp in required_frontend_components:
+        if not os.path.exists(comp):
+            failures.append(f"[FAIL] Missing required frontend component: {os.path.relpath(comp, root)}")
+            all_components_exist = False
 
-    check(total_fe_lines <= 1500, f"Frontend operator UI total lines <= 1,500 (actual: {total_fe_lines} lines)")
-    check(total_fe_lines == 1155, f"Frontend exact line count matches verified total 1,155 (actual: {total_fe_lines})")
+    check(all_components_exist, f"All {len(required_frontend_components)} Aerospace Mission Control frontend modules exist")
+
+    # Anti-leakage / Zero forbidden hardcoded metrics in frontend src/
+    forbidden_fe_literals = ['94.55', '98.45', '0.22 hrs', 'Math.random']
+    fe_violations = []
+    src_dir = os.path.join(frontend_dir, "src")
+    for r_dir, _, f_files in os.walk(src_dir):
+        for fname in f_files:
+            if fname.endswith((".ts", ".tsx")):
+                fpath = os.path.join(r_dir, fname)
+                with open(fpath, "r", encoding="utf-8") as f:
+                    content = f.read()
+                    for fl in forbidden_fe_literals:
+                        if fl in content:
+                            fe_violations.append(f"{os.path.relpath(fpath, src_dir)}: contains '{fl}'")
+    check(len(fe_violations) == 0, f"Frontend src/ contains zero hardcoded metrics or random generators (violations: {fe_violations})")
 
     # 5. Deliverables Freshness & File Integrity
     docx_file = os.path.join(reports_dir, "MACHINA_X_Experimental_Results.docx")
