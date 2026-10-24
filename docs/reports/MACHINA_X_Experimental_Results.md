@@ -136,20 +136,20 @@ TreeSHAP global attribution ($	ext{mean}(|\phi_i|)$ across test samples):
 To verify statistical stability and cross-load transfer, two robustness experiments were conducted:
 
 #### A. Multi-Seed Stability (5 Independent Seeds: [42, 101, 2024, 7, 999])
-- **Stage 2 Classifier Accuracy**: **94.87% ± 0.83%**
-- **Stage 2 Macro F1-Score**: **0.9001 ± 0.0170**
-- **Stage 1 Anomaly F1-Score**: **0.1139 ± 0.0063**
+- **Stage 2 Classifier Accuracy**: **95.30% ± 0.71%**
+- **Stage 2 Macro F1-Score**: **0.9528 ± 0.0071**
+- **Stage 1 Anomaly F1-Score**: **0.1213 ± 0.0096**
 
 #### B. Leave-One-Load-Out (LOLO) Generalization
 Models trained on three load regimes and tested on the held-out load level:
 
 | Held-Out Load Level | Training Load Levels | Generalization Accuracy | Generalization Macro F1 |
 | :---: | :---: | :---: | :---: |
-| **25% Rated Load** | 50%, 75%, 100% | 67.31% | 0.6104 |
-| **50% Rated Load** | 25%, 75%, 100% | 67.31% | 0.5327 |
-| **75% Rated Load** | 25%, 50%, 100% | 75.64% | 0.7220 |
-| **100% Rated Load** | 25%, 50%, 75% | 73.08% | 0.5835 |
-| **Mean Across Loads** | — | **70.83%** | **0.6121** |
+| **25% Rated Load** | 50%, 75%, 100% | 65.28% | 0.5981 |
+| **50% Rated Load** | 25%, 75%, 100% | 60.80% | 0.5221 |
+| **75% Rated Load** | 25%, 50%, 100% | 69.16% | 0.6620 |
+| **100% Rated Load** | 25%, 50%, 75% | 86.44% | 0.8464 |
+| **Mean Across Loads** | — | **70.42%** | **0.6572** |
 
 ---
 
@@ -179,13 +179,13 @@ Inference latencies were directly timed over **500 consecutive 1-second operatio
 
 | Pipeline Stage | Mean Latency | Median (p50) | 95th Percentile (p95) | 99th Percentile (p99) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Feature Extraction (26 features)** | 2.52 ms | 2.39 ms | 3.27 ms | 3.88 ms |
-| **Stage 1: Isolation Forest Filter** | 9.45 ms | 9.13 ms | 11.35 ms | 12.31 ms |
-| **Stage 2: XGBoost Classifier** | 1.41 ms | 1.30 ms | 1.84 ms | 2.21 ms |
-| **Stage 4: TreeSHAP Attribution** | 3.82 ms | 3.62 ms | 5.08 ms | 6.40 ms |
-| **Full End-to-End Ingestion Path** | **17.43 ms** | **16.68 ms** | **21.32 ms** | **26.10 ms** |
+| **Feature Extraction (26 features)** | 2.75 ms | 2.66 ms | 3.47 ms | 3.93 ms |
+| **Stage 1: Isolation Forest Filter** | 10.90 ms | 10.71 ms | 12.02 ms | 15.36 ms |
+| **Stage 2: XGBoost Classifier** | 1.17 ms | 1.04 ms | 1.70 ms | 2.10 ms |
+| **Stage 4: TreeSHAP Attribution** | 4.80 ms | 4.67 ms | 6.06 ms | 7.32 ms |
+| **Full End-to-End Ingestion Path** | **32.80 ms** | **31.87 ms** | **38.00 ms** | **46.82 ms** |
 
-Because full pipeline latency (mean 17.43 ms, p95 21.32 ms) is substantially below the 1,000 ms acquisition window, MACHINA-X comfortably executes real-time streaming inference without telemetry backpressure.
+Because full pipeline latency (mean 32.80 ms, p95 38.00 ms) is substantially below the 1,000 ms acquisition window, MACHINA-X comfortably executes real-time streaming inference without telemetry backpressure.
 
 ---
 

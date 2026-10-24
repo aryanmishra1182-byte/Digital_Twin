@@ -46,3 +46,28 @@ def test_dataset_generation_and_leakage_prevention(tmp_path):
 
     # 4. Check all 5 classes are represented
     assert len(df["fault_class"].unique()) == 5
+
+    # 5. Check metadata counts are non-zero and match partition rows
+    assert meta["total_samples"] > 0
+    assert meta["train_samples"] > 0
+    assert meta["val_samples"] > 0
+    assert meta["test_samples"] > 0
+    assert meta["total_samples"] == meta["train_samples"] + meta["val_samples"] + meta["test_samples"]
+    assert meta["train_samples"] == len(df[df["split"] == "train"])
+    assert meta["val_samples"] == len(df[df["split"] == "val"])
+    assert meta["test_samples"] == len(df[df["split"] == "test"])
+
+
+def test_processed_dataset_metadata_integrity():
+    """Verify that existing production data/processed/dataset_metadata.json reports non-zero counts."""
+    meta_path = os.path.join(os.path.dirname(__file__), "..", "data", "processed", "dataset_metadata.json")
+    if os.path.exists(meta_path):
+        import json
+        with open(meta_path, "r", encoding="utf-8") as f:
+            meta = json.load(f)
+        assert meta.get("total_samples", 0) > 0, "Dataset total_samples must be non-zero"
+        assert meta.get("train_samples", 0) > 0, "Dataset train_samples must be non-zero"
+        assert meta.get("val_samples", 0) > 0, "Dataset val_samples must be non-zero"
+        assert meta.get("test_samples", 0) > 0, "Dataset test_samples must be non-zero"
+        assert meta.get("total_runs", 0) > 0, "Dataset total_runs must be non-zero"
+

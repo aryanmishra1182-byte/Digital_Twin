@@ -1,5 +1,5 @@
 {
-  "selection_rule_timestamp": "2026-10-24T10:57:25.833827+00:00",
+  "selection_rule_timestamp": "2026-10-24T12:21:39.335296+00:00",
   "algorithmic_criteria": {
     "f1_tolerance_band": 0.02,
     "latency_metric": "mean_ms",
@@ -8,9 +8,9 @@
   "stage_1_anomaly_detection": {
     "candidate_models": {
       "IsolationForest": {
-        "f1_score": 0.8855388051367951,
-        "precision": 0.8002018163471241,
-        "recall": 0.99125,
+        "f1_score": 0.8209989063069631,
+        "precision": 0.9851268591426072,
+        "recall": 0.70375,
         "roc_auc": 0.8461140624999999,
         "mean_latency_ms": 10.9,
         "p50_latency_ms": 10.706,
@@ -29,7 +29,7 @@
       }
     },
     "selected_model": "IsolationForest",
-    "decision_reasoning": "Isolation Forest achieved F1=0.8855 and Recall=0.9912 on held-out windows. It is selected as the production filter because it does not require deep learning framework dependencies on industrial edge nodes."
+    "decision_reasoning": "Isolation Forest achieved F1=0.8210, Precision=0.9851, and Recall=0.7037 with controlled FPR <= 5%. It is selected as the production filter because it does not require deep learning framework dependencies on industrial edge nodes."
   },
   "stage_2_fault_classification": {
     "candidate_models": {

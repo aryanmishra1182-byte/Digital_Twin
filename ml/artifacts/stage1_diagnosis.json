@@ -1,0 +1,342 @@
+{
+  "model": "IsolationForest",
+  "threshold": 0.0020079591157951215,
+  "threshold_criterion": "Youden's J statistic on Validation Split",
+  "test_windows": 2000,
+  "overall_fpr": 0.0425,
+  "overall_fault_recall": 0.70375,
+  "by_fault_class": {
+    "AIR_GAP_ECCENTRICITY": {
+      "count": 400,
+      "score_mean": 0.06270708228106069,
+      "score_std": 0.02529673153138898,
+      "score_p25": 0.04933692916183777,
+      "score_p50": 0.06901055018656865,
+      "score_p75": 0.08083986132609658,
+      "score_min": -0.021752137235030222,
+      "score_max": 0.11360954177168425,
+      "detection_rate": 0.9875,
+      "flagged_anomalous": 395
+    },
+    "BEARING_DEFECT": {
+      "count": 400,
+      "score_mean": -0.02799633897274375,
+      "score_std": 0.041512467510909104,
+      "score_p25": -0.05405893909800916,
+      "score_p50": -0.04064818059524186,
+      "score_p75": -0.019354934753022163,
+      "score_min": -0.08810970991339595,
+      "score_max": 0.11647135710483192,
+      "detection_rate": 0.14,
+      "flagged_anomalous": 56
+    },
+    "BROKEN_ROTOR_BAR": {
+      "count": 400,
+      "score_mean": 0.026676297624568534,
+      "score_std": 0.038679699465977366,
+      "score_p25": -0.0013151810709164102,
+      "score_p50": 0.032824116686098415,
+      "score_p75": 0.05682000009821769,
+      "score_min": -0.07637723176281958,
+      "score_max": 0.10333408167004121,
+      "detection_rate": 0.7275,
+      "flagged_anomalous": 291
+    },
+    "HEALTHY": {
+      "count": 400,
+      "score_mean": -0.03556527080283375,
+      "score_std": 0.020653673403135828,
+      "score_p25": -0.04953861352070431,
+      "score_p50": -0.03642337325231679,
+      "score_p75": -0.024844641455699285,
+      "score_min": -0.07726200342205308,
+      "score_max": 0.04750990708092062,
+      "detection_rate": 0.0425,
+      "flagged_anomalous": 17
+    },
+    "STATOR_INTER_TURN_SHORT": {
+      "count": 400,
+      "score_mean": 0.06436555966731526,
+      "score_std": 0.03294123309245135,
+      "score_p25": 0.03724392769386389,
+      "score_p50": 0.07308720314450734,
+      "score_p75": 0.08880847273739464,
+      "score_min": -0.019372814784121783,
+      "score_max": 0.12119166168046658,
+      "detection_rate": 0.96,
+      "flagged_anomalous": 384
+    }
+  },
+  "by_severity": {
+    "0.0": {
+      "count": 400,
+      "score_mean": -0.03556527080283375,
+      "score_std": 0.020653673403135828,
+      "score_p25": -0.04953861352070431,
+      "score_p50": -0.03642337325231679,
+      "score_p75": -0.024844641455699285,
+      "score_min": -0.07726200342205308,
+      "score_max": 0.04750990708092062,
+      "detection_rate": 0.0425,
+      "flagged_anomalous": 17
+    },
+    "0.05": {
+      "count": 320,
+      "score_mean": -0.004294166591973045,
+      "score_std": 0.03546355234570669,
+      "score_p25": -0.03283118458471648,
+      "score_p50": 0.005033758505810282,
+      "score_p75": 0.022848672187716884,
+      "score_min": -0.07987341110275203,
+      "score_max": 0.08974704127238697,
+      "detection_rate": 0.534375,
+      "flagged_anomalous": 171
+    },
+    "0.2": {
+      "count": 320,
+      "score_mean": 0.02002261985208908,
+      "score_std": 0.04454079940437828,
+      "score_p25": -0.01609911248723528,
+      "score_p50": 0.03131832984582211,
+      "score_p75": 0.05786426744317599,
+      "score_min": -0.07816846804275773,
+      "score_max": 0.11324259273190629,
+      "detection_rate": 0.6625,
+      "flagged_anomalous": 212
+    },
+    "0.4": {
+      "count": 320,
+      "score_mean": 0.03855537445522664,
+      "score_std": 0.05018045621078587,
+      "score_p25": -0.003392434621798057,
+      "score_p50": 0.061462238200911234,
+      "score_p75": 0.07817434299581497,
+      "score_min": -0.08810970991339595,
+      "score_max": 0.11003635937735345,
+      "detection_rate": 0.74375,
+      "flagged_anomalous": 238
+    },
+    "0.7": {
+      "count": 320,
+      "score_mean": 0.04951703586742269,
+      "score_std": 0.05120415282739063,
+      "score_p25": 0.03197495165881803,
+      "score_p50": 0.0691574359947652,
+      "score_p75": 0.08496097828250462,
+      "score_min": -0.08502708009498255,
+      "score_max": 0.11485930241082964,
+      "detection_rate": 0.7875,
+      "flagged_anomalous": 252
+    },
+    "0.95": {
+      "count": 320,
+      "score_mean": 0.053389887167485536,
+      "score_std": 0.05053664320234617,
+      "score_p25": 0.04196212857072201,
+      "score_p50": 0.07366137988111238,
+      "score_p75": 0.084547867785637,
+      "score_min": -0.07231520028101313,
+      "score_max": 0.12119166168046658,
+      "detection_rate": 0.790625,
+      "flagged_anomalous": 253
+    }
+  },
+  "by_operating_load": {
+    "25.0": {
+      "count": 500,
+      "score_mean": 0.03037464736706231,
+      "score_std": 0.05504800659462125,
+      "score_p25": -0.024901423082290486,
+      "score_p50": 0.03114397180046624,
+      "score_p75": 0.08346941061334254,
+      "score_min": -0.0703853960072946,
+      "score_max": 0.12119166168046658,
+      "detection_rate": 0.624,
+      "flagged_anomalous": 312
+    },
+    "50.0": {
+      "count": 500,
+      "score_mean": 0.00989188608838917,
+      "score_std": 0.056109876971448897,
+      "score_p25": -0.04214194150957855,
+      "score_p50": 0.004470015601191646,
+      "score_p75": 0.06723372952645354,
+      "score_min": -0.08502708009498255,
+      "score_max": 0.10862024315495666,
+      "detection_rate": 0.508,
+      "flagged_anomalous": 254
+    },
+    "75.0": {
+      "count": 500,
+      "score_mean": 0.012012021281986153,
+      "score_std": 0.054091629710709216,
+      "score_p25": -0.04163849622034625,
+      "score_p50": 0.014003716443674041,
+      "score_p75": 0.06744930270702512,
+      "score_min": -0.08810970991339595,
+      "score_max": 0.09424346858290722,
+      "detection_rate": 0.55,
+      "flagged_anomalous": 275
+    },
+    "100.0": {
+      "count": 500,
+      "score_mean": 0.019871309100455953,
+      "score_std": 0.047968945564962846,
+      "score_p25": -0.02770873727114745,
+      "score_p50": 0.029032088272521794,
+      "score_p75": 0.06490891334011184,
+      "score_min": -0.07987341110275203,
+      "score_max": 0.09942201146491447,
+      "detection_rate": 0.604,
+      "flagged_anomalous": 302
+    }
+  },
+  "by_speed_band": {
+    "low_speed (<1435 RPM)": {
+      "count": 0,
+      "score_mean": 0.0,
+      "score_std": 0.0,
+      "score_p25": 0.0,
+      "score_p50": 0.0,
+      "score_p75": 0.0,
+      "score_min": 0.0,
+      "score_max": 0.0,
+      "detection_rate": 0.0,
+      "flagged_anomalous": 0
+    },
+    "nominal (1435-1445 RPM)": {
+      "count": 500,
+      "score_mean": 0.019871309100455953,
+      "score_std": 0.047968945564962846,
+      "score_p25": -0.02770873727114745,
+      "score_p50": 0.029032088272521794,
+      "score_p75": 0.06490891334011184,
+      "score_min": -0.07987341110275203,
+      "score_max": 0.09942201146491447,
+      "detection_rate": 0.604,
+      "flagged_anomalous": 302
+    },
+    "high_speed (>1445 RPM)": {
+      "count": 1500,
+      "score_mean": 0.017426184912479208,
+      "score_std": 0.05585173000925236,
+      "score_p25": -0.03433169698456362,
+      "score_p50": 0.019054650912138815,
+      "score_p75": 0.07154674178310216,
+      "score_min": -0.08810970991339595,
+      "score_max": 0.12119166168046658,
+      "detection_rate": 0.5606666666666666,
+      "flagged_anomalous": 841
+    }
+  },
+  "fault_x_severity_sensitivity": {
+    "AIR_GAP_ECCENTRICITY": {
+      "0.05": {
+        "count": 80,
+        "detection_rate": 0.9375,
+        "score_mean": 0.021278154100330512
+      },
+      "0.2": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.05802894548249151
+      },
+      "0.4": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.0764396664300703
+      },
+      "0.7": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.07843034718847618
+      },
+      "0.95": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.07935829820393488
+      }
+    },
+    "BEARING_DEFECT": {
+      "0.05": {
+        "count": 80,
+        "detection_rate": 0.1125,
+        "score_mean": -0.03630097563193106
+      },
+      "0.2": {
+        "count": 80,
+        "detection_rate": 0.1375,
+        "score_mean": -0.027606436950179215
+      },
+      "0.4": {
+        "count": 80,
+        "detection_rate": 0.1375,
+        "score_mean": -0.028758255523065056
+      },
+      "0.7": {
+        "count": 80,
+        "detection_rate": 0.15,
+        "score_mean": -0.026057547348720678
+      },
+      "0.95": {
+        "count": 80,
+        "detection_rate": 0.1625,
+        "score_mean": -0.02125847940982275
+      }
+    },
+    "BROKEN_ROTOR_BAR": {
+      "0.05": {
+        "count": 80,
+        "detection_rate": 0.2875,
+        "score_mean": -0.01781300908914272
+      },
+      "0.2": {
+        "count": 80,
+        "detection_rate": 0.5125,
+        "score_mean": 0.0019441162126037476
+      },
+      "0.4": {
+        "count": 80,
+        "detection_rate": 0.8375,
+        "score_mean": 0.03053246522135119
+      },
+      "0.7": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.05734897256160203
+      },
+      "0.95": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.06136894321642842
+      }
+    },
+    "STATOR_INTER_TURN_SHORT": {
+      "0.05": {
+        "count": 80,
+        "detection_rate": 0.8,
+        "score_mean": 0.01565916425285109
+      },
+      "0.2": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.04772385466344027
+      },
+      "0.4": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.07600762169255013
+      },
+      "0.7": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.08834637106833321
+      },
+      "0.95": {
+        "count": 80,
+        "detection_rate": 1.0,
+        "score_mean": 0.09409078665940158
+      }
+    }
+  }
+}

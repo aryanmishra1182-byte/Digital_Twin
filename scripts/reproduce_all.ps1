@@ -32,10 +32,20 @@ python scripts/benchmark_latency.py
 Write-Host "`n[5/6] Executing robustness evaluation (5 seeds + Leave-One-Load-Out)..." -ForegroundColor Yellow
 python scripts/run_robustness_eval.py
 
-Write-Host "`n[6/6] Generating standalone research reports (DOCX + Markdown)..." -ForegroundColor Yellow
+Write-Host "`n[6/8] Running algorithmic model selection and Stage 1 diagnosis..." -ForegroundColor Yellow
+python scripts/run_model_selection.py
+python scripts/generate_stage1_diagnosis.py
+
+Write-Host "`n[7/8] Generating publication figures, LaTeX tables, and research numbers..." -ForegroundColor Yellow
+python scripts/make_paper_figures.py
+python scripts/generate_paper_numbers.py
 python scripts/generate_research_report.py
 
+Write-Host "`n[8/8] Verifying full system integrity and mathematical invariants..." -ForegroundColor Yellow
+python scripts/verify_integrity.py
+
 Write-Host "`n==========================================================" -ForegroundColor Green
-Write-Host "   All models trained, evaluated, and documented!          " -ForegroundColor Green
+Write-Host "   All models trained, evaluated, and verified!            " -ForegroundColor Green
 Write-Host "   Output reports available in docs/reports/               " -ForegroundColor Green
+Write-Host "   Publication figures in docs/paper_assets/               " -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Green

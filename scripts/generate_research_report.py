@@ -74,11 +74,11 @@ hp_clf = hyperparams["stage_2_fault_classifier"]
 hp_rul = hyperparams["stage_3_rul_regressor"]
 
 lat_meta = latency_data["benchmark_metadata"]
-lat_full = latency_data["latencies"]["full_end_to_end_pipeline"]
-lat_feat = latency_data["latencies"]["feature_extraction"]
-lat_iso = latency_data["latencies"]["stage_1_anomaly_detection"]
-lat_xgb = latency_data["latencies"]["stage_2_fault_classification"]
-lat_shap = latency_data["latencies"]["stage_4_shap_attribution"]
+lat_full = latency_data["latencies"].get("full_production_pipeline", latency_data["latencies"].get("full_end_to_end_pipeline", {}))
+lat_feat = latency_data["latencies"].get("feature_extraction", {})
+lat_iso = latency_data["latencies"].get("stage_1_isolation_forest", latency_data["latencies"].get("stage_1_anomaly_detection", {}))
+lat_xgb = latency_data["latencies"].get("stage_2_xgboost", latency_data["latencies"].get("stage_2_fault_classification", {}))
+lat_shap = latency_data["latencies"].get("stage_4_shap_attribution", {})
 
 rob_summary = robustness_data["multi_seed_evaluation"]["summary"]
 rob_lolo = robustness_data["leave_one_load_out_evaluation"]

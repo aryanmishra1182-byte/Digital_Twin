@@ -106,10 +106,19 @@ def main():
     lines.append(f"- **Target Equipment:** 3-phase squirrel-cage induction motor (3 kW, 415 V, 50 Hz, 4 poles, nominal speed ~1440 RPM, nominal slip $s=0.04$).")
     lines.append(f"- **Sampling Specification:** Stator current and vibration sampled at {meta.get('sampling_frequency_hz', 10000):,} Hz ({meta.get('samples_per_window', 10000):,} samples per 1.0 s analysis window).")
     lines.append(f"- **Partitioning Protocol:** Strict run-level partitioning to guarantee zero data leakage between partitions.")
-    lines.append(f"  - **Total Runs:** {meta.get('total_runs', 0):,} runs ({meta.get('total_windows', 0):,} total windows, {meta.get('windows_per_run', 0)} windows/run)")
-    lines.append(f"  - **Training Partition:** {meta.get('splits', {}).get('train', 0):,} windows ({meta.get('splits', {}).get('train_runs', 0):,} runs, 60.0%)")
-    lines.append(f"  - **Validation Partition:** {meta.get('splits', {}).get('val', 0):,} windows ({meta.get('splits', {}).get('val_runs', 0):,} runs, 20.0%)")
-    lines.append(f"  - **Held-Out Test Partition:** {meta.get('splits', {}).get('test', 0):,} windows ({meta.get('splits', {}).get('test_runs', 0):,} runs, 20.0%)")
+    wpr = meta.get('windows_per_run', 10)
+    total_w = meta.get('total_samples', meta.get('total_windows', 0))
+    total_r = meta.get('total_runs', total_w // wpr if wpr else 0)
+    train_w = meta.get('train_samples', meta.get('splits', {}).get('train', 0))
+    train_r = meta.get('train_runs', meta.get('splits', {}).get('train_runs', train_w // wpr if wpr else 0))
+    val_w = meta.get('val_samples', meta.get('splits', {}).get('val', 0))
+    val_r = meta.get('val_runs', meta.get('splits', {}).get('val_runs', val_w // wpr if wpr else 0))
+    test_w = meta.get('test_samples', meta.get('splits', {}).get('test', 0))
+    test_r = meta.get('test_runs', meta.get('splits', {}).get('test_runs', test_w // wpr if wpr else 0))
+    lines.append(f"  - **Total Runs:** {total_r:,} runs ({total_w:,} total windows, {wpr} windows/run)")
+    lines.append(f"  - **Training Partition:** {train_w:,} windows ({train_r:,} runs, {train_w/total_w*100:.1f}%)" if total_w else f"  - **Training Partition:** 0 windows")
+    lines.append(f"  - **Validation Partition:** {val_w:,} windows ({val_r:,} runs, {val_w/total_w*100:.1f}%)" if total_w else f"  - **Validation Partition:** 0 windows")
+    lines.append(f"  - **Held-Out Test Partition:** {test_w:,} windows ({test_r:,} runs, {test_w/total_w*100:.1f}%)" if total_w else f"  - **Held-Out Test Partition:** 0 windows")
     lines.append(f"- **Physics Variations Injected:** Supply voltage unbalance ($0-3\\%$), speed wander ($\\pm 10$ RPM), sensor DC drift, low SNR ($15-35$ dB), and compound multiple-fault states.")
     lines.append("")
     lines.append("---")
@@ -124,16 +133,31 @@ def main():
     lines.append("")
 
     lines.append("### Stage 2: Multiclass Fault Classification (Held-Out Test Split)")
-    lines.append(f"Evaluated on {fc.get('test_windows_count', 0):,} unseen test windows across all 5 health classes.")
+    test_cnt = fc.get("test_samples", fc.get("test_windows_count", 2000))
+    lines.append(f"Evaluated on {test_cnt:,} unseen test windows across all 5 health classes.")
     lines.append("")
     lines.append("| Model Architecture | Test Accuracy | Macro Precision | Macro Recall | Macro F1 | Latency p50 (ms) |")
     lines.append("| :--- | :---: | :---: | :---: | :---: | :---: |")
 
+    def calc_prec_rec(m):
+        pcm = m.get("per_class_metrics", {})
+        if pcm:
+            prec = sum(v.get("precision", 0) for v in pcm.values()) / len(pcm)
+            rec = sum(v.get("recall", 0) for v in pcm.values()) / len(pcm)
+            return prec, rec
+        return m.get("macro_precision", 0), m.get("macro_recall", 0)
+
+    fc_p, fc_r = calc_prec_rec(fc)
+    rf_p, rf_r = calc_prec_rec(rf)
+    svm_p, svm_r = calc_prec_rec(svm)
+    cnn_p = cnn.get("macro_precision", cnn.get("test_macro_precision", 0))
+    cnn_r = cnn.get("macro_recall", cnn.get("test_macro_recall", 0))
+
     models_stage2 = [
-        ("XGBoost Classifier (Champion)", fc.get("accuracy", 0), fc.get("macro_precision", fc.get("precision_macro", 0)), fc.get("macro_recall", fc.get("recall_macro", 0)), fc.get("f1_macro", 0), latencies.get("stage_2_xgboost", {}).get("p50_ms", 0)),
-        ("Random Forest (Baseline)", rf.get("accuracy", 0), rf.get("macro_precision", 0), rf.get("macro_recall", 0), rf.get("f1_macro", 0), latencies.get("stage_2_random_forest", {}).get("p50_ms", 0)),
-        ("Support Vector Machine RBF (Baseline)", svm.get("accuracy", 0), svm.get("macro_precision", 0), svm.get("macro_recall", 0), svm.get("f1_macro", 0), latencies.get("stage_2_svm", {}).get("p50_ms", 0)),
-        ("1-D Waveform CNN (Baseline)", cnn.get("test_accuracy", 0), cnn.get("test_macro_precision", 0), cnn.get("test_macro_recall", 0), cnn.get("test_macro_f1", 0), latencies.get("stage_2_1d_cnn", {}).get("p50_ms", 0)),
+        ("XGBoost Classifier (Champion)", fc.get("accuracy", 0), fc_p, fc_r, fc.get("f1_macro", 0), latencies.get("stage_2_xgboost", {}).get("p50_ms", 0)),
+        ("Random Forest (Baseline)", rf.get("accuracy", 0), rf_p, rf_r, rf.get("f1_macro", 0), latencies.get("stage_2_random_forest", {}).get("p50_ms", 0)),
+        ("Support Vector Machine RBF (Baseline)", svm.get("accuracy", 0), svm_p, svm_r, svm.get("f1_macro", 0), latencies.get("stage_2_svm", {}).get("p50_ms", 0)),
+        ("1-D Waveform CNN (Baseline)", cnn.get("accuracy", cnn.get("test_accuracy", 0)), cnn_p, cnn_r, cnn.get("macro_f1", cnn.get("test_macro_f1", 0)), latencies.get("stage_2_1d_cnn", {}).get("p50_ms", 0)),
     ]
 
     for name, acc, prec, rec, f1_v, lat_v in models_stage2:
@@ -143,9 +167,10 @@ def main():
     lines.append("#### Stage 2 Champion (XGBoost) Per-Class Performance:")
     lines.append("| Health / Fault Class | Precision (%) | Recall (%) | F1-Score | Support (windows) |")
     lines.append("| :--- | :---: | :---: | :---: | :---: |")
-    per_class = fc.get("per_class", {})
+    per_class = fc.get("per_class_metrics", fc.get("per_class", {}))
     for cname, cdata in per_class.items():
-        lines.append(f"| {cname} | {cdata.get('precision', 0)*100:.2f}% | {cdata.get('recall', 0)*100:.2f}% | {cdata.get('f1', 0):.4f} | {cdata.get('support', 0):,} |")
+        f1_c = cdata.get('f1-score', cdata.get('f1', 0))
+        lines.append(f"| {cname} | {cdata.get('precision', 0)*100:.2f}% | {cdata.get('recall', 0)*100:.2f}% | {f1_c:.4f} | {int(cdata.get('support', 0)):,} |")
 
     lines.append("")
 
