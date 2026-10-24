@@ -42,8 +42,8 @@ export const LandingPage: React.FC = () => {
               <Activity className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-semibold text-sm text-slate-100 tracking-tight">TwinSync</span>
-              <span className="hidden sm:inline text-xs text-slate-400 ml-2">Industrial Digital Twin</span>
+              <span className="font-bold text-sm text-slate-100 tracking-tight">MACHINA-X</span>
+              <span className="hidden sm:inline text-xs text-slate-400 ml-2">Explainable Digital Twin</span>
             </div>
           </div>
 
@@ -300,7 +300,7 @@ export const LandingPage: React.FC = () => {
       <footer className="border-t border-panel-border/60 py-8 bg-canvas-subtle mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div>
-            <span className="font-semibold text-slate-200">TwinSync Digital Twin</span> · IEEE Induction Motor Predictive Maintenance Framework
+            <span className="font-bold text-slate-200">MACHINA-X Digital Twin</span> · IEEE Induction Motor Predictive Maintenance Framework
           </div>
           <div className="text-[11px] text-slate-400 text-center sm:text-right">
             Research Specification · Aditya Gupta, Aditya Maurya, Ananya Sharma, Aryan Mishra

@@ -85,7 +85,7 @@ export const AuthPage: React.FC = () => {
         >
           <Activity className="w-5 h-5" />
         </div>
-        <h1 className="text-xl font-bold text-slate-100 tracking-tight">TwinSync Digital Twin</h1>
+        <h1 className="text-xl font-bold text-slate-100 tracking-tight">MACHINA-X Digital Twin</h1>
         <p className="text-xs text-slate-400 mt-0.5">Industrial Equipment Predictive Maintenance Workbench</p>
       </div>
 

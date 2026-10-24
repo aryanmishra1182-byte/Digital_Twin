@@ -16,12 +16,22 @@ import joblib
 import numpy as np
 import torch
 from typing import Dict, Any, List, Optional
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response, UploadFile, File
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 # Ensure root path is accessible
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from ml.csv_analyzer import (
+    generate_csv_template,
+    validate_and_parse_csv,
+    analyze_ai4i_batch,
+    analyze_motor_batch,
+    AI4I_FIELD_GUIDE,
+    MOTOR_FIELD_GUIDE
+)
 
 from ml.features.feature_extractor import FeatureExtractor, FEATURE_NAMES
 from ml.explainability.shap_explainer import MotorShapExplainer
@@ -378,6 +388,119 @@ def predict_ai4i(payload: Ai4iPredictPayload):
         "model_version": "xgboost_ai4i_champion_v1.0",
         "benchmark_dataset": "UCI AI4I 2020 Predictive Maintenance Dataset"
     }
+
+# --- CSV Sensor Data Analysis Endpoints ---
+
+class CsvTextPayload(BaseModel):
+    csv_text: str
+
+@app.get("/csv/templates/{mode}")
+def get_csv_template(mode: str):
+    """Download authoritative empty CSV template with exact required headers."""
+    try:
+        content = generate_csv_template(mode)
+        filename = f"{mode.lower()}_sensor_template.csv"
+        return Response(
+            content=content,
+            media_type="text/csv",
+            headers={"Content-Disposition": f'attachment; filename="{filename}"'}
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/csv/field-guide/{mode}")
+def get_csv_field_guide(mode: str):
+    """Get metadata schema field guide for offline CSV sensor entry."""
+    if mode.lower() == "ai4i":
+        return {
+            "mode": "ai4i",
+            "name": "UCI AI4I 2020 Benchmark Inference",
+            "description": "Raw equipment physical variables for milling machine failure prediction",
+            "fields": AI4I_FIELD_GUIDE
+        }
+    elif mode.lower() == "motor":
+        return {
+            "mode": "motor",
+            "name": "Induction Motor Physics-Guided Features",
+            "description": "26 MCSA current harmonics, vibration BPFO/kurtosis, and thermal rise features",
+            "fields": MOTOR_FIELD_GUIDE
+        }
+    else:
+        raise HTTPException(status_code=400, detail=f"Unknown mode '{mode}'. Choose 'ai4i' or 'motor'.")
+
+@app.post("/csv/analyze/{mode}")
+async def analyze_csv(mode: str, request: Request):
+    """Parse, validate, and run batch offline inference with champion models and SHAP explanations."""
+    content_type = request.headers.get("content-type", "")
+    csv_str = ""
+    if "multipart/form-data" in content_type:
+        form = await request.form()
+        uploaded_file = form.get("file")
+        if uploaded_file and hasattr(uploaded_file, "read"):
+            content_bytes = await uploaded_file.read()
+            csv_str = content_bytes.decode("utf-8", errors="replace")
+    elif "application/json" in content_type:
+        body = await request.json()
+        csv_str = body.get("csv_text", "")
+    else:
+        body_bytes = await request.body()
+        csv_str = body_bytes.decode("utf-8", errors="replace")
+
+    if not csv_str.strip():
+        raise HTTPException(status_code=400, detail="No CSV data provided. Provide a file upload or JSON payload with 'csv_text'.")
+
+    valid_rows, validation_errors = validate_and_parse_csv(csv_str, mode)
+    
+    analysis_results = []
+    export_csv = ""
+    
+    if mode.lower() == "ai4i":
+        if ai4i_model is None or ai4i_features is None:
+            raise HTTPException(status_code=503, detail="AI4I model is not loaded.")
+        if valid_rows:
+            analysis_results, export_csv = analyze_ai4i_batch(valid_rows, ai4i_model, ai4i_explainer, ai4i_features)
+    elif mode.lower() == "motor":
+        if anomaly_bundle is None or classifier_bundle is None:
+            raise HTTPException(status_code=503, detail="Motor models are not loaded.")
+        if valid_rows:
+            analysis_results, export_csv = analyze_motor_batch(valid_rows, anomaly_bundle, classifier_bundle, shap_explainer)
+    else:
+        raise HTTPException(status_code=400, detail=f"Unknown mode '{mode}'. Choose 'ai4i' or 'motor'.")
+
+    return {
+        "mode": mode.lower(),
+        "total_rows_received": len(valid_rows) + len(validation_errors),
+        "valid_rows_count": len(valid_rows),
+        "validation_errors": validation_errors,
+        "analysis_results": analysis_results,
+        "export_csv_content": export_csv
+    }
+
+@app.get("/reports/download/{fmt}")
+def download_research_report(fmt: str):
+    """Download the standalone research results report in DOCX or Markdown format."""
+    fmt = fmt.lower()
+    reports_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "reports")
+    if fmt == "docx":
+        file_path = os.path.join(reports_dir, "MACHINA_X_Experimental_Results.docx")
+        if not os.path.exists(file_path):
+            raise HTTPException(status_code=404, detail="DOCX report not found. Run generate_research_report.py first.")
+        return FileResponse(
+            path=file_path,
+            filename="MACHINA_X_Experimental_Results.docx",
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+    elif fmt in ["md", "markdown"]:
+        file_path = os.path.join(reports_dir, "MACHINA_X_Experimental_Results.md")
+        if not os.path.exists(file_path):
+            raise HTTPException(status_code=404, detail="Markdown report not found.")
+        return FileResponse(
+            path=file_path,
+            filename="MACHINA_X_Experimental_Results.md",
+            media_type="text/markdown"
+        )
+    else:
+        raise HTTPException(status_code=400, detail="Unsupported format. Choose 'docx' or 'md'.")
 
 if __name__ == "__main__":
     import uvicorn

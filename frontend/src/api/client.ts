@@ -89,5 +89,30 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
+    }),
+
+  // CSV Batch Offline Analysis
+  getCsvFieldGuide: (mode: 'ai4i' | 'motor') =>
+    fetchJson<import('../types').CsvFieldGuideResponse>(`/ml-api/csv/field-guide/${mode}`),
+
+  analyzeCsvUpload: async (mode: 'ai4i' | 'motor', file: File): Promise<import('../types').CsvAnalysisResponse> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch(`/ml-api/csv/analyze/${mode}`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`CSV Analysis failed: ${err}`);
+    }
+    return res.json();
+  },
+
+  analyzeCsvText: (mode: 'ai4i' | 'motor', csv_text: string) =>
+    fetchJson<import('../types').CsvAnalysisResponse>(`/ml-api/csv/analyze/${mode}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ csv_text })
     })
 };

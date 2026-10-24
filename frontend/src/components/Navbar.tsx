@@ -14,6 +14,7 @@ import {
   SlidersHorizontal,
   ChevronDown,
   FileText,
+  FileSpreadsheet,
   User,
   LogOut,
   HelpCircle
@@ -54,6 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { to: `/explainability/${selectedMotorId}`, label: 'SHAP Explainability', icon: HelpCircle },
     { to: `/rul/${selectedMotorId}`, label: 'Remaining Life', icon: Clock },
     { to: '/alerts', label: 'Maintenance Alerts', icon: AlertTriangle },
+    { to: '/csv-analysis', label: 'CSV Diagnostics', icon: FileSpreadsheet },
     { to: '/research', label: 'Research Paper Results', icon: FileText }
   ];
 
@@ -79,11 +81,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Activity className="w-4 h-4 stroke-[2.2]" />
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="font-semibold text-sm tracking-tight text-slate-100">
-                TwinSync
+              <span className="font-bold text-sm tracking-tight text-slate-100">
+                MACHINA-X
               </span>
               <span className="hidden sm:inline text-xs text-slate-400 font-normal">
-                Induction Motor Digital Twin
+                Explainable Digital Twin
               </span>
               <span className="hidden md:inline font-mono text-[10px] text-slate-400 px-1.5 py-0.2 border border-panel-border rounded bg-surface">
                 IEEE 3kW · 415V

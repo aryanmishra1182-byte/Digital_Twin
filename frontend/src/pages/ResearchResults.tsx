@@ -46,80 +46,19 @@ export const ResearchResults: React.FC = () => {
     return () => { isMounted = false; };
   }, []);
 
-  const handleDownloadReport = () => {
-    const reportContent = `# Experimental Research Report: Explainable Digital Twin for Industrial Predictive Maintenance
-
-**Authors / Investigators:** Aditya Gupta, Aditya Maurya, Ananya Sharma, Aryan Mishra  
-**Benchmark Target:** UCI AI4I 2020 Predictive Maintenance Dataset  
-**Framework:** Closed-Loop Physical Modeling + XGBoost 3.x + TreeSHAP Explainability  
-**Generated Date:** ${new Date().toISOString()}
-
----
-
-## 1. Executive Summary & Problem Formulation
-Predictive maintenance aims to detect early degradation signatures before irreversible catastrophic machine damage occurs. This research implements an end-to-end Explainable Digital Twin that bridges high-resolution telemetry, multi-stage machine learning inference, and game-theoretic Shapley attributions.
-
----
-
-## 2. Benchmark Dataset Provenance & Attribution
-- **Dataset Official Title:** UCI AI4I 2020 Predictive Maintenance Dataset
-- **Repository URL:** https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset
-- **Original Citation:** Mathes, S. (2020). AI4I 2020 Predictive Maintenance Dataset. UCI Machine Learning Repository.
-- **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
-- **Total Records:** 10,000 instances
-- **Class Distribution:** 9,661 Healthy (96.61%), 339 Failures (3.39%)
-- **Class Imbalance Ratio:** 28.5 : 1
-- **Failure Modes:** Tool Wear Failure (TWF: 46), Heat Dissipation Failure (HDF: 115), Power Failure (PWF: 95), Overstrain Failure (OSF: 98), Random Failure (RNF: 19).
-
----
-
-## 3. Feature Engineering & Preprocessing
-To ground the feature space in industrial physical mechanics, three domain-guided features were derived:
-1. **Temperature Difference (K):** $\\Delta T = T_{\\text{process}} - T_{\\text{air}}$
-2. **Mechanical Power (W):** $P = \\tau \\cdot \\omega = \\tau \\cdot \\left(\\frac{2\\pi \\cdot N}{60}\\right)$
-3. **Mechanical Overstrain Metric:** $M_{\\text{overstrain}} = t_{\\text{tool wear}} \\cdot \\tau$
-4. **Product Quality Encoding:** Type L (0), M (1), H (2).
-
----
-
-## 4. Model Comparison & Experimental Results
-Stratified 80/20 train/test partition (2,000 unseen test instances with 68 failure cases).
-
-| Model Architecture | Test Accuracy | Precision | Recall | F1-Score | ROC-AUC | 5-Fold CV F1 (Mean ± Std) |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Logistic Regression (Baseline)** | 85.75% | 17.80% | 88.24% | 0.2963 | 0.9393 | 0.2719 ± 0.0126 |
-| **Decision Tree (Baseline)** | 95.00% | 38.89% | 82.35% | 0.5283 | 0.8568 | 0.5530 ± 0.0153 |
-| **Random Forest** | 98.40% | 74.32% | 80.88% | 0.7746 | 0.9831 | 0.8246 ± 0.0374 |
-| **XGBoost Classifier (Champion)** | **98.45%** | **74.03%** | **83.82%** | **0.7862** | **0.9808** | **0.7775 ± 0.0245** |
-
-### Confusion Matrix (Champion XGBoost on Test Set):
-- True Negatives (TN): 1,912
-- False Positives (FP): 20
-- False Negatives (FN): 11
-- True Positives (TP): 57
-
----
-
-## 5. TreeSHAP Global Feature Importance
-1. **Rotational Speed (RPM):** Mean |SHAP| = 1.3314
-2. **Tool Wear Time (min):** Mean |SHAP| = 1.2755
-3. **Mechanical Power (W):** Mean |SHAP| = 1.2263
-4. **Overstrain Metric:** Mean |SHAP| = 0.5984
-5. **Temperature Difference (K):** Mean |SHAP| = 0.5015
-6. **Torque (Nm):** Mean |SHAP| = 0.4996
-
----
-
-## 6. Threats to Validity & Physical Limitations
-1. **Synthetic Nature of AI4I Dataset:** The AI4I 2020 dataset was generated using physical simulation models; physical dynamometer testing is essential before deploying on human-safety-critical machinery.
-2. **Correlation vs. Causation:** High Shapley attribution establishes model sensitivity, not independent physical causation.
-`;
-
-    const blob = new Blob([reportContent], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
+  const handleDownloadDocx = () => {
     const link = document.createElement('a');
-    link.href = url;
-    link.download = `Explainable_Digital_Twin_Research_Report_${Date.now()}.md`;
+    link.href = '/ml-api/reports/download/docx';
+    link.download = 'MACHINA_X_Experimental_Results.docx';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleDownloadMd = () => {
+    const link = document.createElement('a');
+    link.href = '/ml-api/reports/download/md';
+    link.download = 'MACHINA_X_Experimental_Results.md';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -151,13 +90,22 @@ Stratified 80/20 train/test partition (2,000 unseen test instances with 68 failu
         subtitle="Reproducible empirical benchmark comparison on the official UCI AI4I 2020 Predictive Maintenance Dataset."
         tag="Academic Report"
         actions={
-          <button
-            onClick={handleDownloadReport}
-            className="px-4 py-2 rounded-md bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs inline-flex items-center gap-2 shadow-subtle transition-colors"
-          >
-            <Download className="w-4 h-4" />
-            <span>Download Research Report (.md)</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleDownloadDocx}
+              className="px-3.5 py-2 rounded-md bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs inline-flex items-center gap-1.5 shadow-subtle transition-colors"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download Report (.docx)</span>
+            </button>
+            <button
+              onClick={handleDownloadMd}
+              className="px-3.5 py-2 rounded-md bg-surface hover:bg-surface-elevated text-slate-200 border border-panel-border font-medium text-xs inline-flex items-center gap-1.5 shadow-subtle transition-colors"
+            >
+              <FileText className="w-3.5 h-3.5 text-brand-400" />
+              <span>Download (.md)</span>
+            </button>
+          </div>
         }
       />
 

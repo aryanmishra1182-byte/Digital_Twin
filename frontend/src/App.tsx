@@ -12,6 +12,7 @@ import { FaultDiagnosis } from './pages/FaultDiagnosis';
 import { Explainability } from './pages/Explainability';
 import { RemainingUsefulLife } from './pages/RemainingUsefulLife';
 import { AlertsMaintenance } from './pages/AlertsMaintenance';
+import { CsvAnalysis } from './pages/CsvAnalysis';
 import { ResearchResults } from './pages/ResearchResults';
 import { ModelStatus } from './pages/ModelStatus';
 import { api } from './api/client';
@@ -137,6 +138,10 @@ function WorkbenchLayout() {
             element={<AlertsMaintenance alerts={alerts} onRefresh={refetchAlerts} />}
           />
           <Route
+            path="/csv-analysis"
+            element={<CsvAnalysis />}
+          />
+          <Route
             path="/research"
             element={<ResearchResults />}
           />
@@ -148,9 +153,9 @@ function WorkbenchLayout() {
       <footer className="border-t border-panel-border/60 py-4 bg-canvas-subtle text-center text-xs text-slate-400">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-slate-300">TwinSync</span>
+            <span className="font-bold text-slate-200">MACHINA-X</span>
             <span>·</span>
-            <span>Explainable Digital Twin Framework</span>
+            <span>Explainable Cyber-Physical Digital Twin Platform</span>
           </div>
           <div className="text-[11px] text-slate-400">
             IEEE Research Specification · Aditya Gupta, Aditya Maurya, Ananya Sharma, Aryan Mishra

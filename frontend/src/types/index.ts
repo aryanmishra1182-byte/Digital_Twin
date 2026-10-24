@@ -218,3 +218,44 @@ export interface Ai4iPredictionResponse {
   model_version: string;
   benchmark_dataset: string;
 }
+
+export interface CsvFieldGuideItem {
+  column: string;
+  description: string;
+  unit: string;
+  type: string;
+  required: boolean;
+  valid_range: string;
+  example: number | string;
+}
+
+export interface CsvFieldGuideResponse {
+  mode: string;
+  name: string;
+  description: string;
+  fields: CsvFieldGuideItem[];
+}
+
+export interface CsvAnalysisRowResult {
+  row_index: number;
+  predicted_condition: string;
+  risk_level: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  top_shap_driver?: string;
+  recommended_action: string;
+  failure_probability?: number;
+  input_data?: Record<string, any>;
+  is_anomaly?: boolean;
+  anomaly_score?: number;
+  confidence?: number;
+  estimated_rul_hours?: number;
+}
+
+export interface CsvAnalysisResponse {
+  mode: 'ai4i' | 'motor';
+  total_rows_received: number;
+  valid_rows_count: number;
+  validation_errors: { row_index: number; column?: string; error: string }[];
+  analysis_results: CsvAnalysisRowResult[];
+  export_csv_content: string;
+}
+
