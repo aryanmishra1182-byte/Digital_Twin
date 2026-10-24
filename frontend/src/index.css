@@ -7,14 +7,11 @@
     --bg: #f3efe6;
     --panel: #fbf9f4;
     --ink: #1b1a17;
-    --mute: #6f6a5f;
+    --mute: #6a655a;
     --rule: #d9d2c3;
     --ok: #2f6b4f;
-    --warn: #b7791f;
-    --bad: #c2410c;
-    --pos: #c2410c;
-    --neg: #2d5d7b;
-    --track: #e6dfd0;
+    --warn: #9a6a14;
+    --bad: #b83e0a;
     color-scheme: light;
   }
 
@@ -22,14 +19,11 @@
     --bg: #151512;
     --panel: #1c1c18;
     --ink: #ece7da;
-    --mute: #9a9486;
+    --mute: #a09a8b;
     --rule: #33322b;
     --ok: #6fbf98;
     --warn: #e0a84a;
     --bad: #f08a52;
-    --pos: #f08a52;
-    --neg: #7fb2d4;
-    --track: #2a2923;
     color-scheme: dark;
   }
 
@@ -37,6 +31,8 @@
     background-color: var(--bg);
     color: var(--ink);
     font-family: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
@@ -45,47 +41,26 @@
 
   h1, h2, h3, h4, .font-serif {
     font-family: 'Fraunces', Georgia, serif;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
   }
 
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
     font-variant-numeric: tabular-nums;
   }
+
+  /* Accessibility focus ring */
+  *:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--rule);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--mute);
-}
-
-/* Tooltips */
-.custom-recharts-tooltip {
-  background-color: var(--panel);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 12px;
-  color: var(--ink);
-  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.1);
-}
-
-/* Pulse animation */
-@keyframes subtlePulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-.animate-pulse-subtle {
-  animation: subtlePulse 2.4s ease-in-out infinite;
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

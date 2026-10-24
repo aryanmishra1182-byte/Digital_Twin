@@ -45,19 +45,22 @@ def train_anomaly_detector(
     )
     iso_forest.fit(X_train_scaled)
 
-    # Threshold tuning on Validation split
+    # Threshold tuning on Validation split using Youden's J statistic (TPR - FPR)
     # decision_function: lower means more abnormal
     y_val_ground_truth = (val_df["fault_class"] != "HEALTHY").astype(int).values
     X_val_scaled = scaler.transform(val_df[FEATURE_NAMES].values)
     val_scores = -iso_forest.decision_function(X_val_scaled)  # higher = more anomalous
 
     best_thresh = float(np.median(val_scores))
-    best_f1 = 0.0
-    for cand in np.percentile(val_scores, np.linspace(1, 99, 100)):
+    best_j = -1.0
+    for cand in np.percentile(val_scores, np.linspace(0.5, 99.5, 200)):
         pred_cand = (val_scores > cand).astype(int)
-        cand_f1 = f1_score(y_val_ground_truth, pred_cand, zero_division=0)
-        if cand_f1 > best_f1:
-            best_f1 = cand_f1
+        tn_val, fp_val, fn_val, tp_val = confusion_matrix(y_val_ground_truth, pred_cand).ravel()
+        tpr = tp_val / (tp_val + fn_val) if (tp_val + fn_val) > 0 else 0.0
+        fpr_val = fp_val / (fp_val + tn_val) if (fp_val + tn_val) > 0 else 0.0
+        j_stat = tpr - fpr_val
+        if j_stat > best_j:
+            best_j = j_stat
             best_thresh = float(cand)
 
     # Evaluate on held-out test set

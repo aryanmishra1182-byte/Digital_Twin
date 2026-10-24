@@ -1,20 +1,20 @@
 {
   "model_version": "iso_forest_v1.0",
   "algorithm": "IsolationForest",
-  "precision": 0.8002018163471241,
-  "recall": 0.99125,
-  "f1": 0.8855388051367951,
+  "precision": 0.9851268591426072,
+  "recall": 0.70375,
+  "f1": 0.8209989063069631,
   "roc_auc": 0.8461140624999999,
-  "false_positive_rate": 0.99,
-  "threshold": -0.07332800701987152,
+  "false_positive_rate": 0.0425,
+  "threshold": 0.0020079591157951215,
   "confusion_matrix": [
     [
-      4,
-      396
+      383,
+      17
     ],
     [
-      14,
-      1586
+      474,
+      1126
     ]
   ],
   "test_samples": 2000,

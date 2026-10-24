@@ -69,6 +69,11 @@ jobs:
           cd frontend
           npm ci
 
+      - name: Run Frontend Tests
+        run: |
+          cd frontend
+          npm test
+
       - name: Run TypeScript & Vite Production Build
         run: |
           cd frontend
