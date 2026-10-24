@@ -107,6 +107,8 @@ export interface AlertRecord {
   status: AlertStatus;
   acknowledgedAt?: string;
   resolvedAt?: string;
+  faultClass?: string;
+  operatorNote?: string;
 }
 
 export interface SimulatorStatus {
@@ -172,6 +174,7 @@ export interface Ai4iBenchmarkMetrics {
   healthy_count: number;
   class_imbalance_ratio: string;
   champion_model: string;
+  champion_metrics?: Ai4iModelMetrics;
   model_comparison: Record<string, Ai4iModelMetrics>;
   shap_global_ranking: { feature: string; mean_abs_shap: number }[];
 }

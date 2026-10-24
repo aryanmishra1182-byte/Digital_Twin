@@ -175,8 +175,7 @@ export const FaultDiagnosis: React.FC<FaultDiagnosisProps> = ({ twin }) => {
               {twin && <StateBadge state={twin.operationalState} />}
             </div>
             <div className="text-xs text-slate-400 mt-1 flex items-center gap-4">
-              <span>Classifier: <strong className="font-mono text-slate-300 font-normal">XGBoost 3.x Multiclass</strong></span>
-              <span>Test Acc: <strong className="font-mono text-emerald-400 font-normal">94.55%</strong></span>
+              <span>Classifier: <strong className="font-mono text-slate-300 font-normal">XGBoost Multiclass</strong></span>
               <span>Confidence: <strong className="font-mono text-slate-100 font-semibold">{((twin?.confidence || 0.95) * 100).toFixed(1)}%</strong></span>
             </div>
           </div>

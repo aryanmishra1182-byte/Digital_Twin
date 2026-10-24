@@ -1,55 +1,81 @@
 {
-  "selection_rule_timestamp": "2026-10-24T14:48:00Z",
+  "selection_rule_timestamp": "2026-10-24T10:57:25.833827+00:00",
+  "algorithmic_criteria": {
+    "f1_tolerance_band": 0.02,
+    "latency_metric": "mean_ms",
+    "explainability_requirement": "Exact TreeSHAP support"
+  },
   "stage_1_anomaly_detection": {
     "candidate_models": {
       "IsolationForest": {
-        "f1_score": 0.8377,
-        "precision": 0.9905,
-        "recall": 0.7257,
-        "inference_latency_ms": 9.45,
-        "memory_kb": 800,
-        "edge_suitability": "High (no GPU required, low memory)"
+        "f1_score": 0.8855388051367951,
+        "precision": 0.8002018163471241,
+        "recall": 0.99125,
+        "roc_auc": 0.8461140624999999,
+        "mean_latency_ms": 10.9,
+        "p50_latency_ms": 10.706,
+        "disk_size_kb": 2450.96,
+        "edge_suitability": "High (no PyTorch runtime required, fast CPU execution)"
       },
       "Autoencoder": {
-        "f1_score": 0.9503,
-        "precision": 0.939,
-        "recall": 0.9618,
-        "inference_latency_ms": 4.12,
-        "memory_kb": 120,
-        "edge_suitability": "High (PyTorch micro-runtime required)"
+        "f1_score": 0.8919,
+        "precision": 0.8223,
+        "recall": 0.9744,
+        "roc_auc": 0.8556,
+        "mean_latency_ms": 0.261,
+        "p50_latency_ms": 0.234,
+        "disk_size_kb": 9.44,
+        "edge_suitability": "Requires PyTorch runtime dependencies"
       }
     },
     "selected_model": "IsolationForest",
-    "decision_reasoning": "While the PyTorch Autoencoder achieved a higher reconstruction F1 (0.9503), Isolation Forest was maintained as the champion production filter because of its zero-hyperparameter calibration stability and native compatibility with tabular feature vector ingestion in industrial SCADA environments without deep learning runtime dependencies."
+    "decision_reasoning": "Isolation Forest achieved F1=0.8855 and Recall=0.9912 on held-out windows. It is selected as the production filter because it does not require deep learning framework dependencies on industrial edge nodes."
   },
   "stage_2_fault_classification": {
     "candidate_models": {
       "XGBoost": {
-        "accuracy": 0.9455,
-        "macro_f1": 0.8862,
-        "inference_latency_ms": 1.41,
+        "accuracy": 0.964,
+        "macro_f1": 0.9638751914569301,
+        "healthy_recall": 0.85,
+        "mean_latency_ms": 1.168,
+        "p50_latency_ms": 1.04,
+        "disk_size_kb": 874.32,
         "interpretability": "Exact TreeSHAP additive feature attributions supported in O(TLD^2)"
       },
       "1D_CNN_Raw_Waveforms": {
-        "accuracy": 0.9231,
-        "macro_f1": 0.7714,
-        "inference_latency_ms": 14.85,
+        "accuracy": 0.81,
+        "macro_f1": 0.7823,
+        "healthy_recall": 0.81,
+        "mean_latency_ms": 2.252,
+        "p50_latency_ms": 2.049,
+        "disk_size_kb": 0.0,
         "interpretability": "Requires approximate Gradient*Input or Integrated Gradients with higher compute"
       },
       "RandomForest": {
-        "accuracy": 0.9263,
-        "macro_f1": 0.8018,
-        "inference_latency_ms": 3.85,
-        "interpretability": "TreeSHAP supported but larger model size"
+        "accuracy": 0.957,
+        "macro_f1": 0.9569758230791706,
+        "healthy_recall": 0.8075,
+        "mean_latency_ms": 8.003,
+        "p50_latency_ms": 7.847,
+        "disk_size_kb": 1020.95,
+        "interpretability": "TreeSHAP supported but larger memory footprint"
       },
       "SVM_RBF": {
-        "accuracy": 0.8782,
-        "macro_f1": 0.7366,
-        "inference_latency_ms": 2.1,
-        "interpretability": "Kernel SHAP required (expensive O(2^M) sampling)"
+        "accuracy": 0.9125,
+        "macro_f1": 0.9147091832396933,
+        "healthy_recall": 0.75,
+        "mean_latency_ms": 0.593,
+        "p50_latency_ms": 0.523,
+        "disk_size_kb": 508.41,
+        "interpretability": "Kernel SHAP required (expensive O(2^M) background sampling)"
       }
     },
+    "top_macro_f1": 0.9639,
+    "competitive_set": [
+      "XGBoost",
+      "RandomForest"
+    ],
     "selected_model": "XGBoost",
-    "decision_reasoning": "XGBoost achieved the highest validation and test accuracy (94.55%) and Macro F1 (0.8862), the lowest classification latency (1.41 ms), and enables instant, exact TreeSHAP feature attributions on physical MCSA harmonic sidebands for operator trust."
+    "decision_reasoning": "Top Macro F1 is 0.9639. Candidates within 0.02 tolerance: ['XGBoost', 'RandomForest']. 'XGBoost' is algorithmically selected because it achieves competitive performance (Macro F1 = 0.9639, Accuracy = 96.40%) while offering the lowest inference latency (1.17 ms mean, 1.04 ms p50) and native exact TreeSHAP explainability."
   }
 }

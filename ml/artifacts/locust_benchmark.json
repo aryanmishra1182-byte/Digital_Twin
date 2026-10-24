@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-10-24T11:07:26.344779+00:00",
+  "concurrent_users": 10,
+  "spawn_rate": 2,
+  "test_duration": "12s",
+  "target_host": "http://127.0.0.1:8001",
+  "total_requests": 262,
+  "total_failures": 0,
+  "failure_rate_pct": 0.0,
+  "requests_per_second": 26.1,
+  "median_response_time_ms": 32.0,
+  "average_response_time_ms": 57.5,
+  "endpoints_evaluated": [
+    "/global-importance",
+    "/health",
+    "/infer",
+    "/metrics/motor"
+  ],
+  "status": "PASS"
+}

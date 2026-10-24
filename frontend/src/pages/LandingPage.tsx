@@ -161,7 +161,7 @@ export const LandingPage: React.FC = () => {
               </p>
               <div className="mt-4 pt-3 border-t border-panel-border/40 text-[11px] font-mono text-slate-300 space-y-1">
                 <div>• Stage 1: Isolation Forest (Outliers)</div>
-                <div>• Stage 2: XGBoost (94.55% Acc)</div>
+                <div>• Stage 2: XGBoost (Physics Multiclass)</div>
                 <div>• Stage 3: PyTorch LSTM RUL</div>
               </div>
             </div>
@@ -283,7 +283,7 @@ export const LandingPage: React.FC = () => {
               Evaluated on the UCI AI4I 2020 Predictive Maintenance Dataset
             </h3>
             <p className="text-xs text-slate-400 mt-1.5 max-w-2xl leading-relaxed">
-              10,000 synthetic industrial milling instances evaluated across Logistic Regression, Decision Trees, Random Forest, and champion XGBoost (98.45% Test Accuracy, 0.7862 F1, 0.9808 ROC-AUC).
+              10,000 synthetic industrial milling instances evaluated across Logistic Regression, Decision Trees, Random Forest, and champion XGBoost with cross-validation and TreeSHAP attribution.
             </p>
           </div>
           <button

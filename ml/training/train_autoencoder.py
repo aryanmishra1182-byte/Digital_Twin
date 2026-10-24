@@ -123,6 +123,8 @@ def train_and_eval_autoencoder(data_dir: str = "data/processed", seed: int = 42)
     with open(out_file, "w") as f:
         json.dump(results, f, indent=2)
 
+    torch.save(model.state_dict(), os.path.join("ml", "artifacts", "autoencoder.pt"))
+
     print(f"[SUCCESS] Autoencoder Stage 1 Baseline Evaluated: F1={f1:.4f}, AUC={roc_auc:.4f}, P={p:.4f}, R={r:.4f}")
     return results
 

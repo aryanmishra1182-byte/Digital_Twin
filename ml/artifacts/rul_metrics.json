@@ -2,46 +2,28 @@
   "model_version": "lstm_rul_v1.0",
   "primary_model": "LSTM_Sequence_Regressor",
   "sequence_length": 5,
-  "mae_hours": 0.21997062815353274,
-  "rmse_hours": 0.2927085406655687,
+  "mae_hours": 0.7466,
+  "rmse_hours": 1.1849,
   "baseline_comparison": {
     "LSTM": {
-      "mae_hours": 0.21997062815353274,
-      "rmse_hours": 0.2927085406655687
+      "mae_hours": 0.7466,
+      "rmse_hours": 1.1849
+    },
+    "GradientBoosting": {
+      "mae_hours": 0.8172,
+      "rmse_hours": 1.2348
     },
     "Ridge_Baseline": {
-      "mae_hours": 0.33101463036233286,
-      "rmse_hours": 0.4627368698039222
+      "mae_hours": 1.2986,
+      "rmse_hours": 1.7571
     },
     "Mean_Baseline": {
-      "mae_hours": 12.0208,
-      "rmse_hours": 13.8917
+      "mae_hours": 12.0,
+      "rmse_hours": 13.8557
     }
   },
-  "test_sequences": 384,
-  "held_out_runs": 4,
+  "test_sequences": 1152,
+  "held_out_runs": 12,
   "limitations": "Evaluated against simulated degradation trajectories; physical bench calibration required for real operating environments.",
-  "provenance": "Synthetic Simulation Degradation Trajectory",
-  "per_run_evaluation": {
-    "RUL_BRO_03": {
-      "sequences": 96,
-      "mae_hours": 0.2093,
-      "rmse_hours": 0.2632
-    },
-    "RUL_STA_03": {
-      "sequences": 96,
-      "mae_hours": 0.1885,
-      "rmse_hours": 0.2421
-    },
-    "RUL_BEA_03": {
-      "sequences": 96,
-      "mae_hours": 0.2453,
-      "rmse_hours": 0.3307
-    },
-    "RUL_AIR_03": {
-      "sequences": 96,
-      "mae_hours": 0.2367,
-      "rmse_hours": 0.3247
-    }
-  }
+  "provenance": "Synthetic Simulation Multi-Law Degradation Trajectories (Linear, Exponential, Power-law)"
 }

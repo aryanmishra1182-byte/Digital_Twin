@@ -305,6 +305,50 @@ public class DigitalTwinService {
         return res;
     }
 
+    public DigitalTwinResponse simulateWhatIf(com.digitaltwin.motor.dto.WhatIfRequest request) {
+        String motorId = request.getMotorId();
+        Motor motor = motorRepository.findById(motorId).orElse(new Motor(motorId, "3 kW Induction Motor", 3.0, 415.0, 50.0, 4, 1440.0, 0.04, "Production Plant Unit 1"));
+
+        double loadFrac = request.getLoadPct() / 100.0;
+        double sev = Math.max(0.0, Math.min(1.0, request.getHypotheticalSeverity()));
+        String fault = request.getHypotheticalFault();
+        boolean isFaulty = !"HEALTHY".equalsIgnoreCase(fault) && sev > 0.05;
+
+        double healthScore = Math.max(0.0, Math.min(100.0, 100.0 - (sev * 75.0) - (isFaulty ? 15.0 : 0.0)));
+        double currentRms = 5.8 * (0.3 + 0.7 * loadFrac) * (1.0 + (isFaulty ? 0.08 * sev : 0.0));
+        double vibRms = (0.4 * loadFrac + 0.2) + (isFaulty ? 2.5 * sev : 0.0);
+        double vibKurtosis = 3.0 + (isFaulty ? 4.5 * sev : 0.0);
+        double tempC = request.getAmbientTempC() + Math.pow(loadFrac, 2) * 40.0 + (isFaulty ? 25.0 * sev : 0.0);
+        double rulHours = Math.max(0.0, 50.0 * (1.0 - Math.pow(sev, 0.7)));
+
+        DigitalTwinResponse res = new DigitalTwinResponse();
+        res.setMotorId(motorId);
+        res.setMotorName(motor.getName() + " [What-If Simulation]");
+        res.setHealthScore(Math.round(healthScore * 10.0) / 10.0);
+        res.setOperationalState(healthScore > 80.0 ? com.digitaltwin.motor.domain.OperationalState.HEALTHY : (healthScore > 50.0 ? com.digitaltwin.motor.domain.OperationalState.WARNING : com.digitaltwin.motor.domain.OperationalState.CRITICAL));
+        res.setAnomaly(isFaulty);
+        res.setAnomalyScore(isFaulty ? Math.min(1.0, 0.4 + 0.6 * sev) : 0.05);
+        res.setPredictedFaultClass(fault);
+        res.setConfidence(isFaulty ? Math.min(0.99, 0.75 + 0.24 * sev) : 0.95);
+        res.setEstimatedRulHours(Math.round(rulHours * 10.0) / 10.0);
+        res.setRulUnit("HOURS");
+        res.setLatestCurrentRms(Math.round(currentRms * 100.0) / 100.0);
+        res.setLatestVibRms(Math.round(vibRms * 100.0) / 100.0);
+        res.setLatestVibKurtosis(Math.round(vibKurtosis * 100.0) / 100.0);
+        res.setLatestTemperatureC(Math.round(tempC * 10.0) / 10.0);
+        res.setLatestLoadPct(request.getLoadPct());
+        res.setLatestEstimatedSpeedRpm(1500.0 * (1.0 - 0.04 * loadFrac));
+        res.setLastUpdated(java.time.Instant.now());
+
+        Map<String, Object> rec = advisoryService.generateRecommendation(
+                fault, isFaulty, res.getAnomalyScore(), res.getConfidence(), currentRms, vibRms, vibKurtosis, tempC
+        );
+        rec.put("isWhatIfSimulation", true);
+        res.setLatestMaintenanceRecommendation(rec);
+
+        return res;
+    }
+
     public List<DigitalTwinResponse> getAllTwinStates() {
         List<Motor> motors = motorRepository.findAll();
         List<DigitalTwinResponse> list = new ArrayList<>();

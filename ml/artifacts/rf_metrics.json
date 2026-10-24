@@ -1,0 +1,84 @@
+{
+  "model_version": "random_forest_v1.0",
+  "algorithm": "RandomForest",
+  "accuracy": 0.957,
+  "f1_macro": 0.9569758230791706,
+  "confusion_matrix": [
+    [
+      323,
+      0,
+      0,
+      77,
+      0
+    ],
+    [
+      0,
+      392,
+      0,
+      8,
+      0
+    ],
+    [
+      0,
+      0,
+      400,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0,
+      399,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      400
+    ]
+  ],
+  "per_class_metrics": {
+    "HEALTHY": {
+      "precision": 0.9969135802469136,
+      "recall": 0.8075,
+      "f1-score": 0.8922651933701657,
+      "support": 400.0
+    },
+    "BROKEN_ROTOR_BAR": {
+      "precision": 1.0,
+      "recall": 0.98,
+      "f1-score": 0.98989898989899,
+      "support": 400.0
+    },
+    "STATOR_INTER_TURN_SHORT": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 400.0
+    },
+    "BEARING_DEFECT": {
+      "precision": 0.8243801652892562,
+      "recall": 0.9975,
+      "f1-score": 0.9027149321266968,
+      "support": 400.0
+    },
+    "AIR_GAP_ECCENTRICITY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 400.0
+    }
+  },
+  "test_samples": 2000,
+  "class_mapping": {
+    "HEALTHY": 0,
+    "BROKEN_ROTOR_BAR": 1,
+    "STATOR_INTER_TURN_SHORT": 2,
+    "BEARING_DEFECT": 3,
+    "AIR_GAP_ECCENTRICITY": 4
+  },
+  "provenance": "Synthetic Simulation (IEEE Paper Spec 3kW 415V Motor)"
+}

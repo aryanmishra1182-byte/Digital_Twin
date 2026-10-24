@@ -228,7 +228,7 @@ export const CsvAnalysis: React.FC = () => {
             </div>
             <p className="text-xs text-slate-400 mt-1">
               {activeMode === 'ai4i'
-                ? 'Evaluates factory machine variables (temperatures, spindle RPM, torque, tool wear) against the 98.45% accurate XGBoost benchmark model.'
+                ? 'Evaluates factory machine variables (temperatures, spindle RPM, torque, tool wear) against the calibrated XGBoost benchmark model.'
                 : 'Evaluates pre-extracted electrical and mechanical features (MCSA sidebands, BPFO/BPFI energies, crest factor, thermal rise) for 5-class fault diagnosis.'}
             </p>
           </div>
@@ -439,7 +439,7 @@ export const CsvAnalysis: React.FC = () => {
                   Batch Inference Completed ({results.analysis_results.length} Rows Processed)
                 </span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  Model: {results.mode === 'ai4i' ? 'XGBoost 98.45% AI4I Champion' : 'XGBoost 94.55% 5-Class Classifier'}
+                  Model: {results.mode === 'ai4i' ? 'XGBoost AI4I Champion' : 'XGBoost Multiclass Classifier'}
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">

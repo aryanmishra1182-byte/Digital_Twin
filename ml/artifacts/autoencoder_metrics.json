@@ -1,11 +1,11 @@
 {
   "model": "PyTorch_Autoencoder",
-  "optimal_threshold_val": 0.1752,
-  "val_f1_at_threshold": 0.9384,
-  "test_precision": 0.939,
-  "test_recall": 0.9618,
-  "test_f1": 0.9503,
-  "test_roc_auc": 0.9018,
-  "test_windows": 312,
-  "training_samples_healthy_only": 48
+  "optimal_threshold_val": 0.0583,
+  "val_f1_at_threshold": 0.8891,
+  "test_precision": 0.8223,
+  "test_recall": 0.9744,
+  "test_f1": 0.8919,
+  "test_roc_auc": 0.8556,
+  "test_windows": 2000,
+  "training_samples_healthy_only": 1200
 }

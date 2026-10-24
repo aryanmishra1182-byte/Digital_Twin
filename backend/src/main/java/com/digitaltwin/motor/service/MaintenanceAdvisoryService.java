@@ -4,9 +4,15 @@ import com.digitaltwin.motor.domain.AlertSeverity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class MaintenanceAdvisoryService {
+
+    // Alert Hysteresis Tracking (prevents flapping/chatter)
+    private final Map<String, Integer> anomalyStreaks = new ConcurrentHashMap<>();
+    private final Map<String, Integer> normalStreaks = new ConcurrentHashMap<>();
+    private final Map<String, AlertSeverity> currentAlertStates = new ConcurrentHashMap<>();
 
     public Map<String, Object> generateRecommendation(
             String faultClass,
@@ -18,33 +24,76 @@ public class MaintenanceAdvisoryService {
             double vibKurtosis,
             double tempC
     ) {
+        return generateRecommendationWithHysteresis(
+                "DEFAULT", faultClass, isAnomaly, anomalyScore, confidence, currentRms, vibRms, vibKurtosis, tempC
+        );
+    }
+
+    public synchronized Map<String, Object> generateRecommendationWithHysteresis(
+            String motorId,
+            String faultClass,
+            boolean isAnomaly,
+            double anomalyScore,
+            double confidence,
+            double currentRms,
+            double vibRms,
+            double vibKurtosis,
+            double tempC
+    ) {
         Map<String, Object> rec = new LinkedHashMap<>();
+        rec.put("motorId", motorId);
         rec.put("faultClass", faultClass);
         rec.put("isAnomaly", isAnomaly);
         rec.put("confidence", confidence);
 
+        int anomStreak = anomalyStreaks.getOrDefault(motorId, 0);
+        int normStreak = normalStreaks.getOrDefault(motorId, 0);
+        AlertSeverity previousSeverity = currentAlertStates.getOrDefault(motorId, AlertSeverity.P3_INFO);
+
+        if (isAnomaly || !"HEALTHY".equalsIgnoreCase(faultClass)) {
+            anomStreak++;
+            normStreak = 0;
+        } else {
+            normStreak++;
+            anomStreak = 0;
+        }
+        anomalyStreaks.put(motorId, anomStreak);
+        normalStreaks.put(motorId, normStreak);
+
+        // Hysteresis Rule:
+        // Require at least 2 consecutive anomalous windows to escalate to P1/P2
+        // Require at least 3 consecutive normal windows to de-escalate back to P3_INFO
         AlertSeverity severity;
-        if (!isAnomaly && "HEALTHY".equalsIgnoreCase(faultClass)) {
+        if (anomStreak >= 2) {
+            if (confidence > 0.85 || anomalyScore > 0.85 || tempC > 85.0 || vibRms > 2.8) {
+                severity = AlertSeverity.P1_CRITICAL;
+            } else {
+                severity = AlertSeverity.P2_WARNING;
+            }
+        } else if (normStreak >= 3) {
             severity = AlertSeverity.P3_INFO;
-            rec.put("severity", severity);
+        } else {
+            // In hysteresis dead-band: maintain previous alert state
+            severity = previousSeverity;
+        }
+
+        currentAlertStates.put(motorId, severity);
+        rec.put("severity", severity);
+        rec.put("anomalyStreak", anomStreak);
+        rec.put("normalStreak", normStreak);
+        rec.put("hysteresisActive", anomStreak < 2 && normStreak < 3);
+
+        if (severity == AlertSeverity.P3_INFO) {
             rec.put("title", "Normal Motor Operation");
             rec.put("summary", "Motor operates within nominal electrical, mechanical, and thermal baselines.");
             rec.put("suggestedActions", List.of(
                     "Maintain standard routine lubrication schedule.",
                     "Continue continuous automated digital twin monitoring."
             ));
-            rec.put("governingStandard", "ISO 10816-3 Zone A (Newly commissioned / Good condition)");
+            rec.put("governingStandard", "ISO 10816-3 Zone A (Good condition)");
             rec.put("safetyDisclaimer", "Advisory recommendation only. Observe plant electrical safety procedures.");
             return rec;
         }
-
-        // Determine priority based on fault severity & metrics
-        if (confidence > 0.85 || anomalyScore > 0.85 || tempC > 85.0 || vibRms > 2.8) {
-            severity = AlertSeverity.P1_CRITICAL;
-        } else {
-            severity = AlertSeverity.P2_WARNING;
-        }
-        rec.put("severity", severity);
 
         List<String> actions = new ArrayList<>();
         String title;
@@ -88,7 +137,7 @@ public class MaintenanceAdvisoryService {
             }
             default -> {
                 title = "Unrecognized Operational Anomaly Detected";
-                summary = String.format("Isolation Forest flagged significant departure from healthy baseline (Anomaly score: %.2f), but classifier confidence is low.", anomalyScore);
+                summary = String.format("Significant departure from healthy baseline (Anomaly score: %.2f), but classifier confidence is low.", anomalyScore);
                 actions.add("Perform full multi-sensor audit (phase current balance, radial vibration, temperature rise).");
                 actions.add("Verify power quality (voltage unbalance, harmonic distortion).");
                 standard = "ISO 13373-1 Condition Monitoring and Diagnostics of Machines";
@@ -99,7 +148,8 @@ public class MaintenanceAdvisoryService {
         rec.put("summary", summary);
         rec.put("suggestedActions", actions);
         rec.put("governingStandard", standard);
-        rec.put("safetyDisclaimer", "Advisory recommendation only. The digital twin does NOT automatically trip or control physical machinery.");
+        rec.put("safetyDisclaimer", "Advisory recommendation only. Observe plant electrical safety procedures.");
+
         return rec;
     }
 }

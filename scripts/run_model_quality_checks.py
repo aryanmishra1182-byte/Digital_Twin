@@ -2,14 +2,15 @@
 MACHINA-X Comprehensive Model Quality & Scientific Verification Suite
 =====================================================================
 Executes rigorous academic checks specified in Part 1B:
-1. Probability Calibration (ECE & Reliability Diagram)
-2. Unknown Fault Detection (UNCLASSIFIED path on combined faults)
-3. Unseen Severities Generalization (Trained on 0.3/0.9, tested on 0.6)
+1. Probability Calibration (ECE & Reliability Diagram on held-out test split)
+2. Unknown Fault Detection (UNCLASSIFIED path evaluated on dataset_combined_faults.csv)
+3. Unseen Severities Generalization (Trained on 0.05, 0.2, 0.7, 0.95; tested on 0.40)
 4. Noise Robustness (Accuracy vs SNR curve from 30 dB down to 5 dB)
 5. Sensor Modality Ablation (Current vs Vibration vs Temp vs Combined)
 6. Statistical Significance (95% Bootstrap CIs & McNemar's tests)
 7. Measurable Explanations (Physics consistency score & fidelity deletion)
 
+ZERO hardcoded metrics. All values computed directly from saved datasets and models.
 Saves verified metrics to ml/artifacts/model_quality_checks.json.
 """
 
@@ -20,14 +21,13 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, confusion_matrix, f1_score
-from sklearn.isotonic import IsotonicRegression
 from sklearn.calibration import CalibratedClassifierCV
 import xgboost as xgb
 import joblib
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ml.features.feature_extractor import FEATURE_NAMES
-from simulator.motor_simulator import MotorSimulator, FAULT_CLASSES
+from simulator.motor_simulator import FAULT_CLASSES
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 ARTIFACTS_DIR = os.path.join(BASE_DIR, "ml", "artifacts")
@@ -79,7 +79,7 @@ def run_calibration_check(clf, X_val, y_val, X_test, y_test):
     }
 
 def run_unknown_faults_check(clf, X_val, y_val, scaler):
-    print("  [2/7] Evaluating UNCLASSIFIED path on unseen combined faults...")
+    print("  [2/7] Evaluating UNCLASSIFIED path on compound failure dataset...")
     # Find validation threshold for unknown rejection (5th percentile of max prob on correct validation predictions)
     val_probs = clf.predict_proba(X_val)
     val_preds = np.argmax(val_probs, axis=1)
@@ -87,25 +87,13 @@ def run_unknown_faults_check(clf, X_val, y_val, scaler):
     val_confs = np.max(val_probs[correct_mask], axis=1)
     rejection_threshold = round(float(np.percentile(val_confs, 5)), 4)
 
-    # Synthesize 50 combined fault windows: Broken Rotor Bar + Bearing Defect
-    sim = MotorSimulator(seed=999)
-    from ml.features.feature_extractor import FeatureExtractor
-    extractor = FeatureExtractor()
+    # Load real generated compound fault dataset
+    comb_path = os.path.join(BASE_DIR, "data", "processed", "dataset_combined_faults.csv")
+    if not os.path.exists(comb_path):
+        raise FileNotFoundError(f"Missing compound fault dataset: {comb_path}")
 
-    combined_features = []
-    for i in range(50):
-        # generate broken rotor bar with severe bearing defect superposition
-        w1 = sim.generate_window(run_id=f"COMB_{i:02d}", load_pct=100.0, fault_class="BROKEN_ROTOR_BAR", severity=0.7)
-        w2 = sim.generate_window(run_id=f"COMB_{i:02d}", load_pct=100.0, fault_class="BEARING_DEFECT", severity=0.7)
-        # Superimpose signals
-        cur = w1.current_signal + (w2.current_signal - np.mean(w2.current_signal)) * 0.5
-        vib = w1.vibration_signal + w2.vibration_signal
-        temp = max(w1.temperature_c, w2.temperature_c) + 2.0
-
-        feat_dict = extractor.extract_features(cur, vib, temp, w1.prev_temperature_c, load_pct=100.0)
-        combined_features.append([feat_dict[k] for k in FEATURE_NAMES])
-
-    X_comb_raw = np.array(combined_features)
+    comb_df = pd.read_csv(comb_path)
+    X_comb_raw = comb_df[FEATURE_NAMES].values
     X_comb_scaled = scaler.transform(X_comb_raw)
     comb_probs = clf.predict_proba(X_comb_scaled)
     max_probs = np.max(comb_probs, axis=1)
@@ -121,10 +109,10 @@ def run_unknown_faults_check(clf, X_val, y_val, scaler):
     }
 
 def run_unseen_severities_check(df_full):
-    print("  [3/7] Testing generalization on unseen severity (0.6)...")
-    # Train on severities 0.0, 0.3, 0.9; test on 0.6
-    train_subset = df_full[(df_full["severity"].isin([0.0, 0.3, 0.9])) & (df_full["split"].isin(["train", "val"]))]
-    test_subset = df_full[(df_full["severity"] == 0.6)]
+    print("  [3/7] Testing generalization on unseen severity (0.40)...")
+    # Train on severities 0.05, 0.20, 0.70, 0.95 (and healthy 0.0); test on held out 0.40
+    train_subset = df_full[(df_full["severity"].isin([0.0, 0.05, 0.20, 0.70, 0.95])) & (df_full["split"].isin(["train", "val"]))]
+    test_subset = df_full[(df_full["severity"] == 0.40)]
 
     X_tr = train_subset[FEATURE_NAMES].values
     y_tr = train_subset["fault_label"].values
@@ -139,8 +127,8 @@ def run_unseen_severities_check(df_full):
     macro_f1 = float(f1_score(y_te, preds, average="macro", zero_division=0))
 
     return {
-        "held_out_severity": 0.6,
-        "training_severities": [0.0, 0.3, 0.9],
+        "held_out_severity": 0.40,
+        "training_severities": [0.0, 0.05, 0.20, 0.70, 0.95],
         "test_windows": len(test_subset),
         "accuracy_on_unseen_severity": round(acc, 4),
         "macro_f1_on_unseen_severity": round(macro_f1, 4)
@@ -151,11 +139,9 @@ def run_noise_robustness_check(clf, X_test, y_test):
     snr_levels_db = [30, 25, 20, 15, 10, 5]
     curve = []
 
-    # Signal power of test features
     sig_power = np.mean(X_test ** 2, axis=0)
 
     for snr in snr_levels_db:
-        # Additive white Gaussian noise corresponding to SNR
         snr_linear = 10 ** (snr / 10.0)
         noise_variance = sig_power / snr_linear
         noise = np.random.RandomState(42).normal(0, np.sqrt(noise_variance), X_test.shape)
@@ -210,7 +196,6 @@ def run_feature_ablation_study(X_train, y_train, X_test, y_test):
 
 def run_statistical_significance(clf, X_train, y_train, X_test, y_test):
     print("  [6/7] Computing 95% Bootstrap Confidence Intervals & McNemar's tests...")
-    # 1. 1,000 Bootstrap Resamples
     n_bootstraps = 1000
     rng = np.random.RandomState(42)
     boot_accs = []
@@ -228,7 +213,7 @@ def run_statistical_significance(clf, X_train, y_train, X_test, y_test):
     ci_acc = [round(float(np.percentile(boot_accs, 2.5)), 4), round(float(np.percentile(boot_accs, 97.5)), 4)]
     ci_f1 = [round(float(np.percentile(boot_f1s, 2.5)), 4), round(float(np.percentile(boot_f1s, 97.5)), 4)]
 
-    # 2. McNemar's test vs Random Forest and SVM
+    # McNemar's test vs Random Forest and SVM
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.svm import SVC
 
@@ -241,8 +226,6 @@ def run_statistical_significance(clf, X_train, y_train, X_test, y_test):
     y_pred_svm = svm.predict(X_test)
 
     def mcnemar(y_true, y_pred1, y_pred2):
-        # b: model 1 correct, model 2 wrong
-        # c: model 1 wrong, model 2 correct
         corr1 = (y_pred1 == y_true)
         corr2 = (y_pred2 == y_true)
         b = int(np.sum(corr1 & (~corr2)))
@@ -268,7 +251,6 @@ def run_measurable_explanations_check(clf, X_test, y_test, scaler):
     clf_path = os.path.join(ARTIFACTS_DIR, "fault_classifier.joblib")
     explainer = MotorShapExplainer(clf_path)
 
-    # Physics consistency expectations
     expected_physics_groups = {
         "BROKEN_ROTOR_BAR": ["brb_sideband_ratio", "brb_left_sideband_amp", "brb_right_sideband_amp", "current_thd"],
         "STATOR_INTER_TURN_SHORT": ["current_harm_5_ratio", "current_harm_3_ratio", "current_thd", "temp_rate_of_rise"],
@@ -279,7 +261,10 @@ def run_measurable_explanations_check(clf, X_test, y_test, scaler):
     consistent_count = 0
     total_fault_samples = 0
 
-    for i in range(len(X_test)):
+    # Evaluate on a representative sample of test windows for speed (e.g. 200 windows)
+    sample_indices = np.linspace(0, len(X_test) - 1, min(200, len(X_test)), dtype=int)
+
+    for i in sample_indices:
         c_idx = y_test[i]
         c_name = FAULT_CLASSES[c_idx]
         if c_name == "HEALTHY":
@@ -296,19 +281,18 @@ def run_measurable_explanations_check(clf, X_test, y_test, scaler):
     physics_consistency_score = round(float(consistent_count / (total_fault_samples + 1e-6)), 4)
 
     # Fidelity Deletion Test: Mask top 2 SHAP features vs Mask 2 random features
+    baseline_acc = float(accuracy_score(y_test[sample_indices], clf.predict(scaler.transform(X_test[sample_indices]))))
     masked_top_accs = []
     masked_rand_accs = []
 
-    for i in range(len(X_test)):
+    for i in sample_indices:
         x_vec = X_test[i].copy()
         exp = explainer.explain_prediction(x_vec, top_k=2)
         top_f_indices = [FEATURE_NAMES.index(item["feature_name"]) for item in exp.get("top_attributions", [])[:2]]
 
-        # Zero-out top SHAP features
         x_top_masked = x_vec.copy()
         x_top_masked[top_f_indices] = 0.0
 
-        # Zero-out 2 random features
         rand_indices = np.random.RandomState(i).choice(len(FEATURE_NAMES), size=2, replace=False)
         x_rand_masked = x_vec.copy()
         x_rand_masked[rand_indices] = 0.0
@@ -319,12 +303,13 @@ def run_measurable_explanations_check(clf, X_test, y_test, scaler):
         masked_top_accs.append(pred_top == y_test[i])
         masked_rand_accs.append(pred_rand == y_test[i])
 
-    fidelity_deletion_top2_drop = round(float(0.9455 - np.mean(masked_top_accs)), 4)
-    fidelity_deletion_rand2_drop = round(float(0.9455 - np.mean(masked_rand_accs)), 4)
+    fidelity_deletion_top2_drop = round(float(baseline_acc - np.mean(masked_top_accs)), 4)
+    fidelity_deletion_rand2_drop = round(float(baseline_acc - np.mean(masked_rand_accs)), 4)
 
     return {
         "physics_consistency_score": physics_consistency_score,
         "fault_test_windows_evaluated": total_fault_samples,
+        "baseline_accuracy": round(baseline_acc, 4),
         "fidelity_top2_deletion_accuracy_drop": fidelity_deletion_top2_drop,
         "fidelity_random2_deletion_accuracy_drop": fidelity_deletion_rand2_drop,
         "fidelity_ratio_shap_vs_random": round(float(fidelity_deletion_top2_drop / (fidelity_deletion_rand2_drop + 1e-6)), 2)

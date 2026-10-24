@@ -1,34 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { api } from '../api/client';
 
 export const ModelProvenanceTable: React.FC = () => {
-  const models = [
+  const [metrics, setMetrics] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    api.getMotorMetrics()
+      .then(data => {
+        if (mounted) {
+          setMetrics(data);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => { mounted = false; };
+  }, []);
+
+  const cpuModel = metrics?.latency?.benchmark_metadata?.cpu_model || 'Hardware CPU';
+
+  const rows = [
     {
       stage: 'Stage 1: Anomaly Detector',
-      model: 'Isolation Forest (n=150, c=0.05)',
+      model: 'Isolation Forest (n=150, threshold tuned)',
       input: '26 Handcrafted Physics Features',
-      testSplit: '312 Windows (52 Held-Out Runs)',
-      metric: 'Recall: 72.57% · F1: 49.38%',
-      latency: '9.13 ms (p50) · 11.35 ms (p95)',
+      testSplit: metrics?.anomaly ? `${metrics.anomaly.test_samples} Held-Out Windows` : 'Held-Out Test Split',
+      metric: metrics?.anomaly
+        ? `Recall: ${(metrics.anomaly.recall * 100).toFixed(2)}% · F1: ${(metrics.anomaly.f1 * 100).toFixed(2)}%`
+        : 'Loading...',
+      latency: metrics?.latency?.latencies?.stage_1_isolation_forest
+        ? `${metrics.latency.latencies.stage_1_isolation_forest.p50_ms.toFixed(2)} ms (p50) · ${metrics.latency.latencies.stage_1_isolation_forest.p95_ms.toFixed(2)} ms (p95)`
+        : 'Benchmarking...',
       provenance: 'SIMULATED DATA',
       provColor: 'bg-warn/15 text-warn border-warn/30'
     },
     {
       stage: 'Stage 2: Fault Classifier',
-      model: 'XGBoost Multiclass (120 Trees)',
+      model: 'XGBoost Multiclass (140 Trees, Balanced)',
       input: '26 Standardized Features (MCSA + Vib)',
-      testSplit: '312 Windows (52 Held-Out Runs)',
-      metric: 'Acc: 94.55% · Macro F1: 88.62%',
-      latency: '1.30 ms (p50) · 1.84 ms (p95)',
+      testSplit: metrics?.classifier ? `${metrics.classifier.test_samples} Held-Out Windows` : 'Held-Out Test Split',
+      metric: metrics?.classifier
+        ? `Acc: ${(metrics.classifier.accuracy * 100).toFixed(2)}% · Macro F1: ${(metrics.classifier.f1_macro * 100).toFixed(2)}%`
+        : 'Loading...',
+      latency: metrics?.latency?.latencies?.stage_2_xgboost
+        ? `${metrics.latency.latencies.stage_2_xgboost.p50_ms.toFixed(2)} ms (p50) · ${metrics.latency.latencies.stage_2_xgboost.p95_ms.toFixed(2)} ms (p95)`
+        : 'Benchmarking...',
       provenance: 'SIMULATED DATA',
       provColor: 'bg-warn/15 text-warn border-warn/30'
     },
     {
       stage: 'Stage 3: RUL Degradation',
-      model: 'Unidirectional LSTM (32h, 2-layer)',
-      input: '5-Window Historical Sequence (10s)',
-      testSplit: '4 Held-Out Runs (384 Sequences)',
-      metric: 'MAE: 0.220 h · RMSE: 0.293 h',
-      latency: '1.15 ms (p50) · 1.45 ms (p95)',
+      model: 'Sequence LSTM (32h, 2-layer, 5-window)',
+      input: '5-Window Historical Sequence (Multi-Law)',
+      testSplit: metrics?.rul ? `${metrics.rul.test_sequences} Sequences (${metrics.rul.held_out_runs} Held-Out Runs)` : 'Held-Out Test Runs',
+      metric: metrics?.rul
+        ? `MAE: ${metrics.rul.mae_hours.toFixed(2)} h · RMSE: ${metrics.rul.rmse_hours.toFixed(2)} h`
+        : 'Loading...',
+      latency: metrics?.latency?.latencies?.stage_3_lstm_rul
+        ? `${metrics.latency.latencies.stage_3_lstm_rul.p50_ms.toFixed(2)} ms (p50) · ${metrics.latency.latencies.stage_3_lstm_rul.p95_ms.toFixed(2)} ms (p95)`
+        : 'Benchmarking...',
       provenance: 'SIMULATED DATA',
       provColor: 'bg-warn/15 text-warn border-warn/30'
     },
@@ -37,18 +70,26 @@ export const ModelProvenanceTable: React.FC = () => {
       model: 'Fast TreeSHAP (TreeExplainer)',
       input: 'Physics-Guided Feature Vector',
       testSplit: 'Continuous Streaming Windows',
-      metric: 'Physics Consistency: 90.97%',
-      latency: '3.62 ms (p50) · 5.08 ms (p95)',
+      metric: metrics?.quality_checks?.measurable_explainability
+        ? `Physics Consistency: ${(metrics.quality_checks.measurable_explainability.physics_consistency_score * 100).toFixed(1)}%`
+        : 'Measured Live',
+      latency: metrics?.latency?.latencies?.stage_4_shap_attribution
+        ? `${metrics.latency.latencies.stage_4_shap_attribution.p50_ms.toFixed(2)} ms (p50) · ${metrics.latency.latencies.stage_4_shap_attribution.p95_ms.toFixed(2)} ms (p95)`
+        : 'Benchmarking...',
       provenance: 'SIMULATED DATA',
       provColor: 'bg-warn/15 text-warn border-warn/30'
     },
     {
       stage: 'Real Bearing Benchmark',
       model: 'XGBoost on CWRU 12k Accelerometer',
-      input: 'Vibration Time + Spectral Features',
-      testSplit: '20 Held-Out CWRU Windows',
-      metric: 'Acc: 100.0% (Sim-to-Real: 72.5%)',
-      latency: '1.25 ms (p50) · 1.60 ms (p95)',
+      input: 'Vibration Time + Spectral Features (10 kHz resampled)',
+      testSplit: metrics?.cwru ? `${metrics.cwru.within_dataset_performance?.test_windows || 20} Held-Out Real Windows (Load 3)` : 'Held-Out Real Windows',
+      metric: metrics?.cwru
+        ? `Within-Dataset Acc: ${(metrics.cwru.within_dataset_performance.accuracy * 100).toFixed(1)}% (Zero-Shot: ${(metrics.cwru.sim_to_real_fine_tuning_experiment?.k_0?.accuracy_mean * 100).toFixed(1)}%)`
+        : 'Loading...',
+      latency: metrics?.latency?.latencies?.stage_2_xgboost
+        ? `${metrics.latency.latencies.stage_2_xgboost.p50_ms.toFixed(2)} ms (p50)`
+        : 'Benchmarking...',
       provenance: 'REAL PHYSICAL DATA',
       provColor: 'bg-ok/15 text-ok border-ok/30'
     }
@@ -62,7 +103,7 @@ export const ModelProvenanceTable: React.FC = () => {
             Machine Learning Pipeline Architecture & Provenance
           </h3>
           <p className="text-xs text-mute mt-1 font-sans">
-            Verified hyperparameters, held-out evaluation splits, and benchmarked inference latencies (AMD Ryzen 5 4600H CPU)
+            Verified hyperparameters, held-out evaluation splits, and empirically benchmarked latencies ({cpuModel})
           </p>
         </div>
       </div>
@@ -80,7 +121,7 @@ export const ModelProvenanceTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-rule/60">
-            {models.map((m, idx) => (
+            {rows.map((m, idx) => (
               <tr key={idx} className="hover:bg-track/50 transition-colors">
                 <td className="py-3 px-4 font-medium text-ink">
                   {m.stage}
@@ -98,7 +139,7 @@ export const ModelProvenanceTable: React.FC = () => {
                   {m.latency}
                 </td>
                 <td className="py-3 px-4">
-                  <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-mono border font-semibold ${m.provColor}`}>
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono border font-medium ${m.provColor}`}>
                     {m.provenance}
                   </span>
                 </td>

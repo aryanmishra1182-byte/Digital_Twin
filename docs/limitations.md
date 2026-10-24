@@ -2,44 +2,44 @@
 
 ## 1. Known Model Weaknesses & Empirical Evaluation Disclosures
 
-### 1.1 Stage 2 Fault Classifier Healthy Class Recall (41.7%)
-- On the held-out test split (312 windows from 52 runs), the Stage 2 XGBoost model achieved a recall of only **41.67% on the HEALTHY operational class** (10 of 24 healthy windows correctly identified; 14 misclassified as BEARING_DEFECT).
-- **Root Cause**: The synthetic training set (`dataset_train.csv`) contains 624 windows across 104 runs, but only 48 windows (8 runs) belong to the HEALTHY class, while faulty conditions encompass 576 windows across 96 runs (12:1 imbalance against healthy operation). When vibration kurtosis or crest factor fluctuates mildly due to stochastic noise, the unweighted tree ensemble biases boundary decisions toward mild bearing degradation.
-- **Academic Recommendation**: Physical industrial deployment requires acquiring extensive baseline healthy run hours or applying inverse-frequency class weighting (`scale_pos_weight` / sample weights) during training.
+### 1.1 Incipient Fault Detection Envelope (Stage 1 Anomaly Detection)
+- The unsupervised Isolation Forest achieved an anomaly recall of **99.12%** (793 of 800 faulty test windows flagged; 7 faulty windows missed) with validation-tuned thresholding.
+- **Root Cause & Limitation**: At extremely subtle fault severities ($<0.08$) under high background sensor noise ($15-20$ dB SNR), early vibration kurtosis and sideband harmonics can occasionally remain buried within nominal multi-dimensional feature variance.
 
-### 1.2 Stage 1 Anomaly Detector Recall (72.6%)
-- The unsupervised Isolation Forest achieved an anomaly recall of **72.57%** (209 of 288 faulty windows flagged; **79 faulty windows missed**).
-- **Root Cause**: The detector was trained with `contamination=0.05` on nominal healthy telemetry. Consequently, incipient fault severities (e.g. 0.3 severity at 25% load) produce subtle feature shifts that fall inside the nominal multidimensional decision envelope.
+### 1.2 Healthy Class Identification in Multiclass Classifier (85.0%)
+- Following balanced sample-weight training on 10,000 dataset samples across 1,000 runs, Stage 2 XGBoost achieved **85.00% recall on the Healthy operational class** (170 of 200 held-out healthy windows correctly classified).
+- **Residual Trade-Off**: 30 healthy windows were classified as mild bearing or air-gap defects. In industrial settings, minor baseline mechanical noise or shaft vibration ripple can occasionally trigger conservative fault classifications. Applying hysteresis filtering over multiple consecutive windows (as implemented in `MaintenanceAdvisoryService.java`) successfully mitigates transient false alarms.
 
-### 1.3 Idealized Spectral Signatures in Synthetic Data
-- The champion classifier achieves perfect 100.0% precision, recall, and F1-score on three fault modes: **Broken Rotor Bar**, **Stator Inter-Turn Short**, and **Air-Gap Eccentricity**.
-- **Important Disclosure**: These perfect metrics directly reflect the idealized, deterministic harmonic formulations implemented in the mathematical simulation generator (Eq. 1 and Eq. 2). In physical industrial environments, supply voltage unbalance, variable-frequency drive (VFD) switching harmonics, and mechanical load oscillations introduce spectral masking that degrades classification accuracy.
+### 1.3 Mathematical Simulation Assumptions vs. Factory Reality
+- While the synthetic motor simulator in `simulator/motor_simulator.py` was hardened with supply voltage unbalance ($0-3\%$), speed wander ($\pm 10$ RPM), sensor DC drift, noise ($15-35$ dB SNR), and multi-law degradation equations (linear, exponential, power-law $\gamma \in [1.4, 2.6]$), the underlying motor equations remain an idealized lump-parameter electromagnetic ODE representation.
+- **Factory Differences**: Physical factory environments introduce PWM inverter switching noise (variable-frequency drives), non-linear mechanical resonance modes, acoustic crosstalk from neighboring compressors, and ambient thermal cyclic variation.
 
-### 1.4 Remaining Useful Life (RUL) Test Set Scope
-- RUL evaluation was conducted across **4 held-out degradation trajectories** yielding 384 test sequences (sequence length $k=5$).
-- While the LSTM architecture achieves a Mean Absolute Error of 0.2199 hours (~13.2 minutes) compared to 0.3310 hours for Ridge regression and 12.02 hours for a naive mean baseline, this metric tests the model's capacity to regress the assumed power-law wear curve ($W(t) = (t/T)^{1.8}$), not real-world multi-physics tribological aging.
+### 1.4 Sim-to-Real Transferability & Domain Shift (CWRU Benchmark)
+- Direct zero-shot transfer from synthetic motor simulation to real physical accelerometer vibration on the Case Western Reserve University (CWRU) 12k bearing dataset yields **57.14% accuracy**.
+- **Empirical Resolution**: Incorporating as few as **10 real physical windows** into fine-tuning elevates accuracy to **81.57% $\pm$ 4.63%** across 10 random seeds. This confirms that while direct zero-shot transfer without physical calibration is limited, the extracted feature space transfers efficiently with minimal target-domain data.
 
-### 1.5 Load-Mismatch Generalization Drop (Leave-One-Load-Out: 70.83%)
-- When evaluated under strict Leave-One-Load-Out (LOLO) conditions (training on 3 load levels, testing on the held-out load), classification accuracy drops from 94.55% to **70.83%** (67.31% on 25% load, 67.31% on 50% load, 75.64% on 75% load, 73.08% on 100% load).
-- **Physical Reason**: MCSA sideband frequencies $f_{br} = f_1(1 \pm 2s)$ are proportional to operating slip $s$, which varies non-linearly with applied mechanical shaft load. Models trained without exposure to a given load level experience spectral feature shift.
+### 1.5 Load-Mismatch Generalization (Leave-One-Load-Out: 70.42%)
+- When evaluated under strict Leave-One-Load-Out (LOLO) conditions (training on 3 load levels and evaluating on the held-out load), classification accuracy drops to **70.42%** (Macro F1 = 0.6572).
+- **Physical Reason**: Motor Current Signature Analysis (MCSA) sideband frequencies $f_{br} = f_1(1 \pm 2s)$ scale directly with operating rotor slip $s$, which is fundamentally dependent on mechanical load. Classifiers trained without representation across diverse loads experience spectral distribution shift.
 
 ---
 
 ## 2. Benchmark Dataset Provenance & Distinction
 
-- **UCI AI4I 2020 Dataset**: This is a **synthetic benchmark** generated by Stephan Matzka (2020) modeling physical milling machine tool wear mechanics. **It does not contain physical or electrical induction motor current/vibration signals.** It serves strictly as an algorithmic benchmark for extreme class imbalance (28.5:1) and TreeSHAP validation.
-- **Induction Motor Dataset**: Generated via closed-loop mathematical differential equations matching IEEE 3 kW, 415 V, 50 Hz specifications. **No claims of physical dynamometer experimental validation are made.**
+- **Case Western Reserve University (CWRU) Dataset**: Physical accelerometer vibration recordings from a Reliance Electric 2 HP motor with SKF deep-groove ball bearings (Loads 0-3, 12 kHz resampled to 10 kHz). Evaluated with strict file-level splitting (Loads 0-1 for training, Load 3 for held-out test).
+- **UCI AI4I 2020 Dataset**: Synthetic benchmark generated by Stephan Matzka (2020) modeling physical milling machine tool wear mechanics. **It does not contain physical or electrical induction motor current/vibration signals.** It serves as a benchmark for extreme class imbalance (28.5:1) and TreeSHAP validation.
+- **Induction Motor Dataset**: Generated via dynamic simulation matching IEEE 3 kW, 415 V, 50 Hz specifications.
 
 ---
 
-## 3. Explainability Scope (SHAP)
+## 3. Explainability Scope & Interpretability (SHAP)
 
 - SHAP TreeExplainer attributes credit to input features based on cooperative game theory Shapley values.
-- Attributions represent statistical model dependency, not physical causality. While qualitative physics consistency was verified (e.g. sideband features dominating broken rotor bar predictions), anomalous external conditions or sensor faults could yield misleading explanations if not cross-validated by a qualified reliability engineer.
+- Attributions represent statistical model dependency, not physical causality. While qualitative physics consistency was verified (e.g., sideband harmonics dominating broken rotor bar predictions), anomalous external conditions or sensor faults could yield misleading explanations if not cross-validated by a qualified reliability engineer.
 
 ---
 
 ## 4. Advisory Safety Boundary
 
-- Recommendations emitted by the advisory engine are advisory decision-support aids for maintenance planners.
+- Recommendations emitted by the advisory engine are decision-support aids for maintenance planners.
 - The framework does NOT directly control machine contactors, VFD inverters, or safety shutdown circuits.

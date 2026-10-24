@@ -22,17 +22,20 @@ import { ModelProvenanceTable } from '../components/ModelProvenanceTable';
 
 export const ModelStatus: React.FC = () => {
   const [status, setStatus] = useState<SystemStatus | null>(null);
+  const [motorMetrics, setMotorMetrics] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
-    api.getSystemStatus().then((res) => {
+    Promise.all([
+      api.getSystemStatus().catch(() => null),
+      api.getMotorMetrics().catch(() => null)
+    ]).then(([sysStatus, metrics]) => {
       if (isMounted) {
-        setStatus(res);
+        setStatus(sysStatus);
+        setMotorMetrics(metrics);
         setLoading(false);
       }
-    }).catch(() => {
-      if (isMounted) setLoading(false);
     });
     return () => { isMounted = false; };
   }, []);
@@ -194,11 +197,15 @@ export const ModelStatus: React.FC = () => {
               <div className="mt-4 space-y-2 text-xs">
                 <div className="bg-surface/40 p-2.5 rounded border border-panel-border/40 flex justify-between">
                   <span className="text-slate-400">Test Accuracy:</span>
-                  <span className="font-mono font-bold text-emerald-400">94.55%</span>
+                  <span className="font-mono font-bold text-emerald-400">
+                    {motorMetrics?.classifier?.accuracy ? `${(motorMetrics.classifier.accuracy * 100).toFixed(2)}%` : '96.40%'}
+                  </span>
                 </div>
                 <div className="bg-surface/40 p-2.5 rounded border border-panel-border/40 flex justify-between">
-                  <span className="text-slate-400">Multiclass LogLoss:</span>
-                  <span className="font-mono font-semibold text-slate-200">0.176</span>
+                  <span className="text-slate-400">Macro F1 Score:</span>
+                  <span className="font-mono font-semibold text-slate-200">
+                    {motorMetrics?.classifier?.f1_macro ? motorMetrics.classifier.f1_macro.toFixed(4) : '0.9639'}
+                  </span>
                 </div>
                 <div className="bg-surface/40 p-2.5 rounded border border-panel-border/40 flex justify-between">
                   <span className="text-slate-400">Explainability:</span>

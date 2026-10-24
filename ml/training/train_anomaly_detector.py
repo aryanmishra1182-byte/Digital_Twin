@@ -2,6 +2,8 @@
 Stage 1: Anomaly Detection Training and Evaluation
 =================================================
 Trains an Isolation Forest anomaly detector primarily on HEALTHY operation data.
+Selects optimal decision threshold on the VALIDATION split to maximize F1.
+Evaluates on the held-out TEST split.
 Saves model artifact, threshold, metadata, and evaluation metrics.
 """
 
@@ -12,7 +14,7 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix
+from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score
 from ml.features.feature_extractor import FEATURE_NAMES
 
 MODEL_VERSION = "iso_forest_v1.0"
@@ -38,30 +40,37 @@ def train_anomaly_detector(
     iso_forest = IsolationForest(
         n_estimators=150,
         max_samples="auto",
-        contamination=0.05,  # expected nominal outlier fraction in healthy
+        contamination=0.05,
         random_state=random_state
     )
     iso_forest.fit(X_train_scaled)
 
+    # Threshold tuning on Validation split
+    # decision_function: lower means more abnormal
+    y_val_ground_truth = (val_df["fault_class"] != "HEALTHY").astype(int).values
+    X_val_scaled = scaler.transform(val_df[FEATURE_NAMES].values)
+    val_scores = -iso_forest.decision_function(X_val_scaled)  # higher = more anomalous
+
+    best_thresh = float(np.median(val_scores))
+    best_f1 = 0.0
+    for cand in np.percentile(val_scores, np.linspace(1, 99, 100)):
+        pred_cand = (val_scores > cand).astype(int)
+        cand_f1 = f1_score(y_val_ground_truth, pred_cand, zero_division=0)
+        if cand_f1 > best_f1:
+            best_f1 = cand_f1
+            best_thresh = float(cand)
+
     # Evaluate on held-out test set
-    # Ground truth: 1 for anomaly (faulty), 0 for normal (healthy)
     y_test_ground_truth = (test_df["fault_class"] != "HEALTHY").astype(int).values
     X_test_scaled = scaler.transform(test_df[FEATURE_NAMES].values)
-
-    # decision_function: lower means more abnormal
-    raw_scores = iso_forest.decision_function(X_test_scaled)
-    # Convert to anomaly score in [0, 1] where 1.0 is highly anomalous
-    anomaly_scores = 1.0 - (raw_scores - raw_scores.min()) / (raw_scores.max() - raw_scores.min() + 1e-6)
-    
-    # IsolationForest predict returns -1 for anomaly, 1 for inlier
-    raw_preds = iso_forest.predict(X_test_scaled)
-    binary_preds = (raw_preds == -1).astype(int)
+    test_scores = -iso_forest.decision_function(X_test_scaled)
+    binary_preds = (test_scores > best_thresh).astype(int)
 
     precision = float(precision_score(y_test_ground_truth, binary_preds, zero_division=0))
     recall = float(recall_score(y_test_ground_truth, binary_preds, zero_division=0))
     f1 = float(f1_score(y_test_ground_truth, binary_preds, zero_division=0))
+    roc_auc = float(roc_auc_score(y_test_ground_truth, test_scores))
     cm = confusion_matrix(y_test_ground_truth, binary_preds).tolist()
-    # False Positive Rate = FP / (FP + TN)
     tn, fp, fn, tp = confusion_matrix(y_test_ground_truth, binary_preds).ravel()
     fpr = float(fp / (fp + tn)) if (fp + tn) > 0 else 0.0
 
@@ -71,7 +80,9 @@ def train_anomaly_detector(
         "precision": precision,
         "recall": recall,
         "f1": f1,
+        "roc_auc": roc_auc,
         "false_positive_rate": fpr,
+        "threshold": best_thresh,
         "confusion_matrix": cm,
         "test_samples": len(test_df),
         "healthy_samples": int((test_df["fault_class"] == "HEALTHY").sum()),
@@ -83,6 +94,7 @@ def train_anomaly_detector(
     bundle = {
         "model": iso_forest,
         "scaler": scaler,
+        "threshold": best_thresh,
         "feature_names": FEATURE_NAMES,
         "model_version": MODEL_VERSION,
         "metrics": metrics
@@ -95,7 +107,7 @@ def train_anomaly_detector(
         json.dump(metrics, f, indent=2)
 
     print(f"Anomaly detector trained and saved to {artifact_path}")
-    print(f"Metrics: F1={f1:.4f}, Precision={precision:.4f}, Recall={recall:.4f}, FPR={fpr:.4f}")
+    print(f"Metrics: F1={f1:.4f}, Precision={precision:.4f}, Recall={recall:.4f}, FPR={fpr:.4f}, ROC_AUC={roc_auc:.4f}")
     return metrics
 
 if __name__ == "__main__":

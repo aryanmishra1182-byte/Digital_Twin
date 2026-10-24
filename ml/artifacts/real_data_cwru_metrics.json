@@ -3,51 +3,97 @@
   "data_provenance": "Physical Accelerometer Vibration Measurements (Real Data)",
   "dataset_url": "https://engineering.case.edu/bearingdatacenter",
   "testbed_specification": "Reliance Electric 2 HP Induction Motor with Deep Groove Ball Bearings (6205-2RS JEM SKF)",
-  "sampling_rate_hz": 12000,
-  "classes_evaluated": [
-    "NORMAL",
-    "INNER_RACE",
-    "BALL_FAULT",
-    "OUTER_RACE"
-  ],
+  "sampling_rate_original_hz": 12000,
+  "sampling_rate_resampled_hz": 10000,
+  "partitioning_method": "Strict File-Level Partition (Loads 0-1 for Train, Load 3 for Test)",
+  "file_sha256_hashes": {
+    "97.mat": "16bf48babcf1c7ac224bc1a81cd9eafdb27e42d5cf559761907e067e8eeadf3c",
+    "98.mat": "37e6612c05e65c415dcfa2ab27a3fda648a5863160fa898b884a14743044e045",
+    "105.mat": "f80b0ea04fd06b372a0eaec7c056543ea37e4bb4727a5b173d2a5bacd2aa9cab",
+    "106.mat": "e5cec7cdd138e6cd1deb9ed8634e5aaa9bc1bd7094ddc075bff606580eb6e883",
+    "118.mat": "b00628f8dd8d1d930af77fa465d1e5cdb385fe259489053f91f3680bda7f640e",
+    "119.mat": "bc72d9df7668219e004a0f711232b23ec0aed393eb9bd8f9f5483426f6b51330",
+    "130.mat": "35a095307d0971477049b343a1b5981dde465a58fb7f233ad89b035068c1717d",
+    "131.mat": "7883f7b83beadc54b2f301767f9145ce07055707182fb0278fdf0a6bb53ce3cb",
+    "100.mat": "88a5990cb541320e91505a1d72139e1993500ffe6e292a451011667f4138ca78",
+    "108.mat": "d415f0e65128bfa0b118c2051c988fb0dc6ce3e4c8aa45fdc5ad1d0967462e7d",
+    "121.mat": "52f686e984ba8e9b04a047a57416271cdb322cee57ee105dce58926a24b966cb",
+    "133.mat": "53f076cb0d905cf46bffaee7736abce8224ffed777deed03c0c863d762a90c71"
+  },
   "within_dataset_performance": {
-    "train_windows": 30,
-    "test_windows": 20,
-    "accuracy": 1.0,
-    "macro_precision": 1.0,
-    "macro_recall": 1.0,
-    "macro_f1": 1.0,
+    "train_windows": 120,
+    "test_windows": 70,
+    "accuracy": 0.7,
+    "macro_precision": 0.3159,
+    "macro_recall": 0.475,
+    "macro_f1": 0.3626,
     "per_class": {
       "NORMAL": {
-        "precision": 1.0,
+        "precision": 0.9302,
         "recall": 1.0,
-        "f1": 1.0,
-        "test_windows": 8
+        "f1": 0.9639,
+        "test_windows": 40
       },
       "INNER_RACE": {
-        "precision": 1.0,
-        "recall": 1.0,
-        "f1": 1.0,
-        "test_windows": 4
+        "precision": 0.3333,
+        "recall": 0.9,
+        "f1": 0.4865,
+        "test_windows": 10
       },
       "BALL_FAULT": {
-        "precision": 1.0,
-        "recall": 1.0,
-        "f1": 1.0,
-        "test_windows": 4
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "test_windows": 10
       },
       "OUTER_RACE": {
-        "precision": 1.0,
-        "recall": 1.0,
-        "f1": 1.0,
-        "test_windows": 4
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "test_windows": 10
       }
     }
   },
-  "simulation_to_real_transfer_evaluation": {
-    "transfer_accuracy": 0.725,
-    "transfer_macro_f1": 0.684,
-    "performance_drop_percentage": 27.5,
-    "transfer_finding": "Direct zero-shot transfer from mathematical simulation to physical CWRU signals experiences a 25.6% accuracy drop due to real structural transmission path resonances and non-ideal impulse decay rates. Fine-tuning with as few as 20 real windows restores accuracy to >92%."
+  "sim_to_real_fine_tuning_experiment": {
+    "k_0": {
+      "real_windows_used": 0,
+      "accuracy_mean": 0.5714,
+      "accuracy_std": 0.0,
+      "macro_f1_mean": 0.3636,
+      "macro_f1_std": 0.0,
+      "trials_evaluated": 10
+    },
+    "k_5": {
+      "real_windows_used": 5,
+      "accuracy_mean": 0.5714,
+      "accuracy_std": 0.0,
+      "macro_f1_mean": 0.1818,
+      "macro_f1_std": 0.0,
+      "trials_evaluated": 10
+    },
+    "k_10": {
+      "real_windows_used": 10,
+      "accuracy_mean": 0.8157,
+      "accuracy_std": 0.0463,
+      "macro_f1_mean": 0.6321,
+      "macro_f1_std": 0.0727,
+      "trials_evaluated": 10
+    },
+    "k_20": {
+      "real_windows_used": 20,
+      "accuracy_mean": 0.7543,
+      "accuracy_std": 0.0725,
+      "macro_f1_mean": 0.4933,
+      "macro_f1_std": 0.1237,
+      "trials_evaluated": 10
+    },
+    "k_50": {
+      "real_windows_used": 50,
+      "accuracy_mean": 0.7929,
+      "accuracy_std": 0.0607,
+      "macro_f1_mean": 0.5792,
+      "macro_f1_std": 0.1253,
+      "trials_evaluated": 10
+    }
   }
 }

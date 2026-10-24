@@ -47,6 +47,8 @@ def load_json(name):
 
 # Load metrics
 classifier_metrics = load_json("fault_classifier_metrics.json")
+anomaly_metrics = load_json("anomaly_detector_metrics.json")
+rf_metrics = load_json("rf_metrics.json")
 rul_metrics = load_json("rul_metrics.json")
 quality_metrics = load_json("model_quality_checks.json")
 robustness_metrics = load_json("robustness_metrics.json")
@@ -300,17 +302,28 @@ def plot_cwru_transfer():
         return
     within_acc = cwru_metrics["within_dataset_performance"]["accuracy"] * 100
     within_f1 = cwru_metrics["within_dataset_performance"]["macro_f1"] * 100
-    transfer_acc = cwru_metrics["simulation_to_real_transfer_evaluation"]["transfer_accuracy"] * 100
-    transfer_f1 = cwru_metrics["simulation_to_real_transfer_evaluation"]["transfer_macro_f1"] * 100
     
-    categories = ["Within CWRU Benchmark\n(Real Training & Test)", "Zero-Shot Sim-to-Real Transfer\n(Sim Trained -> CWRU Tested)"]
-    accs = [within_acc, transfer_acc]
-    f1s = [within_f1, transfer_f1]
+    ft = cwru_metrics.get("sim_to_real_fine_tuning_experiment", {})
+    k0 = ft.get("k_0", {})
+    k10 = ft.get("k_10", {})
+    
+    transfer_acc = k0.get("accuracy_mean", 0.5714) * 100
+    transfer_f1 = k0.get("macro_f1_mean", 0.3636) * 100
+    ft10_acc = k10.get("accuracy_mean", 0.8157) * 100
+    ft10_f1 = k10.get("macro_f1_mean", 0.6321) * 100
+    
+    categories = [
+        "Within CWRU Benchmark\n(Train Loads 0-1, Test 3)",
+        "Zero-Shot Sim-to-Real\n(Mathematical Model)",
+        "Few-Shot Fine-Tuned\n(Model + 10 CWRU Windows)"
+    ]
+    accs = [within_acc, transfer_acc, ft10_acc]
+    f1s = [within_f1, transfer_f1, ft10_f1]
     
     x = np.arange(len(categories))
-    width = 0.3
+    width = 0.32
     
-    fig, ax = plt.subplots(figsize=(6.5, 4.2))
+    fig, ax = plt.subplots(figsize=(7.2, 4.5))
     rects1 = ax.bar(x - width/2, accs, width, label="Accuracy (%)", color="#1f4e78", edgecolor="#102a43")
     rects2 = ax.bar(x + width/2, f1s, width, label="Macro F1 (%)", color="#486581", edgecolor="#102a43")
     
@@ -325,7 +338,7 @@ def plot_cwru_transfer():
     ax.set_xticklabels(categories)
     ax.set_ylabel("Score (%)", fontweight="bold")
     ax.set_ylim(0, 115)
-    ax.set_title("CWRU 12k Bearing Dataset Evaluation (Real Physical Data)", pad=12)
+    ax.set_title("CWRU Bearing Physical Dataset Validation & Transferability", pad=12)
     ax.legend(loc="upper right")
     ax.grid(axis="y")
     
@@ -339,35 +352,57 @@ def plot_cwru_transfer():
 # -------------------------------------------------------------
 def generate_latex_tables():
     tex_path = os.path.join(OUTPUT_DIR, "tables.tex")
-    with open(tex_path, "w") as f:
+    with open(tex_path, "w", encoding="utf-8") as f:
         f.write("% =========================================================\n")
         f.write("% MACHINA-X PAPER READY LATEX TABLES\n")
         f.write("% Auto-generated from ml/artifacts JSON metrics\n")
         f.write("% =========================================================\n\n")
         
-        # Table I: Model Comparison across Pipeline
+        # Table I: Multi-stage Model Comparison
         f.write("% Table I: Multi-stage Model Comparison\n")
         f.write("\\begin{table}[htbp]\n")
         f.write("\\centering\n")
-        f.write("\\caption{MACHINA-X Multi-Stage Detection and Classification Benchmarking (Held-out Test Split: 312 Windows across 52 Runs)}\n")
+        f.write("\\caption{MACHINA-X Multi-Stage Detection and Classification Benchmarking (Held-out Test Split)}\n")
         f.write("\\label{tab:pipeline_benchmark}\n")
         f.write("\\begin{tabular}{lccccc}\n")
         f.write("\\hline\n")
         f.write("\\textbf{Stage / Model Architecture} & \\textbf{Input Type} & \\textbf{Accuracy (\\%)} & \\textbf{Macro F1 (\\%)} & \\textbf{Inference (ms)} & \\textbf{Selected} \\\\\n")
         f.write("\\hline\n")
-        f.write("Stage 1: Isolation Forest & 26 Handcrafted Feats & 72.57 & 49.38 & 9.45 & \\checkmark \\\\\n")
+        
+        if anomaly_metrics:
+            ad_f1 = anomaly_metrics.get('f1', 0) * 100
+            ad_rec = anomaly_metrics.get('recall', 0) * 100
+            ad_lat = latency_metrics.get('latencies', {}).get('stage_1_isolation_forest', {}).get('p50_ms', 9.45) if latency_metrics else 9.45
+            f.write(f"Stage 1: Isolation Forest & 26 Handcrafted Feats & {ad_rec:.2f} (Recall) & {ad_f1:.2f} & {ad_lat:.2f} & \\checkmark \\\\\n")
         if autoencoder_metrics:
-            ae_f1 = autoencoder_metrics['test_f1'] * 100
-            ae_rec = autoencoder_metrics['test_recall'] * 100
-            f.write(f"Stage 1: Reconstruction Autoencoder & 26 Scaled Feats & {ae_rec:.2f} (Recall) & {ae_f1:.2f} & 11.20 & Baseline \\\\\n")
-        f.write("Stage 2: XGBoost Classifier (120 Trees) & 26 Handcrafted Feats & 94.55 & 88.62 & 1.41 & \\checkmark \\\\\n")
+            ae_f1 = autoencoder_metrics.get('test_f1', 0) * 100
+            ae_rec = autoencoder_metrics.get('test_recall', 0) * 100
+            ae_lat = latency_metrics.get('latencies', {}).get('stage_1_autoencoder', {}).get('p50_ms', 0.23) if latency_metrics else 0.23
+            f.write(f"Stage 1: Reconstruction Autoencoder & 26 Scaled Feats & {ae_rec:.2f} (Recall) & {ae_f1:.2f} & {ae_lat:.2f} & Baseline \\\\\n")
+        if classifier_metrics:
+            xgb_acc = classifier_metrics.get('accuracy', 0) * 100
+            xgb_f1 = classifier_metrics.get('f1_macro', 0) * 100
+            xgb_lat = latency_metrics.get('latencies', {}).get('stage_2_xgboost', {}).get('p50_ms', 1.04) if latency_metrics else 1.04
+            f.write(f"Stage 2: XGBoost Classifier & 26 Handcrafted Feats & {xgb_acc:.2f} & {xgb_f1:.2f} & {xgb_lat:.2f} & \\checkmark \\\\\n")
+        if rf_metrics:
+            rf_acc = rf_metrics.get('accuracy', 0) * 100
+            rf_f1 = rf_metrics.get('f1_macro', 0) * 100
+            rf_lat = latency_metrics.get('latencies', {}).get('stage_2_random_forest', {}).get('p50_ms', 7.85) if latency_metrics else 7.85
+            f.write(f"Stage 2: Random Forest Baseline & 26 Handcrafted Feats & {rf_acc:.2f} & {rf_f1:.2f} & {rf_lat:.2f} & Baseline \\\\\n")
         if cnn_metrics:
-            cnn_acc = cnn_metrics['accuracy'] * 100
-            cnn_f1 = cnn_metrics['macro_f1'] * 100
-            f.write(f"Stage 2: 1-D Waveform CNN & Raw Signals (2x10000) & {cnn_acc:.2f} & {cnn_f1:.2f} & 18.50 & Baseline \\\\\n")
-        f.write("Stage 2: Random Forest Baseline & 26 Handcrafted Feats & 92.63 & 84.10 & 2.80 & Baseline \\\\\n")
-        f.write("Stage 3: LSTM Sequence Regressor & 5-Step Feature Window & MAE 0.220 h & RMSE 0.293 h & 1.15 & \\checkmark \\\\\n")
-        f.write("Stage 3: Ridge Regression Baseline & 5-Step Flattened & MAE 0.331 h & RMSE 0.463 h & 0.45 & Baseline \\\\\n")
+            cnn_acc = cnn_metrics.get('test_accuracy', 0) * 100
+            cnn_f1 = cnn_metrics.get('test_macro_f1', 0) * 100
+            cnn_lat = latency_metrics.get('latencies', {}).get('stage_2_1d_cnn', {}).get('p50_ms', 2.05) if latency_metrics else 2.05
+            f.write(f"Stage 2: 1-D Waveform CNN & Raw Signals (2x10000) & {cnn_acc:.2f} & {cnn_f1:.2f} & {cnn_lat:.2f} & Baseline \\\\\n")
+        if rul_metrics:
+            rul_mae = rul_metrics.get('mae_hours', 0)
+            rul_rmse = rul_metrics.get('rmse_hours', 0)
+            rul_lat = latency_metrics.get('latencies', {}).get('stage_3_lstm_rul', {}).get('p50_ms', 0.80) if latency_metrics else 0.80
+            f.write(f"Stage 3: LSTM Sequence Regressor & 5-Step Feature Window & MAE {rul_mae:.3f} h & RMSE {rul_rmse:.3f} h & {rul_lat:.2f} & \\checkmark \\\\\n")
+            rul_base = rul_metrics.get("baseline_comparison", {})
+            if "Ridge_Baseline" in rul_base:
+                rg = rul_base["Ridge_Baseline"]
+                f.write(f"Stage 3: Ridge Regression Baseline & 5-Step Flattened & MAE {rg.get('mae_hours', 0):.3f} h & RMSE {rg.get('rmse_hours', 0):.3f} h & 0.45 & Baseline \\\\\n")
         f.write("\\hline\n")
         f.write("\\end{tabular}\n")
         f.write("\\end{table}\n\n")
@@ -378,7 +413,7 @@ def generate_latex_tables():
             f.write("% Table II: Sensor Modality Ablation\n")
             f.write("\\begin{table}[htbp]\n")
             f.write("\\centering\n")
-            f.write("\\caption{Sensor Modality Ablation Analysis on 312 Held-Out Test Windows}\n")
+            f.write("\\caption{Sensor Modality Ablation Analysis on Held-Out Test Windows}\n")
             f.write("\\label{tab:modality_ablation}\n")
             f.write("\\begin{tabular}{lccc}\n")
             f.write("\\hline\n")
@@ -395,27 +430,39 @@ def generate_latex_tables():
 
         # Table III: Hardware Latency Breakdown
         if latency_metrics:
-            lat = latency_metrics["latencies"]
-            hw = latency_metrics["benchmark_metadata"]
-            p50 = lat["full_end_to_end_pipeline"]["p50_ms"]
-            p95 = lat["full_end_to_end_pipeline"]["p95_ms"]
+            lat = latency_metrics.get("latencies", {})
+            hw = latency_metrics.get("benchmark_metadata", {})
             f.write("% Table III: Hardware Latency Breakdown\n")
             f.write("\\begin{table}[htbp]\n")
             f.write("\\centering\n")
-            f.write(f"\\caption{{Measured Computational Latency across {hw['benchmark_windows_evaluated']} Test Windows ({hw['cpu_model']}, Python {hw['python_version']})}}\n")
+            f.write(f"\\caption{{Measured Computational Latency across {hw.get('timing_windows_evaluated', 500)} Test Windows ({hw.get('processor', 'CPU')}, Python {hw.get('python_version', '3.10')})}}\n")
             f.write("\\label{tab:hardware_latency}\n")
             f.write("\\begin{tabular}{lcccc}\n")
             f.write("\\hline\n")
             f.write("\\textbf{Pipeline Component} & \\textbf{Mean (ms)} & \\textbf{Std Dev (ms)} & \\textbf{p50 (ms)} & \\textbf{p95 (ms)} \\\\\n")
             f.write("\\hline\n")
-            f.write(f"Physics Feature Extraction (26 features) & {lat['feature_extraction']['mean_ms']:.2f} & {lat['feature_extraction']['std_ms']:.2f} & {lat['feature_extraction']['p50_ms']:.2f} & {lat['feature_extraction']['p95_ms']:.2f} \\\\\n")
-            f.write(f"Stage 1 Isolation Forest Anomaly Detection & {lat['stage_1_anomaly_detection']['mean_ms']:.2f} & {lat['stage_1_anomaly_detection']['std_ms']:.2f} & {lat['stage_1_anomaly_detection']['p50_ms']:.2f} & {lat['stage_1_anomaly_detection']['p95_ms']:.2f} \\\\\n")
-            f.write(f"Stage 2 XGBoost Multi-Class Classification & {lat['stage_2_fault_classification']['mean_ms']:.2f} & {lat['stage_2_fault_classification']['std_ms']:.2f} & {lat['stage_2_fault_classification']['p50_ms']:.2f} & {lat['stage_2_fault_classification']['p95_ms']:.2f} \\\\\n")
-            f.write(f"TreeSHAP Attribution (Top 5 Explanations) & {lat['stage_4_shap_attribution']['mean_ms']:.2f} & {lat['stage_4_shap_attribution']['std_ms']:.2f} & {lat['stage_4_shap_attribution']['p50_ms']:.2f} & {lat['stage_4_shap_attribution']['p95_ms']:.2f} \\\\\n")
-            f.write(f"\\textbf{{Full End-to-End Decision Pipeline}} & \\textbf{{{lat['full_end_to_end_pipeline']['mean_ms']:.2f}}} & \\textbf{{{lat['full_end_to_end_pipeline']['std_ms']:.2f}}} & \\textbf{{{p50:.2f}}} & \\textbf{{{p95:.2f}}} \\\\\n")
+            for c_name, c_key in [
+                ("Physics Feature Extraction (26 features)", "feature_extraction"),
+                ("Stage 1 Isolation Forest Anomaly Detection", "stage_1_isolation_forest"),
+                ("Stage 2 XGBoost Multi-Class Classification", "stage_2_xgboost"),
+                ("Stage 3 LSTM Remaining Useful Life", "stage_3_lstm_rul"),
+                ("TreeSHAP Attribution (Top 5 Explanations)", "stage_4_shap_attribution"),
+                ("Full End-to-End Decision Pipeline", "full_production_pipeline"),
+            ]:
+                cd = lat.get(c_key, {})
+                mean_s = f"{cd.get('mean_ms', 0):.2f}"
+                std_s = f"{cd.get('std_ms', 0):.2f}"
+                p50_s = f"{cd.get('p50_ms', 0):.2f}"
+                p95_s = f"{cd.get('p95_ms', 0):.2f}"
+                if c_key == "full_production_pipeline":
+                    f.write(f"\\textbf{{{c_name}}} & \\textbf{{{mean_s}}} & \\textbf{{{std_s}}} & \\textbf{{{p50_s}}} & \\textbf{{{p95_s}}} \\\\\n")
+                else:
+                    f.write(f"{c_name} & {mean_s} & {std_s} & {p50_s} & {p95_s} \\\\\n")
             f.write("\\hline\n")
             f.write("\\end{tabular}\n")
             f.write("\\end{table}\n\n")
+
+    print(f"  -> Generated LaTeX tables: {tex_path}")
 
     print(f"  -> Generated LaTeX tables: {tex_path}")
 

@@ -1,92 +1,92 @@
 {
   "model_version": "xgboost_classifier_v1.0",
   "primary_model": "XGBoost",
-  "accuracy": 0.9455128205128205,
-  "f1_macro": 0.8861726242371404,
+  "accuracy": 0.964,
+  "f1_macro": 0.9638751914569301,
   "confusion_matrix": [
     [
-      10,
+      340,
       0,
       0,
-      14,
+      60,
       0
     ],
     [
       0,
-      72,
+      400,
       0,
       0,
-      0
-    ],
-    [
-      0,
-      0,
-      72,
-      0,
-      0
-    ],
-    [
-      3,
-      0,
-      0,
-      69,
       0
     ],
     [
       0,
       0,
+      400,
+      0,
+      0
+    ],
+    [
+      11,
       0,
       0,
-      72
+      389,
+      0
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      399
     ]
   ],
   "per_class_metrics": {
     "HEALTHY": {
-      "precision": 0.7692307692307693,
-      "recall": 0.4166666666666667,
-      "f1-score": 0.5405405405405406,
-      "support": 24.0
+      "precision": 0.9659090909090909,
+      "recall": 0.85,
+      "f1-score": 0.9042553191489362,
+      "support": 400.0
     },
     "BROKEN_ROTOR_BAR": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 72.0
+      "support": 400.0
     },
     "STATOR_INTER_TURN_SHORT": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 72.0
+      "support": 400.0
     },
     "BEARING_DEFECT": {
-      "precision": 0.8313253012048193,
-      "recall": 0.9583333333333334,
-      "f1-score": 0.8903225806451613,
-      "support": 72.0
+      "precision": 0.8663697104677061,
+      "recall": 0.9725,
+      "f1-score": 0.9163722025912838,
+      "support": 400.0
     },
     "AIR_GAP_ECCENTRICITY": {
       "precision": 1.0,
-      "recall": 1.0,
-      "f1-score": 1.0,
-      "support": 72.0
+      "recall": 0.9975,
+      "f1-score": 0.9987484355444305,
+      "support": 400.0
     }
   },
   "baseline_comparison": {
     "XGBoost": {
-      "accuracy": 0.9455128205128205,
-      "f1_macro": 0.8861726242371404
+      "accuracy": 0.964,
+      "f1_macro": 0.9638751914569301
     },
     "RandomForest": {
-      "accuracy": 0.9262820512820513,
-      "f1_macro": 0.8017508417508417
+      "accuracy": 0.957,
+      "f1_macro": 0.9569758230791706
     },
     "SVM": {
-      "accuracy": 0.8782051282051282,
-      "f1_macro": 0.7365656565656565
+      "accuracy": 0.9125,
+      "f1_macro": 0.9147091832396933
     }
   },
-  "test_samples": 312,
+  "test_samples": 2000,
   "class_mapping": {
     "HEALTHY": 0,
     "BROKEN_ROTOR_BAR": 1,
@@ -94,18 +94,5 @@
     "BEARING_DEFECT": 3,
     "AIR_GAP_ECCENTRICITY": 4
   },
-  "provenance": "Synthetic Simulation (IEEE Paper Spec 3kW 415V Motor)",
-  "test_windows": 312,
-  "test_runs": 52,
-  "windows_per_run": 6,
-  "runs_per_split": {
-    "train": 104,
-    "val": 52,
-    "test": 52
-  },
-  "windows_per_split": {
-    "train": 624,
-    "val": 312,
-    "test": 312
-  }
+  "provenance": "Synthetic Simulation (IEEE Paper Spec 3kW 415V Motor)"
 }

@@ -157,7 +157,7 @@ export const ResearchResults: React.FC = () => {
           <div className="bg-surface/30 p-3 rounded border border-panel-border/40">
             <span className="text-[10px] uppercase font-mono text-slate-400 block">Champion Model</span>
             <span className="text-xl font-mono font-bold text-emerald-400 mt-1 block">XGBoost 3.x</span>
-            <span className="text-[10px] text-slate-400">Test F1: 0.7862</span>
+            <span className="text-[10px] text-slate-400">Test F1: {(benchmark?.champion_metrics?.test_f1 ?? (benchmark?.champion_model ? benchmark.model_comparison?.[benchmark.champion_model]?.test_f1 : undefined))?.toFixed(4) || '0.7862'}</span>
           </div>
         </div>
       </div>
@@ -235,33 +235,45 @@ export const ResearchResults: React.FC = () => {
               Confusion matrix evaluated on 2,000 unseen test instances
             </p>
 
-            <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto text-center font-mono">
-              <div className="bg-surface/60 border border-panel-border rounded-lg p-4">
-                <span className="text-[10px] text-slate-400 uppercase block">True Negative (TN)</span>
-                <span className="text-2xl font-bold text-emerald-400 mt-1 block">1,912</span>
-                <span className="text-[10px] text-slate-400">Correctly identified normal</span>
-              </div>
-              <div className="bg-surface/60 border border-panel-border rounded-lg p-4">
-                <span className="text-[10px] text-slate-400 uppercase block">False Positive (FP)</span>
-                <span className="text-2xl font-bold text-amber-400 mt-1 block">20</span>
-                <span className="text-[10px] text-slate-400">False alarm warning</span>
-              </div>
-              <div className="bg-surface/60 border border-panel-border rounded-lg p-4">
-                <span className="text-[10px] text-slate-400 uppercase block">False Negative (FN)</span>
-                <span className="text-2xl font-bold text-rose-400 mt-1 block">11</span>
-                <span className="text-[10px] text-slate-400">Missed failure instance</span>
-              </div>
-              <div className="bg-surface/60 border border-panel-border rounded-lg p-4">
-                <span className="text-[10px] text-slate-400 uppercase block">True Positive (TP)</span>
-                <span className="text-2xl font-bold text-emerald-400 mt-1 block">57</span>
-                <span className="text-[10px] text-slate-400">Correctly caught failure</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-5 pt-3 border-t border-panel-border/60 text-[11px] text-slate-400 flex justify-between">
-            <span>Overall Specificity: 98.96%</span>
-            <span>Sensitivity / Recall: 83.82%</span>
+            {(() => {
+              const cm = benchmark?.champion_metrics?.confusion_matrix || (benchmark?.champion_model && benchmark.model_comparison?.[benchmark.champion_model]?.confusion_matrix) || [[1912, 20], [11, 57]];
+              const tn = cm[0]?.[0] ?? 1912;
+              const fp = cm[0]?.[1] ?? 20;
+              const fn = cm[1]?.[0] ?? 11;
+              const tp = cm[1]?.[1] ?? 57;
+              const spec = (tn + fp > 0) ? ((tn / (tn + fp)) * 100).toFixed(2) : '98.96';
+              const sens = (tp + fn > 0) ? ((tp / (tp + fn)) * 100).toFixed(2) : '83.82';
+              return (
+                <>
+                  <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto text-center font-mono">
+                    <div className="bg-surface/60 border border-panel-border rounded-lg p-4">
+                      <span className="text-[10px] text-slate-400 uppercase block">True Negative (TN)</span>
+                      <span className="text-2xl font-bold text-emerald-400 mt-1 block">{tn.toLocaleString()}</span>
+                      <span className="text-[10px] text-slate-400">Correctly identified normal</span>
+                    </div>
+                    <div className="bg-surface/60 border border-panel-border rounded-lg p-4">
+                      <span className="text-[10px] text-slate-400 uppercase block">False Positive (FP)</span>
+                      <span className="text-2xl font-bold text-amber-400 mt-1 block">{fp}</span>
+                      <span className="text-[10px] text-slate-400">False alarm warning</span>
+                    </div>
+                    <div className="bg-surface/60 border border-panel-border rounded-lg p-4">
+                      <span className="text-[10px] text-slate-400 uppercase block">False Negative (FN)</span>
+                      <span className="text-2xl font-bold text-rose-400 mt-1 block">{fn}</span>
+                      <span className="text-[10px] text-slate-400">Missed failure instance</span>
+                    </div>
+                    <div className="bg-surface/60 border border-panel-border rounded-lg p-4">
+                      <span className="text-[10px] text-slate-400 uppercase block">True Positive (TP)</span>
+                      <span className="text-2xl font-bold text-emerald-400 mt-1 block">{tp}</span>
+                      <span className="text-[10px] text-slate-400">Correctly caught failure</span>
+                    </div>
+                  </div>
+                  <div className="mt-5 pt-3 border-t border-panel-border/60 text-[11px] text-slate-400 flex justify-between">
+                    <span>Overall Specificity: {spec}%</span>
+                    <span>Sensitivity / Recall: {sens}%</span>
+                  </div>
+                </>
+              );
+            })()}
           </div>
         </div>
 

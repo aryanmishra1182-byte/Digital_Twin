@@ -325,7 +325,11 @@ def get_motor_metrics():
         ("anomaly_detector_metrics.json", "anomaly"),
         ("latency_metrics.json", "latency"),
         ("robustness_metrics.json", "robustness"),
-        ("hyperparameters.json", "hyperparameters")
+        ("hyperparameters.json", "hyperparameters"),
+        ("real_data_cwru_metrics.json", "cwru"),
+        ("model_selection.json", "selection"),
+        ("model_quality_checks.json", "quality_checks"),
+        ("locust_benchmark.json", "locust")
     ]:
         p = os.path.join(artifacts_dir, fname)
         if os.path.exists(p):

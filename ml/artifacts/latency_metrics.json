@@ -11,51 +11,105 @@
     "architecture": "AMD64",
     "python_version": "3.10.0"
   },
+  "disk_sizes_kb": {
+    "isolation_forest_kb": 2450.96,
+    "autoencoder_kb": 9.44,
+    "xgboost_kb": 874.32,
+    "random_forest_kb": 1020.95,
+    "svm_kb": 508.41,
+    "cnn_1d_kb": 0.0,
+    "rul_lstm_kb": 69.75
+  },
   "latencies": {
     "feature_extraction": {
-      "mean_ms": 2.516,
-      "std_ms": 0.355,
-      "p50_ms": 2.386,
-      "p95_ms": 3.271,
-      "p99_ms": 3.877,
-      "min_ms": 2.175,
-      "max_ms": 4.583
+      "mean_ms": 2.751,
+      "std_ms": 0.399,
+      "p50_ms": 2.658,
+      "p95_ms": 3.469,
+      "p99_ms": 3.926,
+      "min_ms": 2.377,
+      "max_ms": 6.384
     },
-    "stage_1_anomaly_detection": {
-      "mean_ms": 9.451,
-      "std_ms": 0.862,
-      "p50_ms": 9.126,
-      "p95_ms": 11.345,
-      "p99_ms": 12.307,
-      "min_ms": 8.481,
-      "max_ms": 15.429
+    "stage_1_isolation_forest": {
+      "mean_ms": 10.9,
+      "std_ms": 1.051,
+      "p50_ms": 10.706,
+      "p95_ms": 12.021,
+      "p99_ms": 15.355,
+      "min_ms": 9.78,
+      "max_ms": 23.858
     },
-    "stage_2_fault_classification": {
-      "mean_ms": 1.411,
-      "std_ms": 1.486,
-      "p50_ms": 1.298,
-      "p95_ms": 1.84,
-      "p99_ms": 2.207,
-      "min_ms": 0.805,
-      "max_ms": 28.832
+    "stage_1_autoencoder": {
+      "mean_ms": 0.261,
+      "std_ms": 0.113,
+      "p50_ms": 0.234,
+      "p95_ms": 0.398,
+      "p99_ms": 0.497,
+      "min_ms": 0.213,
+      "max_ms": 2.168
+    },
+    "stage_2_xgboost": {
+      "mean_ms": 1.168,
+      "std_ms": 0.373,
+      "p50_ms": 1.04,
+      "p95_ms": 1.698,
+      "p99_ms": 2.096,
+      "min_ms": 0.909,
+      "max_ms": 4.713
+    },
+    "stage_2_random_forest": {
+      "mean_ms": 8.003,
+      "std_ms": 1.117,
+      "p50_ms": 7.847,
+      "p95_ms": 8.82,
+      "p99_ms": 10.653,
+      "min_ms": 7.114,
+      "max_ms": 28.284
+    },
+    "stage_2_svm": {
+      "mean_ms": 0.593,
+      "std_ms": 0.172,
+      "p50_ms": 0.523,
+      "p95_ms": 0.959,
+      "p99_ms": 1.175,
+      "min_ms": 0.442,
+      "max_ms": 2.333
+    },
+    "stage_2_1d_cnn": {
+      "mean_ms": 2.252,
+      "std_ms": 0.733,
+      "p50_ms": 2.049,
+      "p95_ms": 3.279,
+      "p99_ms": 4.519,
+      "min_ms": 1.68,
+      "max_ms": 11.776
+    },
+    "stage_3_lstm_rul": {
+      "mean_ms": 0.887,
+      "std_ms": 0.234,
+      "p50_ms": 0.796,
+      "p95_ms": 1.241,
+      "p99_ms": 1.637,
+      "min_ms": 0.694,
+      "max_ms": 3.124
     },
     "stage_4_shap_attribution": {
-      "mean_ms": 3.818,
-      "std_ms": 1.952,
-      "p50_ms": 3.62,
-      "p95_ms": 5.081,
-      "p99_ms": 6.4,
-      "min_ms": 2.645,
-      "max_ms": 42.692
+      "mean_ms": 4.798,
+      "std_ms": 0.939,
+      "p50_ms": 4.668,
+      "p95_ms": 6.063,
+      "p99_ms": 7.323,
+      "min_ms": 3.802,
+      "max_ms": 18.419
     },
-    "full_end_to_end_pipeline": {
-      "mean_ms": 17.425,
-      "std_ms": 2.991,
-      "p50_ms": 16.68,
-      "p95_ms": 21.321,
-      "p99_ms": 26.102,
-      "min_ms": 15.075,
-      "max_ms": 55.496
+    "full_production_pipeline": {
+      "mean_ms": 32.804,
+      "std_ms": 3.172,
+      "p50_ms": 31.866,
+      "p95_ms": 37.999,
+      "p99_ms": 46.818,
+      "min_ms": 29.673,
+      "max_ms": 58.436
     }
   }
 }

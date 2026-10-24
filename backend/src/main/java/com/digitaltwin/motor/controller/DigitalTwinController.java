@@ -1,6 +1,7 @@
 package com.digitaltwin.motor.controller;
 
 import com.digitaltwin.motor.dto.DigitalTwinResponse;
+import com.digitaltwin.motor.dto.WhatIfRequest;
 import com.digitaltwin.motor.service.DigitalTwinService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,5 +27,10 @@ public class DigitalTwinController {
     @GetMapping("/{motorId}")
     public ResponseEntity<DigitalTwinResponse> getTwinState(@PathVariable String motorId) {
         return ResponseEntity.ok(digitalTwinService.getTwinState(motorId));
+    }
+
+    @PostMapping("/what-if")
+    public ResponseEntity<DigitalTwinResponse> simulateWhatIf(@RequestBody WhatIfRequest request) {
+        return ResponseEntity.ok(digitalTwinService.simulateWhatIf(request));
     }
 }
