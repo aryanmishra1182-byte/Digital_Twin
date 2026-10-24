@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { Navbar } from './components/Navbar';
 import { SimulatorModal } from './components/SimulatorModal';
+import { LandingPage } from './pages/LandingPage';
+import { AuthPage } from './pages/AuthPage';
 import { FleetOverview } from './pages/FleetOverview';
 import { MotorDetail } from './pages/MotorDetail';
+import { PredictiveMaintenance } from './pages/PredictiveMaintenance';
 import { FaultDiagnosis } from './pages/FaultDiagnosis';
 import { Explainability } from './pages/Explainability';
 import { RemainingUsefulLife } from './pages/RemainingUsefulLife';
 import { AlertsMaintenance } from './pages/AlertsMaintenance';
+import { ResearchResults } from './pages/ResearchResults';
 import { ModelStatus } from './pages/ModelStatus';
 import { api } from './api/client';
 import { DigitalTwinState, AlertRecord, SimulatorStatus } from './types';
@@ -23,7 +27,7 @@ const queryClient = new QueryClient({
   }
 });
 
-function DashboardContent() {
+function WorkbenchLayout() {
   const [selectedMotorId, setSelectedMotorId] = useState('MOTOR-001');
   const [isSimModalOpen, setIsSimModalOpen] = useState(false);
 
@@ -87,8 +91,9 @@ function DashboardContent() {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Routes>
+          <Route path="/" element={<Navigate to="/fleet" replace />} />
           <Route
-            path="/"
+            path="/fleet"
             element={
               <FleetOverview
                 twins={twins}
@@ -105,6 +110,10 @@ function DashboardContent() {
                 onOpenSimulator={() => setIsSimModalOpen(true)}
               />
             }
+          />
+          <Route
+            path="/predictions"
+            element={<PredictiveMaintenance />}
           />
           <Route
             path="/diagnosis/:motorId"
@@ -127,8 +136,12 @@ function DashboardContent() {
             path="/alerts"
             element={<AlertsMaintenance alerts={alerts} onRefresh={refetchAlerts} />}
           />
+          <Route
+            path="/research"
+            element={<ResearchResults />}
+          />
           <Route path="/status" element={<ModelStatus />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/fleet" replace />} />
         </Routes>
       </main>
 
@@ -161,7 +174,12 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <DashboardContent />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<AuthPage />} />
+          <Route path="/register" element={<AuthPage />} />
+          <Route path="/*" element={<WorkbenchLayout />} />
+        </Routes>
       </BrowserRouter>
     </QueryClientProvider>
   );

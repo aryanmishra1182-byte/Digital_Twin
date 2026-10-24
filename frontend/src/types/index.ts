@@ -138,3 +138,83 @@ export interface SystemStatus {
     error?: string;
   };
 }
+
+// User Authentication
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'RESEARCHER' | 'OPERATOR' | 'GUEST';
+  organization?: string;
+}
+
+// AI4I 2020 Predictive Maintenance Benchmark Types
+export interface Ai4iModelMetrics {
+  test_accuracy: number;
+  test_precision: number;
+  test_recall: number;
+  test_f1: number;
+  test_roc_auc: number;
+  confusion_matrix: number[][];
+  cv_f1_mean: number;
+  cv_f1_std: number;
+  cv_roc_auc_mean: number;
+}
+
+export interface Ai4iBenchmarkMetrics {
+  dataset_name: string;
+  source_url: string;
+  citation: string;
+  license: string;
+  total_instances: number;
+  features_count: number;
+  failure_count: number;
+  healthy_count: number;
+  class_imbalance_ratio: string;
+  champion_model: string;
+  model_comparison: Record<string, Ai4iModelMetrics>;
+  shap_global_ranking: { feature: string; mean_abs_shap: number }[];
+}
+
+export interface Ai4iTestCase {
+  udi: number;
+  product_id: string;
+  type: string;
+  actual_failure: number;
+  failure_mode: string;
+  predicted_failure: number;
+  failure_probability: number;
+  features: {
+    Air_temperature_K: number;
+    Process_temperature_K: number;
+    Rotational_speed_rpm: number;
+    Torque_Nm: number;
+    Tool_wear_min: number;
+    Temp_difference_K: number;
+    Mechanical_Power_W: number;
+    Overstrain_Metric: number;
+    Type_Code: number;
+  };
+  top_shap_attributions: {
+    feature: string;
+    value: number;
+    shap_value: number;
+    direction: string;
+  }[];
+}
+
+export interface Ai4iPredictionResponse {
+  is_failure_predicted: boolean;
+  failure_probability: number;
+  risk_level: 'LOW' | 'ELEVATED' | 'CRITICAL';
+  recommendation: string;
+  evidence: Record<string, number>;
+  top_shap_attributions: {
+    feature: string;
+    value: number;
+    shap_value: number;
+    direction: string;
+  }[];
+  model_version: string;
+  benchmark_dataset: string;
+}

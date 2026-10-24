@@ -28,6 +28,7 @@ import { DigitalTwinState, TelemetryPoint } from '../types';
 import { api } from '../api/client';
 import { StateBadge } from '../components/ui/Badge';
 import { SectionHeader } from '../components/ui/SectionHeader';
+import { EquipmentSchematic } from '../components/EquipmentSchematic';
 
 interface MotorDetailProps {
   twin?: DigitalTwinState;
@@ -183,6 +184,9 @@ export const MotorDetail: React.FC<MotorDetailProps> = ({ twin, onOpenSimulator 
           </div>
         </div>
       </div>
+
+      {/* Interactive Equipment Subsystem Schematic */}
+      <EquipmentSchematic twin={twin} onOpenSimulator={onOpenSimulator} />
 
       {/* Real-time Oscilloscope & Telemetry Trends */}
       <div className="bg-panel border border-panel-border rounded-lg p-5">

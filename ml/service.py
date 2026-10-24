@@ -42,8 +42,15 @@ rul_model = None
 shap_explainer = None
 global_importance_cache = None
 
+ai4i_model = None
+ai4i_metrics = None
+ai4i_test_cases = None
+ai4i_features = None
+ai4i_explainer = None
+
 def load_artifacts():
     global anomaly_bundle, classifier_bundle, rul_bundle, rul_model, shap_explainer, global_importance_cache
+    global ai4i_model, ai4i_metrics, ai4i_test_cases, ai4i_features, ai4i_explainer
     artifacts_dir = ARTIFACTS_DIR
 
     # 1. Anomaly Detector
@@ -78,6 +85,32 @@ def load_artifacts():
     if os.path.exists(imp_path):
         with open(imp_path, "r") as f:
             global_importance_cache = json.load(f)
+
+    # 6. UCI AI4I 2020 Predictive Maintenance Benchmark Artifacts
+    ai4i_dir = os.path.join(artifacts_dir, "ai4i")
+    ai4i_model_path = os.path.join(ai4i_dir, "ai4i_champion_model.joblib")
+    if os.path.exists(ai4i_model_path):
+        ai4i_model = joblib.load(ai4i_model_path)
+        try:
+            import shap
+            ai4i_explainer = shap.TreeExplainer(ai4i_model)
+        except Exception as e:
+            print(f"Notice: ai4i tree explainer: {e}")
+
+    ai4i_metrics_path = os.path.join(ai4i_dir, "ai4i_evaluation_metrics.json")
+    if os.path.exists(ai4i_metrics_path):
+        with open(ai4i_metrics_path, "r") as f:
+            ai4i_metrics = json.load(f)
+
+    ai4i_test_cases_path = os.path.join(ai4i_dir, "ai4i_test_cases.json")
+    if os.path.exists(ai4i_test_cases_path):
+        with open(ai4i_test_cases_path, "r") as f:
+            ai4i_test_cases = json.load(f)
+
+    ai4i_features_path = os.path.join(ai4i_dir, "feature_names.json")
+    if os.path.exists(ai4i_features_path):
+        with open(ai4i_features_path, "r") as f:
+            ai4i_features = json.load(f)
 
 # Preload on import so test clients have models immediately loaded
 load_artifacts()
@@ -254,6 +287,97 @@ def get_global_importance():
     if global_importance_cache is None:
         raise HTTPException(status_code=404, detail="Global importance artifact not found.")
     return global_importance_cache
+
+# --- UCI AI4I 2020 Predictive Maintenance Endpoints ---
+
+class Ai4iPredictPayload(BaseModel):
+    air_temp_k: float = Field(300.0, description="Air temperature in Kelvin")
+    process_temp_k: float = Field(310.0, description="Process temperature in Kelvin")
+    rotational_speed_rpm: float = Field(1500.0, description="Rotational speed in RPM")
+    torque_nm: float = Field(40.0, description="Torque in Nm")
+    tool_wear_min: float = Field(120.0, description="Tool wear time in minutes")
+    machine_type: str = Field("M", description="Machine quality variant: L, M, or H")
+
+@app.get("/ai4i/benchmark")
+def get_ai4i_benchmark():
+    if ai4i_metrics is None:
+        raise HTTPException(status_code=404, detail="AI4I benchmark metrics not found.")
+    return ai4i_metrics
+
+@app.get("/ai4i/test-cases")
+def get_ai4i_test_cases():
+    if ai4i_test_cases is None:
+        raise HTTPException(status_code=404, detail="AI4I test cases not found.")
+    return ai4i_test_cases
+
+@app.post("/ai4i/predict")
+def predict_ai4i(payload: Ai4iPredictPayload):
+    if ai4i_model is None or ai4i_features is None:
+        raise HTTPException(status_code=503, detail="AI4I model not loaded.")
+        
+    temp_diff = payload.process_temp_k - payload.air_temp_k
+    power_w = payload.torque_nm * (payload.rotational_speed_rpm * 2 * np.pi / 60)
+    overstrain = payload.tool_wear_min * payload.torque_nm
+    type_code = {"L": 0, "M": 1, "H": 2}.get(payload.machine_type.upper(), 1)
+    
+    import pandas as pd
+    row_dict = {
+        "Air_temperature_K": payload.air_temp_k,
+        "Process_temperature_K": payload.process_temp_k,
+        "Rotational_speed_rpm": payload.rotational_speed_rpm,
+        "Torque_Nm": payload.torque_nm,
+        "Tool_wear_min": payload.tool_wear_min,
+        "Temp_difference_K": temp_diff,
+        "Mechanical_Power_W": power_w,
+        "Overstrain_Metric": overstrain,
+        "Type_Code": type_code
+    }
+    
+    df_row = pd.DataFrame([row_dict])[ai4i_features]
+    prob = float(ai4i_model.predict_proba(df_row)[0, 1])
+    is_failure = bool(prob >= 0.5)
+    
+    # SHAP local attribution
+    attributions = []
+    if ai4i_explainer is not None:
+        try:
+            shap_vals = ai4i_explainer.shap_values(df_row)[0]
+            for f, s in zip(ai4i_features, shap_vals):
+                attributions.append({
+                    "feature": f,
+                    "value": round(float(df_row[f].values[0]), 2),
+                    "shap_value": round(float(s), 4),
+                    "direction": "INCREASES_FAILURE_RISK" if s > 0 else "DECREASES_RISK"
+                })
+            attributions = sorted(attributions, key=lambda a: abs(a["shap_value"]), reverse=True)
+        except Exception as e:
+            print(f"SHAP local error: {e}")
+            
+    risk_level = "CRITICAL" if prob >= 0.70 else ("ELEVATED" if prob >= 0.35 else "LOW")
+    
+    recommendation = "Normal operating baseline. Continue standard preventive inspection."
+    if is_failure:
+        if overstrain > 11000:
+            recommendation = "Severe Overstrain Risk (OSF). Reduce shaft torque load and check tool wear limit immediately."
+        elif temp_diff < 8.6 and payload.rotational_speed_rpm < 1380:
+            recommendation = "Heat Dissipation Failure (HDF). Clean heat exchanger cooling ducts and verify convection airflow."
+        elif power_w < 3500 or power_w > 9000:
+            recommendation = "Power Supply Anomaly (PWF). Check line voltage and current feed for over/under-power excursion."
+        elif payload.tool_wear_min > 200:
+            recommendation = "Tool Wear Failure (TWF). Replace cutting tool insert before catastrophic workpiece fracture."
+        else:
+            recommendation = "Unrecognized Failure Anomaly. Inspect mechanical vibration and thermal dissipation."
+            
+    return {
+        "is_failure_predicted": is_failure,
+        "failure_probability": round(prob, 4),
+        "risk_level": risk_level,
+        "recommendation": recommendation,
+        "evidence": row_dict,
+        "top_shap_attributions": attributions[:6],
+        "model_version": "xgboost_ai4i_champion_v1.0",
+        "benchmark_dataset": "UCI AI4I 2020 Predictive Maintenance Dataset"
+    }
 
 if __name__ == "__main__":
     import uvicorn

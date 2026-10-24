@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Activity,
   Layers,
@@ -12,7 +12,11 @@ import {
   Square,
   Radio,
   SlidersHorizontal,
-  ChevronDown
+  ChevronDown,
+  FileText,
+  User,
+  LogOut,
+  HelpCircle
 } from 'lucide-react';
 import { SimulatorStatus } from '../types';
 
@@ -31,14 +35,26 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenSimulator,
   onToggleSimulator
 }) => {
+  const navigate = useNavigate();
+
+  // Retrieve user session
+  const storedUser = localStorage.getItem('twin_user');
+  const user = storedUser ? JSON.parse(storedUser) : { name: 'Guest Researcher', role: 'GUEST' };
+
+  const handleLogout = () => {
+    localStorage.removeItem('twin_user');
+    navigate('/login');
+  };
+
   const navItems = [
-    { to: '/', label: 'Fleet Overview', icon: Layers },
-    { to: `/motor/${selectedMotorId}`, label: 'Live Telemetry', icon: Activity },
+    { to: '/fleet', label: 'Fleet Overview', icon: Layers },
+    { to: `/motor/${selectedMotorId}`, label: 'Equipment Twin', icon: Activity },
+    { to: '/predictions', label: 'Predictions & AI4I', icon: Sparkles },
     { to: `/diagnosis/${selectedMotorId}`, label: 'Fault Diagnostics', icon: Cpu },
-    { to: `/explainability/${selectedMotorId}`, label: 'SHAP Attribution', icon: Sparkles },
-    { to: `/rul/${selectedMotorId}`, label: 'Remaining Life (RUL)', icon: Clock },
+    { to: `/explainability/${selectedMotorId}`, label: 'SHAP Explainability', icon: HelpCircle },
+    { to: `/rul/${selectedMotorId}`, label: 'Remaining Life', icon: Clock },
     { to: '/alerts', label: 'Maintenance Alerts', icon: AlertTriangle },
-    { to: '/status', label: 'Models & Provenance', icon: Server }
+    { to: '/research', label: 'Research Paper Results', icon: FileText }
   ];
 
   const scenarioLabels: Record<string, string> = {
@@ -55,8 +71,11 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 border-b border-panel-border/40">
           {/* Brand Identity */}
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-md bg-brand-600/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+          <div
+            onClick={() => navigate('/')}
+            className="flex items-center gap-3 cursor-pointer group"
+          >
+            <div className="w-8 h-8 rounded-md bg-brand-600/10 border border-brand-500/30 flex items-center justify-center text-brand-400 group-hover:border-brand-500 transition-colors">
               <Activity className="w-4 h-4 stroke-[2.2]" />
             </div>
             <div className="flex items-baseline gap-2">
@@ -72,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Right Controls: Asset Selector & Simulator Workbench */}
+          {/* Right Controls: Asset Selector, Simulator & User Session */}
           <div className="flex items-center gap-2.5">
             {/* Asset Selector */}
             <div className="relative flex items-center bg-panel border border-panel-border rounded-md px-2.5 py-1 text-xs transition-colors hover:border-panel-border-strong">
@@ -81,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 aria-label="Select Monitored Motor Asset"
                 value={selectedMotorId}
                 onChange={(e) => onSelectMotor(e.target.value)}
-                className="bg-transparent text-slate-200 font-mono font-medium focus:outline-none cursor-pointer pr-4 appearance-none"
+                className="bg-transparent text-slate-200 font-mono font-medium focus:outline-none cursor-pointer pr-4 appearance-none text-[11px]"
               >
                 <option value="MOTOR-001" className="bg-panel text-slate-200">MOTOR-001 (Feed Pump)</option>
                 <option value="MOTOR-002" className="bg-panel text-slate-200">MOTOR-002 (Cooling Fan)</option>
@@ -128,6 +147,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {simulatorStatus?.isRunning ? <Square className="w-3 h-3" /> : <Play className="w-3 h-3" />}
               </button>
             </div>
+
+            {/* User Session Pill */}
+            <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-panel-border/60 text-xs text-slate-300">
+              <div className="flex items-center gap-1.5 bg-surface/50 border border-panel-border rounded-md px-2.5 py-1">
+                <User className="w-3 h-3 text-brand-400" />
+                <span className="font-medium text-[11px] truncate max-w-[120px]">{user.name}</span>
+              </div>
+              <button
+                onClick={handleLogout}
+                title="Sign out / Switch account"
+                className="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-surface transition-colors"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -140,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all ${
+                  `inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all ${
                     isActive
                       ? 'bg-surface text-slate-100 font-semibold border border-panel-border shadow-subtle'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-surface/50 border border-transparent'

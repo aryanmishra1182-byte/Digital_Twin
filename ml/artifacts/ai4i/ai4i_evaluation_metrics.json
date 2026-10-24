@@ -1,0 +1,132 @@
+{
+  "dataset_name": "UCI AI4I 2020 Predictive Maintenance Dataset",
+  "source_url": "https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset",
+  "citation": "Mathes, S. (2020). AI4I 2020 Predictive Maintenance Dataset. UCI Machine Learning Repository.",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "total_instances": 10000,
+  "features_count": 9,
+  "failure_count": 339,
+  "healthy_count": 9661,
+  "class_imbalance_ratio": "28.5:1",
+  "champion_model": "XGBoost Classifier",
+  "model_comparison": {
+    "Logistic Regression (Baseline)": {
+      "test_accuracy": 0.8575,
+      "test_precision": 0.178,
+      "test_recall": 0.8824,
+      "test_f1": 0.2963,
+      "test_roc_auc": 0.9393,
+      "confusion_matrix": [
+        [
+          1655,
+          277
+        ],
+        [
+          8,
+          60
+        ]
+      ],
+      "cv_f1_mean": 0.2719,
+      "cv_f1_std": 0.0126,
+      "cv_roc_auc_mean": 0.9235
+    },
+    "Decision Tree (Baseline)": {
+      "test_accuracy": 0.95,
+      "test_precision": 0.3889,
+      "test_recall": 0.8235,
+      "test_f1": 0.5283,
+      "test_roc_auc": 0.8568,
+      "confusion_matrix": [
+        [
+          1844,
+          88
+        ],
+        [
+          12,
+          56
+        ]
+      ],
+      "cv_f1_mean": 0.553,
+      "cv_f1_std": 0.0153,
+      "cv_roc_auc_mean": 0.9168
+    },
+    "Random Forest": {
+      "test_accuracy": 0.984,
+      "test_precision": 0.7432,
+      "test_recall": 0.8088,
+      "test_f1": 0.7746,
+      "test_roc_auc": 0.9831,
+      "confusion_matrix": [
+        [
+          1913,
+          19
+        ],
+        [
+          13,
+          55
+        ]
+      ],
+      "cv_f1_mean": 0.8246,
+      "cv_f1_std": 0.0374,
+      "cv_roc_auc_mean": 0.9797
+    },
+    "XGBoost Classifier": {
+      "test_accuracy": 0.9845,
+      "test_precision": 0.7403,
+      "test_recall": 0.8382,
+      "test_f1": 0.7862,
+      "test_roc_auc": 0.9808,
+      "confusion_matrix": [
+        [
+          1912,
+          20
+        ],
+        [
+          11,
+          57
+        ]
+      ],
+      "cv_f1_mean": 0.7775,
+      "cv_f1_std": 0.0245,
+      "cv_roc_auc_mean": 0.9795
+    }
+  },
+  "shap_global_ranking": [
+    {
+      "feature": "Rotational_speed_rpm",
+      "mean_abs_shap": 1.3314
+    },
+    {
+      "feature": "Tool_wear_min",
+      "mean_abs_shap": 1.2755
+    },
+    {
+      "feature": "Mechanical_Power_W",
+      "mean_abs_shap": 1.2263
+    },
+    {
+      "feature": "Overstrain_Metric",
+      "mean_abs_shap": 0.5984
+    },
+    {
+      "feature": "Temp_difference_K",
+      "mean_abs_shap": 0.5015
+    },
+    {
+      "feature": "Torque_Nm",
+      "mean_abs_shap": 0.4996
+    },
+    {
+      "feature": "Process_temperature_K",
+      "mean_abs_shap": 0.2971
+    },
+    {
+      "feature": "Air_temperature_K",
+      "mean_abs_shap": 0.2453
+    },
+    {
+      "feature": "Type_Code",
+      "mean_abs_shap": 0.0646
+    }
+  ]
+}

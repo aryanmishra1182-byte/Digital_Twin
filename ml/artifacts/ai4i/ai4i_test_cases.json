@@ -1,0 +1,7078 @@
+[
+  {
+    "udi": 2998,
+    "product_id": "L50177",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0383,
+    "features": {
+      "Air_temperature_K": 300.5,
+      "Process_temperature_K": 309.8,
+      "Rotational_speed_rpm": 1345.0,
+      "Torque_Nm": 62.7,
+      "Tool_wear_min": 153.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 8831.17,
+      "Overstrain_Metric": 9593.1,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 8831.17,
+        "shap_value": -1.5392,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 9593.1,
+        "shap_value": -1.3569,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.3,
+        "shap_value": -1.2206,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 62.7,
+        "shap_value": 0.9883,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1345.0,
+        "shap_value": 0.8655,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 153.0,
+        "shap_value": -0.6491,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4872,
+    "product_id": "L52051",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0014,
+    "features": {
+      "Air_temperature_K": 303.7,
+      "Process_temperature_K": 312.4,
+      "Rotational_speed_rpm": 1513.0,
+      "Torque_Nm": 40.1,
+      "Tool_wear_min": 135.0,
+      "Temp_difference_K": 8.7,
+      "Mechanical_Power_W": 6353.48,
+      "Overstrain_Metric": 5413.5,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1513.0,
+        "shap_value": -1.562,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 135.0,
+        "shap_value": -1.3811,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6353.48,
+        "shap_value": -1.1944,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.4,
+        "shap_value": -1.0978,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5413.5,
+        "shap_value": -0.6685,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 40.1,
+        "shap_value": -0.6004,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3859,
+    "product_id": "L51038",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 1,
+    "failure_probability": 0.5725,
+    "features": {
+      "Air_temperature_K": 302.5,
+      "Process_temperature_K": 311.4,
+      "Rotational_speed_rpm": 1559.0,
+      "Torque_Nm": 37.6,
+      "Tool_wear_min": 209.0,
+      "Temp_difference_K": 8.9,
+      "Mechanical_Power_W": 6138.5,
+      "Overstrain_Metric": 7858.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 209.0,
+        "shap_value": 2.4901,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1559.0,
+        "shap_value": -0.8779,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 311.4,
+        "shap_value": -0.4895,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6138.5,
+        "shap_value": -0.4026,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 7858.4,
+        "shap_value": -0.2513,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.9,
+        "shap_value": -0.1165,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 952,
+    "product_id": "H30365",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0013,
+    "features": {
+      "Air_temperature_K": 295.6,
+      "Process_temperature_K": 306.3,
+      "Rotational_speed_rpm": 1509.0,
+      "Torque_Nm": 35.8,
+      "Tool_wear_min": 60.0,
+      "Temp_difference_K": 10.7,
+      "Mechanical_Power_W": 5657.19,
+      "Overstrain_Metric": 2148.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 60.0,
+        "shap_value": -1.7918,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1509.0,
+        "shap_value": -1.2735,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5657.19,
+        "shap_value": -1.2361,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 295.6,
+        "shap_value": -0.6787,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2148.0,
+        "shap_value": -0.6242,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 35.8,
+        "shap_value": -0.5023,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6464,
+    "product_id": "H35877",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0223,
+    "features": {
+      "Air_temperature_K": 300.5,
+      "Process_temperature_K": 310.0,
+      "Rotational_speed_rpm": 1358.0,
+      "Torque_Nm": 60.4,
+      "Tool_wear_min": 102.0,
+      "Temp_difference_K": 9.5,
+      "Mechanical_Power_W": 8589.45,
+      "Overstrain_Metric": 6160.8,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 8589.45,
+        "shap_value": -1.5715,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6160.8,
+        "shap_value": -1.465,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.5,
+        "shap_value": -1.2123,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 60.4,
+        "shap_value": 0.8862,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1358.0,
+        "shap_value": 0.8444,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 102.0,
+        "shap_value": -0.682,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3265,
+    "product_id": "H32678",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0074,
+    "features": {
+      "Air_temperature_K": 301.3,
+      "Process_temperature_K": 310.1,
+      "Rotational_speed_rpm": 1455.0,
+      "Torque_Nm": 44.1,
+      "Tool_wear_min": 188.0,
+      "Temp_difference_K": 8.8,
+      "Mechanical_Power_W": 6719.4,
+      "Overstrain_Metric": 8290.8,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6719.4,
+        "shap_value": -1.1948,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 44.1,
+        "shap_value": -0.9662,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 188.0,
+        "shap_value": -0.916,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1455.0,
+        "shap_value": -0.712,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 8290.8,
+        "shap_value": -0.3143,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.8,
+        "shap_value": -0.2902,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4509,
+    "product_id": "L51688",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0966,
+    "features": {
+      "Air_temperature_K": 302.4,
+      "Process_temperature_K": 310.0,
+      "Rotational_speed_rpm": 1426.0,
+      "Torque_Nm": 46.6,
+      "Tool_wear_min": 102.0,
+      "Temp_difference_K": 7.6,
+      "Mechanical_Power_W": 6958.8,
+      "Overstrain_Metric": 4753.2,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1426.0,
+        "shap_value": -1.3832,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6958.8,
+        "shap_value": -0.9718,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 102.0,
+        "shap_value": -0.8862,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 7.6,
+        "shap_value": 0.7562,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4753.2,
+        "shap_value": -0.376,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 46.6,
+        "shap_value": 0.3368,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2101,
+    "product_id": "M16960",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0031,
+    "features": {
+      "Air_temperature_K": 299.3,
+      "Process_temperature_K": 309.3,
+      "Rotational_speed_rpm": 1471.0,
+      "Torque_Nm": 46.0,
+      "Tool_wear_min": 42.0,
+      "Temp_difference_K": 10.0,
+      "Mechanical_Power_W": 7085.97,
+      "Overstrain_Metric": 1932.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7085.97,
+        "shap_value": -1.49,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1471.0,
+        "shap_value": -1.4488,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 42.0,
+        "shap_value": -1.273,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1932.0,
+        "shap_value": -0.538,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.0,
+        "shap_value": -0.3684,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 309.3,
+        "shap_value": -0.3582,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7886,
+    "product_id": "L55065",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0004,
+    "features": {
+      "Air_temperature_K": 300.7,
+      "Process_temperature_K": 312.3,
+      "Rotational_speed_rpm": 1590.0,
+      "Torque_Nm": 36.3,
+      "Tool_wear_min": 93.0,
+      "Temp_difference_K": 11.6,
+      "Mechanical_Power_W": 6044.11,
+      "Overstrain_Metric": 3375.9,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1590.0,
+        "shap_value": -1.6392,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 93.0,
+        "shap_value": -1.4508,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6044.11,
+        "shap_value": -1.1034,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.3,
+        "shap_value": -1.0676,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.6,
+        "shap_value": -0.8486,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3375.9,
+        "shap_value": -0.7809,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2422,
+    "product_id": "L49601",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0157,
+    "features": {
+      "Air_temperature_K": 298.9,
+      "Process_temperature_K": 308.2,
+      "Rotational_speed_rpm": 2384.0,
+      "Torque_Nm": 15.0,
+      "Tool_wear_min": 19.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 3744.78,
+      "Overstrain_Metric": 285.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 19.0,
+        "shap_value": -1.7804,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 2384.0,
+        "shap_value": -0.685,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 285.0,
+        "shap_value": -0.5488,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 3744.78,
+        "shap_value": -0.4552,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.3,
+        "shap_value": -0.3262,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 15.0,
+        "shap_value": -0.2079,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 129,
+    "product_id": "L47308",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.002,
+    "features": {
+      "Air_temperature_K": 299.0,
+      "Process_temperature_K": 308.6,
+      "Rotational_speed_rpm": 1587.0,
+      "Torque_Nm": 38.6,
+      "Tool_wear_min": 124.0,
+      "Temp_difference_K": 9.6,
+      "Mechanical_Power_W": 6414.94,
+      "Overstrain_Metric": 4786.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6414.94,
+        "shap_value": -1.5126,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1587.0,
+        "shap_value": -1.5076,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 124.0,
+        "shap_value": -1.3444,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4786.4,
+        "shap_value": -0.5561,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 38.6,
+        "shap_value": -0.4338,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.6,
+        "shap_value": -0.4328,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7718,
+    "product_id": "L54897",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0088,
+    "features": {
+      "Air_temperature_K": 300.5,
+      "Process_temperature_K": 311.6,
+      "Rotational_speed_rpm": 1365.0,
+      "Torque_Nm": 53.0,
+      "Tool_wear_min": 85.0,
+      "Temp_difference_K": 11.1,
+      "Mechanical_Power_W": 7575.95,
+      "Overstrain_Metric": 4505.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7575.95,
+        "shap_value": -2.0051,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1365.0,
+        "shap_value": 1.7253,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4505.0,
+        "shap_value": -1.4955,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.1,
+        "shap_value": -1.3641,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 85.0,
+        "shap_value": -0.9125,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 300.5,
+        "shap_value": -0.3368,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6205,
+    "product_id": "M21064",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0029,
+    "features": {
+      "Air_temperature_K": 300.9,
+      "Process_temperature_K": 310.8,
+      "Rotational_speed_rpm": 1519.0,
+      "Torque_Nm": 34.9,
+      "Tool_wear_min": 73.0,
+      "Temp_difference_K": 9.9,
+      "Mechanical_Power_W": 5551.52,
+      "Overstrain_Metric": 2547.7,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 73.0,
+        "shap_value": -1.581,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1519.0,
+        "shap_value": -1.3098,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5551.52,
+        "shap_value": -1.19,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2547.7,
+        "shap_value": -0.6107,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 34.9,
+        "shap_value": -0.6,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.9,
+        "shap_value": -0.4048,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 290,
+    "product_id": "L47469",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0125,
+    "features": {
+      "Air_temperature_K": 298.1,
+      "Process_temperature_K": 308.4,
+      "Rotational_speed_rpm": 1436.0,
+      "Torque_Nm": 46.7,
+      "Tool_wear_min": 103.0,
+      "Temp_difference_K": 10.3,
+      "Mechanical_Power_W": 7022.63,
+      "Overstrain_Metric": 4810.1,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7022.63,
+        "shap_value": -1.4235,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 103.0,
+        "shap_value": -1.196,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4810.1,
+        "shap_value": -0.5164,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1436.0,
+        "shap_value": -0.4089,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.3,
+        "shap_value": -0.3843,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.4,
+        "shap_value": -0.3283,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 922,
+    "product_id": "H30335",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0055,
+    "features": {
+      "Air_temperature_K": 295.5,
+      "Process_temperature_K": 305.9,
+      "Rotational_speed_rpm": 1593.0,
+      "Torque_Nm": 37.2,
+      "Tool_wear_min": 197.0,
+      "Temp_difference_K": 10.4,
+      "Mechanical_Power_W": 6205.65,
+      "Overstrain_Metric": 7328.4,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1593.0,
+        "shap_value": -1.4411,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 197.0,
+        "shap_value": -1.05,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6205.65,
+        "shap_value": -0.9416,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 295.5,
+        "shap_value": -0.694,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 37.2,
+        "shap_value": -0.5407,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.4,
+        "shap_value": -0.3172,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5087,
+    "product_id": "L52266",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0015,
+    "features": {
+      "Air_temperature_K": 304.0,
+      "Process_temperature_K": 313.0,
+      "Rotational_speed_rpm": 1541.0,
+      "Torque_Nm": 45.9,
+      "Tool_wear_min": 64.0,
+      "Temp_difference_K": 9.0,
+      "Mechanical_Power_W": 7407.03,
+      "Overstrain_Metric": 2937.6,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1541.0,
+        "shap_value": -1.8659,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7407.03,
+        "shap_value": -1.417,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 64.0,
+        "shap_value": -1.3312,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 313.0,
+        "shap_value": -1.1204,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2937.6,
+        "shap_value": -0.7945,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 304.0,
+        "shap_value": 0.2073,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5107,
+    "product_id": "L52286",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0016,
+    "features": {
+      "Air_temperature_K": 304.0,
+      "Process_temperature_K": 313.3,
+      "Rotational_speed_rpm": 1519.0,
+      "Torque_Nm": 36.7,
+      "Tool_wear_min": 117.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 5837.84,
+      "Overstrain_Metric": 4293.9,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1519.0,
+        "shap_value": -1.5156,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 117.0,
+        "shap_value": -1.4994,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5837.84,
+        "shap_value": -1.0994,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 313.3,
+        "shap_value": -0.932,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 36.7,
+        "shap_value": -0.6939,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4293.9,
+        "shap_value": -0.6565,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4852,
+    "product_id": "L52031",
+    "type": "L",
+    "actual_failure": 1,
+    "failure_mode": "HDF",
+    "predicted_failure": 1,
+    "failure_probability": 0.9215,
+    "features": {
+      "Air_temperature_K": 303.7,
+      "Process_temperature_K": 312.1,
+      "Rotational_speed_rpm": 1363.0,
+      "Torque_Nm": 51.8,
+      "Tool_wear_min": 90.0,
+      "Temp_difference_K": 8.4,
+      "Mechanical_Power_W": 7393.57,
+      "Overstrain_Metric": 4662.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1363.0,
+        "shap_value": 3.6175,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.4,
+        "shap_value": 2.4362,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.1,
+        "shap_value": -1.4962,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7393.57,
+        "shap_value": -1.0155,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 90.0,
+        "shap_value": -0.698,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4662.0,
+        "shap_value": -0.5933,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 8750,
+    "product_id": "L55929",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0064,
+    "features": {
+      "Air_temperature_K": 297.2,
+      "Process_temperature_K": 308.4,
+      "Rotational_speed_rpm": 1677.0,
+      "Torque_Nm": 26.4,
+      "Tool_wear_min": 146.0,
+      "Temp_difference_K": 11.2,
+      "Mechanical_Power_W": 4636.24,
+      "Overstrain_Metric": 3854.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1677.0,
+        "shap_value": -1.3415,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 146.0,
+        "shap_value": -1.172,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 26.4,
+        "shap_value": -0.6505,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3854.4,
+        "shap_value": -0.5846,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4636.24,
+        "shap_value": -0.5128,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.2,
+        "shap_value": -0.3415,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 133,
+    "product_id": "M14992",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.004,
+    "features": {
+      "Air_temperature_K": 298.7,
+      "Process_temperature_K": 308.4,
+      "Rotational_speed_rpm": 1441.0,
+      "Torque_Nm": 43.2,
+      "Tool_wear_min": 132.0,
+      "Temp_difference_K": 9.7,
+      "Mechanical_Power_W": 6518.93,
+      "Overstrain_Metric": 5702.4,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6518.93,
+        "shap_value": -1.3661,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 132.0,
+        "shap_value": -1.2962,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 43.2,
+        "shap_value": -0.9292,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.7,
+        "shap_value": -0.4543,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5702.4,
+        "shap_value": -0.405,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1441.0,
+        "shap_value": -0.3764,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7382,
+    "product_id": "L54561",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0033,
+    "features": {
+      "Air_temperature_K": 299.7,
+      "Process_temperature_K": 310.3,
+      "Rotational_speed_rpm": 1495.0,
+      "Torque_Nm": 43.1,
+      "Tool_wear_min": 101.0,
+      "Temp_difference_K": 10.6,
+      "Mechanical_Power_W": 6747.57,
+      "Overstrain_Metric": 4353.1,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6747.57,
+        "shap_value": -1.3863,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1495.0,
+        "shap_value": -1.347,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 101.0,
+        "shap_value": -1.1318,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 43.1,
+        "shap_value": -0.954,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4353.1,
+        "shap_value": -0.4494,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.6,
+        "shap_value": -0.3072,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1392,
+    "product_id": "L48571",
+    "type": "L",
+    "actual_failure": 1,
+    "failure_mode": "PWF",
+    "predicted_failure": 1,
+    "failure_probability": 0.9814,
+    "features": {
+      "Air_temperature_K": 298.9,
+      "Process_temperature_K": 310.2,
+      "Rotational_speed_rpm": 2737.0,
+      "Torque_Nm": 8.8,
+      "Tool_wear_min": 142.0,
+      "Temp_difference_K": 11.3,
+      "Mechanical_Power_W": 2522.24,
+      "Overstrain_Metric": 1249.6,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 2522.24,
+        "shap_value": 5.0733,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.3,
+        "shap_value": -0.9807,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 142.0,
+        "shap_value": -0.5264,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 2737.0,
+        "shap_value": 0.3851,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1249.6,
+        "shap_value": -0.3307,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 8.8,
+        "shap_value": 0.2215,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1740,
+    "product_id": "H31153",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0057,
+    "features": {
+      "Air_temperature_K": 298.5,
+      "Process_temperature_K": 307.9,
+      "Rotational_speed_rpm": 1260.0,
+      "Torque_Nm": 54.2,
+      "Tool_wear_min": 141.0,
+      "Temp_difference_K": 9.4,
+      "Mechanical_Power_W": 7151.52,
+      "Overstrain_Metric": 7642.2,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7151.52,
+        "shap_value": -2.281,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.4,
+        "shap_value": -1.4538,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1260.0,
+        "shap_value": 1.4166,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 141.0,
+        "shap_value": -1.1599,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 307.9,
+        "shap_value": -0.413,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 7642.2,
+        "shap_value": -0.4026,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4177,
+    "product_id": "M19036",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0052,
+    "features": {
+      "Air_temperature_K": 302.3,
+      "Process_temperature_K": 310.7,
+      "Rotational_speed_rpm": 1544.0,
+      "Torque_Nm": 39.7,
+      "Tool_wear_min": 141.0,
+      "Temp_difference_K": 8.4,
+      "Mechanical_Power_W": 6418.99,
+      "Overstrain_Metric": 5597.7,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1544.0,
+        "shap_value": -2.6396,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 141.0,
+        "shap_value": -1.1976,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6418.99,
+        "shap_value": -1.1482,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 39.7,
+        "shap_value": -0.671,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.4,
+        "shap_value": 0.4937,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5597.7,
+        "shap_value": -0.4005,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9602,
+    "product_id": "L56781",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0077,
+    "features": {
+      "Air_temperature_K": 298.9,
+      "Process_temperature_K": 310.1,
+      "Rotational_speed_rpm": 2109.0,
+      "Torque_Nm": 18.0,
+      "Tool_wear_min": 61.0,
+      "Temp_difference_K": 11.2,
+      "Mechanical_Power_W": 3975.37,
+      "Overstrain_Metric": 1098.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 61.0,
+        "shap_value": -1.5781,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 2109.0,
+        "shap_value": -1.2885,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 3975.37,
+        "shap_value": -0.9965,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1098.0,
+        "shap_value": -0.5081,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.2,
+        "shap_value": -0.2431,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 18.0,
+        "shap_value": -0.1789,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6045,
+    "product_id": "M20904",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0043,
+    "features": {
+      "Air_temperature_K": 300.8,
+      "Process_temperature_K": 310.9,
+      "Rotational_speed_rpm": 1522.0,
+      "Torque_Nm": 41.7,
+      "Tool_wear_min": 115.0,
+      "Temp_difference_K": 10.1,
+      "Mechanical_Power_W": 6646.29,
+      "Overstrain_Metric": 4795.5,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1522.0,
+        "shap_value": -1.309,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6646.29,
+        "shap_value": -1.2792,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 115.0,
+        "shap_value": -1.117,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 41.7,
+        "shap_value": -0.9986,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4795.5,
+        "shap_value": -0.3691,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.1,
+        "shap_value": -0.3188,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 885,
+    "product_id": "L48064",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.006,
+    "features": {
+      "Air_temperature_K": 295.8,
+      "Process_temperature_K": 306.4,
+      "Rotational_speed_rpm": 1356.0,
+      "Torque_Nm": 48.0,
+      "Tool_wear_min": 99.0,
+      "Temp_difference_K": 10.6,
+      "Mechanical_Power_W": 6816.0,
+      "Overstrain_Metric": 4752.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6816.0,
+        "shap_value": -1.9317,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1356.0,
+        "shap_value": 1.537,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.6,
+        "shap_value": -1.3899,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 99.0,
+        "shap_value": -1.2629,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4752.0,
+        "shap_value": -1.0407,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 295.8,
+        "shap_value": -0.8375,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7436,
+    "product_id": "L54615",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0017,
+    "features": {
+      "Air_temperature_K": 299.9,
+      "Process_temperature_K": 311.3,
+      "Rotational_speed_rpm": 1504.0,
+      "Torque_Nm": 40.7,
+      "Tool_wear_min": 20.0,
+      "Temp_difference_K": 11.4,
+      "Mechanical_Power_W": 6410.19,
+      "Overstrain_Metric": 814.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6410.19,
+        "shap_value": -1.4105,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1504.0,
+        "shap_value": -1.3829,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 20.0,
+        "shap_value": -1.3068,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 814.0,
+        "shap_value": -0.69,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 40.7,
+        "shap_value": -0.6446,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.4,
+        "shap_value": -0.4523,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2048,
+    "product_id": "L49227",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0036,
+    "features": {
+      "Air_temperature_K": 299.3,
+      "Process_temperature_K": 309.2,
+      "Rotational_speed_rpm": 1775.0,
+      "Torque_Nm": 24.2,
+      "Tool_wear_min": 125.0,
+      "Temp_difference_K": 9.9,
+      "Mechanical_Power_W": 4498.24,
+      "Overstrain_Metric": 3025.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 125.0,
+        "shap_value": -1.5075,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1775.0,
+        "shap_value": -1.443,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4498.24,
+        "shap_value": -0.8155,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 24.2,
+        "shap_value": -0.7617,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3025.0,
+        "shap_value": -0.6132,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.9,
+        "shap_value": -0.4618,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5210,
+    "product_id": "M20069",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0033,
+    "features": {
+      "Air_temperature_K": 303.8,
+      "Process_temperature_K": 312.7,
+      "Rotational_speed_rpm": 1507.0,
+      "Torque_Nm": 38.5,
+      "Tool_wear_min": 180.0,
+      "Temp_difference_K": 8.9,
+      "Mechanical_Power_W": 6075.79,
+      "Overstrain_Metric": 6930.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1507.0,
+        "shap_value": -1.4467,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 180.0,
+        "shap_value": -1.2749,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.7,
+        "shap_value": -1.2394,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6075.79,
+        "shap_value": -1.0964,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6930.0,
+        "shap_value": -0.314,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 38.5,
+        "shap_value": -0.2119,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1733,
+    "product_id": "H31146",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0037,
+    "features": {
+      "Air_temperature_K": 298.4,
+      "Process_temperature_K": 307.9,
+      "Rotational_speed_rpm": 1700.0,
+      "Torque_Nm": 28.2,
+      "Tool_wear_min": 120.0,
+      "Temp_difference_K": 9.5,
+      "Mechanical_Power_W": 5020.27,
+      "Overstrain_Metric": 3384.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 120.0,
+        "shap_value": -1.5497,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1700.0,
+        "shap_value": -1.2847,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 28.2,
+        "shap_value": -0.8761,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5020.27,
+        "shap_value": -0.6374,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3384.0,
+        "shap_value": -0.5227,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.5,
+        "shap_value": -0.2414,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2447,
+    "product_id": "L49626",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0106,
+    "features": {
+      "Air_temperature_K": 299.3,
+      "Process_temperature_K": 308.6,
+      "Rotational_speed_rpm": 1422.0,
+      "Torque_Nm": 48.9,
+      "Tool_wear_min": 83.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 7281.77,
+      "Overstrain_Metric": 4058.7,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7281.77,
+        "shap_value": -1.5191,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 83.0,
+        "shap_value": -1.0073,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4058.7,
+        "shap_value": -0.5893,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.6,
+        "shap_value": -0.5637,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.3,
+        "shap_value": -0.3516,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 299.3,
+        "shap_value": -0.2313,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1040,
+    "product_id": "L48219",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0011,
+    "features": {
+      "Air_temperature_K": 296.7,
+      "Process_temperature_K": 307.7,
+      "Rotational_speed_rpm": 1524.0,
+      "Torque_Nm": 36.8,
+      "Tool_wear_min": 82.0,
+      "Temp_difference_K": 11.0,
+      "Mechanical_Power_W": 5873.02,
+      "Overstrain_Metric": 3017.6,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 82.0,
+        "shap_value": -1.6425,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1524.0,
+        "shap_value": -1.394,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5873.02,
+        "shap_value": -1.1164,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 36.8,
+        "shap_value": -0.7671,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 296.7,
+        "shap_value": -0.7157,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3017.6,
+        "shap_value": -0.6396,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3439,
+    "product_id": "L50618",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0207,
+    "features": {
+      "Air_temperature_K": 301.4,
+      "Process_temperature_K": 310.4,
+      "Rotational_speed_rpm": 1471.0,
+      "Torque_Nm": 37.5,
+      "Tool_wear_min": 193.0,
+      "Temp_difference_K": 9.0,
+      "Mechanical_Power_W": 5776.6,
+      "Overstrain_Metric": 7237.5,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1471.0,
+        "shap_value": -1.3159,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5776.6,
+        "shap_value": -0.9776,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 193.0,
+        "shap_value": -0.9222,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 7237.5,
+        "shap_value": -0.2886,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 301.4,
+        "shap_value": -0.2469,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.0,
+        "shap_value": -0.1656,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 8827,
+    "product_id": "M23686",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0021,
+    "features": {
+      "Air_temperature_K": 297.2,
+      "Process_temperature_K": 308.8,
+      "Rotational_speed_rpm": 1485.0,
+      "Torque_Nm": 47.9,
+      "Tool_wear_min": 143.0,
+      "Temp_difference_K": 11.6,
+      "Mechanical_Power_W": 7448.87,
+      "Overstrain_Metric": 6849.7,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7448.87,
+        "shap_value": -1.6059,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1485.0,
+        "shap_value": -1.4496,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 143.0,
+        "shap_value": -1.1178,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.6,
+        "shap_value": -0.7805,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.8,
+        "shap_value": -0.4636,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6849.7,
+        "shap_value": -0.3409,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3105,
+    "product_id": "M17964",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0716,
+    "features": {
+      "Air_temperature_K": 299.8,
+      "Process_temperature_K": 309.2,
+      "Rotational_speed_rpm": 1678.0,
+      "Torque_Nm": 29.8,
+      "Tool_wear_min": 202.0,
+      "Temp_difference_K": 9.4,
+      "Mechanical_Power_W": 5236.45,
+      "Overstrain_Metric": 6019.6,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5236.45,
+        "shap_value": -1.0051,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1678.0,
+        "shap_value": -0.89,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6019.6,
+        "shap_value": -0.5031,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 29.8,
+        "shap_value": 0.1767,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.4,
+        "shap_value": -0.1514,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 309.2,
+        "shap_value": -0.1342,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4668,
+    "product_id": "H34081",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0027,
+    "features": {
+      "Air_temperature_K": 303.3,
+      "Process_temperature_K": 311.4,
+      "Rotational_speed_rpm": 1651.0,
+      "Torque_Nm": 30.6,
+      "Tool_wear_min": 50.0,
+      "Temp_difference_K": 8.1,
+      "Mechanical_Power_W": 5290.5,
+      "Overstrain_Metric": 1530.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1651.0,
+        "shap_value": -2.7733,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 50.0,
+        "shap_value": -1.4111,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5290.5,
+        "shap_value": -1.1789,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1530.0,
+        "shap_value": -0.5185,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.1,
+        "shap_value": 0.4168,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 30.6,
+        "shap_value": -0.236,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7294,
+    "product_id": "L54473",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.011,
+    "features": {
+      "Air_temperature_K": 300.1,
+      "Process_temperature_K": 310.5,
+      "Rotational_speed_rpm": 1627.0,
+      "Torque_Nm": 29.2,
+      "Tool_wear_min": 95.0,
+      "Temp_difference_K": 10.4,
+      "Mechanical_Power_W": 4975.07,
+      "Overstrain_Metric": 2774.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1627.0,
+        "shap_value": -1.617,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 95.0,
+        "shap_value": -1.3992,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2774.0,
+        "shap_value": -0.6052,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.4,
+        "shap_value": -0.4365,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4975.07,
+        "shap_value": -0.3755,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 29.2,
+        "shap_value": -0.1204,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6895,
+    "product_id": "L54074",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0268,
+    "features": {
+      "Air_temperature_K": 301.1,
+      "Process_temperature_K": 311.7,
+      "Rotational_speed_rpm": 1408.0,
+      "Torque_Nm": 46.3,
+      "Tool_wear_min": 135.0,
+      "Temp_difference_K": 10.6,
+      "Mechanical_Power_W": 6826.72,
+      "Overstrain_Metric": 6250.5,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 135.0,
+        "shap_value": -1.2127,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6826.72,
+        "shap_value": -0.9548,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6250.5,
+        "shap_value": -0.504,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 301.1,
+        "shap_value": -0.4071,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 46.3,
+        "shap_value": 0.382,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1408.0,
+        "shap_value": -0.3651,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5597,
+    "product_id": "M20456",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0031,
+    "features": {
+      "Air_temperature_K": 302.7,
+      "Process_temperature_K": 312.0,
+      "Rotational_speed_rpm": 1538.0,
+      "Torque_Nm": 36.7,
+      "Tool_wear_min": 74.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 5910.86,
+      "Overstrain_Metric": 2715.8,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 74.0,
+        "shap_value": -1.5513,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1538.0,
+        "shap_value": -1.5104,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5910.86,
+        "shap_value": -1.0664,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 36.7,
+        "shap_value": -0.7328,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2715.8,
+        "shap_value": -0.6287,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.3,
+        "shap_value": -0.2255,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4496,
+    "product_id": "L51675",
+    "type": "L",
+    "actual_failure": 1,
+    "failure_mode": "HDF",
+    "predicted_failure": 1,
+    "failure_probability": 0.9949,
+    "features": {
+      "Air_temperature_K": 302.6,
+      "Process_temperature_K": 310.4,
+      "Rotational_speed_rpm": 1359.0,
+      "Torque_Nm": 57.2,
+      "Tool_wear_min": 67.0,
+      "Temp_difference_K": 7.8,
+      "Mechanical_Power_W": 8140.37,
+      "Overstrain_Metric": 3832.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1359.0,
+        "shap_value": 3.5625,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 7.8,
+        "shap_value": 2.54,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 8140.37,
+        "shap_value": -0.7714,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3832.4,
+        "shap_value": -0.5706,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 57.2,
+        "shap_value": 0.569,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 67.0,
+        "shap_value": -0.5636,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 8379,
+    "product_id": "M23238",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0353,
+    "features": {
+      "Air_temperature_K": 298.8,
+      "Process_temperature_K": 309.9,
+      "Rotational_speed_rpm": 1331.0,
+      "Torque_Nm": 61.6,
+      "Tool_wear_min": 46.0,
+      "Temp_difference_K": 11.1,
+      "Mechanical_Power_W": 8585.93,
+      "Overstrain_Metric": 2833.6,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 8585.93,
+        "shap_value": -1.6301,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2833.6,
+        "shap_value": -1.4631,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.1,
+        "shap_value": -1.305,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 61.6,
+        "shap_value": 1.2604,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1331.0,
+        "shap_value": 0.9311,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 46.0,
+        "shap_value": -0.6787,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2120,
+    "product_id": "M16979",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0048,
+    "features": {
+      "Air_temperature_K": 299.3,
+      "Process_temperature_K": 308.9,
+      "Rotational_speed_rpm": 1858.0,
+      "Torque_Nm": 24.7,
+      "Tool_wear_min": 101.0,
+      "Temp_difference_K": 9.6,
+      "Mechanical_Power_W": 4805.86,
+      "Overstrain_Metric": 2494.7,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 101.0,
+        "shap_value": -1.4456,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1858.0,
+        "shap_value": -1.3969,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 24.7,
+        "shap_value": -0.862,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4805.86,
+        "shap_value": -0.5378,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2494.7,
+        "shap_value": -0.5301,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.9,
+        "shap_value": -0.3149,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 8583,
+    "product_id": "M23442",
+    "type": "M",
+    "actual_failure": 1,
+    "failure_mode": "PWF",
+    "predicted_failure": 1,
+    "failure_probability": 0.9929,
+    "features": {
+      "Air_temperature_K": 297.5,
+      "Process_temperature_K": 308.1,
+      "Rotational_speed_rpm": 1334.0,
+      "Torque_Nm": 72.0,
+      "Tool_wear_min": 151.0,
+      "Temp_difference_K": 10.6,
+      "Mechanical_Power_W": 10058.12,
+      "Overstrain_Metric": 10872.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 10058.12,
+        "shap_value": 3.9695,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 72.0,
+        "shap_value": 1.5018,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1334.0,
+        "shap_value": 1.1697,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 151.0,
+        "shap_value": -0.6515,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.6,
+        "shap_value": -0.4499,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.1,
+        "shap_value": -0.2788,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9277,
+    "product_id": "L56456",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0017,
+    "features": {
+      "Air_temperature_K": 298.1,
+      "Process_temperature_K": 308.7,
+      "Rotational_speed_rpm": 1691.0,
+      "Torque_Nm": 30.3,
+      "Tool_wear_min": 49.0,
+      "Temp_difference_K": 10.6,
+      "Mechanical_Power_W": 5365.56,
+      "Overstrain_Metric": 1484.7,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 49.0,
+        "shap_value": -1.5004,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5365.56,
+        "shap_value": -1.3579,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1691.0,
+        "shap_value": -1.3473,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1484.7,
+        "shap_value": -0.6777,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.6,
+        "shap_value": -0.4476,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.7,
+        "shap_value": -0.4352,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5404,
+    "product_id": "L52583",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0006,
+    "features": {
+      "Air_temperature_K": 302.7,
+      "Process_temperature_K": 312.3,
+      "Rotational_speed_rpm": 1858.0,
+      "Torque_Nm": 25.4,
+      "Tool_wear_min": 2.0,
+      "Temp_difference_K": 9.6,
+      "Mechanical_Power_W": 4942.06,
+      "Overstrain_Metric": 50.8,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1858.0,
+        "shap_value": -1.8807,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 2.0,
+        "shap_value": -1.4689,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.3,
+        "shap_value": -1.1627,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 25.4,
+        "shap_value": -0.8888,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4942.06,
+        "shap_value": -0.8517,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 50.8,
+        "shap_value": -0.6577,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1562,
+    "product_id": "L48741",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0083,
+    "features": {
+      "Air_temperature_K": 298.2,
+      "Process_temperature_K": 308.4,
+      "Rotational_speed_rpm": 1388.0,
+      "Torque_Nm": 53.8,
+      "Tool_wear_min": 137.0,
+      "Temp_difference_K": 10.2,
+      "Mechanical_Power_W": 7819.88,
+      "Overstrain_Metric": 7370.6,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7819.88,
+        "shap_value": -1.3035,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 137.0,
+        "shap_value": -1.1718,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1388.0,
+        "shap_value": -0.6862,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 7370.6,
+        "shap_value": -0.5316,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.4,
+        "shap_value": -0.3866,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.2,
+        "shap_value": -0.3434,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 554,
+    "product_id": "M15413",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0018,
+    "features": {
+      "Air_temperature_K": 297.4,
+      "Process_temperature_K": 309.3,
+      "Rotational_speed_rpm": 1564.0,
+      "Torque_Nm": 36.0,
+      "Tool_wear_min": 126.0,
+      "Temp_difference_K": 11.9,
+      "Mechanical_Power_W": 5896.14,
+      "Overstrain_Metric": 4536.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 126.0,
+        "shap_value": -1.3897,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1564.0,
+        "shap_value": -1.3693,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5896.14,
+        "shap_value": -1.1053,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.9,
+        "shap_value": -0.871,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 36.0,
+        "shap_value": -0.5528,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4536.0,
+        "shap_value": -0.3936,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7010,
+    "product_id": "L54189",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0023,
+    "features": {
+      "Air_temperature_K": 300.5,
+      "Process_temperature_K": 310.5,
+      "Rotational_speed_rpm": 1536.0,
+      "Torque_Nm": 36.2,
+      "Tool_wear_min": 12.0,
+      "Temp_difference_K": 10.0,
+      "Mechanical_Power_W": 5822.75,
+      "Overstrain_Metric": 434.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 12.0,
+        "shap_value": -1.5363,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1536.0,
+        "shap_value": -1.4068,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5822.75,
+        "shap_value": -1.1545,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 36.2,
+        "shap_value": -0.8179,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 434.4,
+        "shap_value": -0.724,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.0,
+        "shap_value": -0.302,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1684,
+    "product_id": "M16543",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0058,
+    "features": {
+      "Air_temperature_K": 297.9,
+      "Process_temperature_K": 307.4,
+      "Rotational_speed_rpm": 1403.0,
+      "Torque_Nm": 52.8,
+      "Tool_wear_min": 0.0,
+      "Temp_difference_K": 9.5,
+      "Mechanical_Power_W": 7757.47,
+      "Overstrain_Metric": 0.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7757.47,
+        "shap_value": -1.3747,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 0.0,
+        "shap_value": -1.0731,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1403.0,
+        "shap_value": -0.7026,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 0.0,
+        "shap_value": -0.7017,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 297.9,
+        "shap_value": -0.4183,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 307.4,
+        "shap_value": -0.3831,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9809,
+    "product_id": "M24668",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0046,
+    "features": {
+      "Air_temperature_K": 298.2,
+      "Process_temperature_K": 309.0,
+      "Rotational_speed_rpm": 1441.0,
+      "Torque_Nm": 44.2,
+      "Tool_wear_min": 147.0,
+      "Temp_difference_K": 10.8,
+      "Mechanical_Power_W": 6669.83,
+      "Overstrain_Metric": 6497.4,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6669.83,
+        "shap_value": -1.2915,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 147.0,
+        "shap_value": -1.1601,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 44.2,
+        "shap_value": -0.9157,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 309.0,
+        "shap_value": -0.5451,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1441.0,
+        "shap_value": -0.387,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.8,
+        "shap_value": -0.3789,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 406,
+    "product_id": "L47585",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0457,
+    "features": {
+      "Air_temperature_K": 297.3,
+      "Process_temperature_K": 308.5,
+      "Rotational_speed_rpm": 1350.0,
+      "Torque_Nm": 57.6,
+      "Tool_wear_min": 186.0,
+      "Temp_difference_K": 11.2,
+      "Mechanical_Power_W": 8143.01,
+      "Overstrain_Metric": 10713.6,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 8143.01,
+        "shap_value": -1.3608,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1350.0,
+        "shap_value": 1.1911,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.2,
+        "shap_value": -1.0807,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 10713.6,
+        "shap_value": -0.9309,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 186.0,
+        "shap_value": -0.7861,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 57.6,
+        "shap_value": 0.7565,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1726,
+    "product_id": "M16585",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0073,
+    "features": {
+      "Air_temperature_K": 298.3,
+      "Process_temperature_K": 307.8,
+      "Rotational_speed_rpm": 1392.0,
+      "Torque_Nm": 50.4,
+      "Tool_wear_min": 101.0,
+      "Temp_difference_K": 9.5,
+      "Mechanical_Power_W": 7346.8,
+      "Overstrain_Metric": 5090.4,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7346.8,
+        "shap_value": -1.5832,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 101.0,
+        "shap_value": -1.0799,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5090.4,
+        "shap_value": -0.4899,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1392.0,
+        "shap_value": -0.4772,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 307.8,
+        "shap_value": -0.3921,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.5,
+        "shap_value": -0.3194,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5183,
+    "product_id": "L52362",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0008,
+    "features": {
+      "Air_temperature_K": 303.9,
+      "Process_temperature_K": 313.1,
+      "Rotational_speed_rpm": 1586.0,
+      "Torque_Nm": 31.9,
+      "Tool_wear_min": 108.0,
+      "Temp_difference_K": 9.2,
+      "Mechanical_Power_W": 5298.13,
+      "Overstrain_Metric": 3445.2,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1586.0,
+        "shap_value": -1.7243,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 108.0,
+        "shap_value": -1.4986,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5298.13,
+        "shap_value": -1.2667,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 313.1,
+        "shap_value": -0.9528,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3445.2,
+        "shap_value": -0.8581,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 31.9,
+        "shap_value": -0.7973,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7968,
+    "product_id": "M22827",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0005,
+    "features": {
+      "Air_temperature_K": 301.0,
+      "Process_temperature_K": 312.2,
+      "Rotational_speed_rpm": 1629.0,
+      "Torque_Nm": 32.6,
+      "Tool_wear_min": 69.0,
+      "Temp_difference_K": 11.2,
+      "Mechanical_Power_W": 5561.18,
+      "Overstrain_Metric": 2249.4,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 69.0,
+        "shap_value": -1.5799,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1629.0,
+        "shap_value": -1.5736,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5561.18,
+        "shap_value": -1.155,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.2,
+        "shap_value": -1.0611,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 32.6,
+        "shap_value": -0.8094,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2249.4,
+        "shap_value": -0.7076,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 8743,
+    "product_id": "L55922",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0027,
+    "features": {
+      "Air_temperature_K": 297.4,
+      "Process_temperature_K": 308.8,
+      "Rotational_speed_rpm": 1467.0,
+      "Torque_Nm": 39.0,
+      "Tool_wear_min": 128.0,
+      "Temp_difference_K": 11.4,
+      "Mechanical_Power_W": 5991.33,
+      "Overstrain_Metric": 4992.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 128.0,
+        "shap_value": -1.4719,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1467.0,
+        "shap_value": -1.3027,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5991.33,
+        "shap_value": -1.2364,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4992.0,
+        "shap_value": -0.4754,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 39.0,
+        "shap_value": -0.4131,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.4,
+        "shap_value": -0.402,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6370,
+    "product_id": "H35783",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0039,
+    "features": {
+      "Air_temperature_K": 300.0,
+      "Process_temperature_K": 309.5,
+      "Rotational_speed_rpm": 1781.0,
+      "Torque_Nm": 24.9,
+      "Tool_wear_min": 70.0,
+      "Temp_difference_K": 9.5,
+      "Mechanical_Power_W": 4644.0,
+      "Overstrain_Metric": 1743.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1781.0,
+        "shap_value": -1.4879,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 70.0,
+        "shap_value": -1.4633,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 24.9,
+        "shap_value": -0.9129,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4644.0,
+        "shap_value": -0.5403,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1743.0,
+        "shap_value": -0.4982,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.5,
+        "shap_value": -0.3088,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9147,
+    "product_id": "L56326",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0023,
+    "features": {
+      "Air_temperature_K": 297.6,
+      "Process_temperature_K": 308.6,
+      "Rotational_speed_rpm": 1528.0,
+      "Torque_Nm": 40.0,
+      "Tool_wear_min": 123.0,
+      "Temp_difference_K": 11.0,
+      "Mechanical_Power_W": 6400.47,
+      "Overstrain_Metric": 4920.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6400.47,
+        "shap_value": -1.3476,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 123.0,
+        "shap_value": -1.3439,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1528.0,
+        "shap_value": -1.3314,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 40.0,
+        "shap_value": -0.531,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4920.0,
+        "shap_value": -0.5041,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.6,
+        "shap_value": -0.4437,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3660,
+    "product_id": "M18519",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0019,
+    "features": {
+      "Air_temperature_K": 302.2,
+      "Process_temperature_K": 311.5,
+      "Rotational_speed_rpm": 1734.0,
+      "Torque_Nm": 25.0,
+      "Tool_wear_min": 116.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 4539.6,
+      "Overstrain_Metric": 2900.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1734.0,
+        "shap_value": -1.6809,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 116.0,
+        "shap_value": -1.4108,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4539.6,
+        "shap_value": -1.1945,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 25.0,
+        "shap_value": -0.7924,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2900.0,
+        "shap_value": -0.473,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.3,
+        "shap_value": -0.3152,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6591,
+    "product_id": "L53770",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0025,
+    "features": {
+      "Air_temperature_K": 301.7,
+      "Process_temperature_K": 310.7,
+      "Rotational_speed_rpm": 1763.0,
+      "Torque_Nm": 25.9,
+      "Tool_wear_min": 3.0,
+      "Temp_difference_K": 9.0,
+      "Mechanical_Power_W": 4781.68,
+      "Overstrain_Metric": 77.7,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1763.0,
+        "shap_value": -1.7377,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 3.0,
+        "shap_value": -1.439,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 25.9,
+        "shap_value": -0.9454,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4781.68,
+        "shap_value": -0.9094,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 77.7,
+        "shap_value": -0.6139,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.0,
+        "shap_value": -0.3571,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1428,
+    "product_id": "L48607",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0077,
+    "features": {
+      "Air_temperature_K": 298.7,
+      "Process_temperature_K": 309.8,
+      "Rotational_speed_rpm": 1394.0,
+      "Torque_Nm": 40.3,
+      "Tool_wear_min": 11.0,
+      "Temp_difference_K": 11.1,
+      "Mechanical_Power_W": 5882.97,
+      "Overstrain_Metric": 443.3,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 11.0,
+        "shap_value": -1.2724,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5882.97,
+        "shap_value": -1.1618,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 443.3,
+        "shap_value": -0.6127,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1394.0,
+        "shap_value": -0.6077,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 40.3,
+        "shap_value": -0.5987,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.1,
+        "shap_value": -0.3314,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5437,
+    "product_id": "M20296",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0014,
+    "features": {
+      "Air_temperature_K": 302.9,
+      "Process_temperature_K": 312.5,
+      "Rotational_speed_rpm": 1679.0,
+      "Torque_Nm": 30.9,
+      "Tool_wear_min": 79.0,
+      "Temp_difference_K": 9.6,
+      "Mechanical_Power_W": 5432.98,
+      "Overstrain_Metric": 2441.1,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1679.0,
+        "shap_value": -1.4826,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 79.0,
+        "shap_value": -1.4135,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5432.98,
+        "shap_value": -1.2945,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.5,
+        "shap_value": -1.1695,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2441.1,
+        "shap_value": -0.67,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.6,
+        "shap_value": -0.3212,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2485,
+    "product_id": "H31898",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0068,
+    "features": {
+      "Air_temperature_K": 298.8,
+      "Process_temperature_K": 308.6,
+      "Rotational_speed_rpm": 1524.0,
+      "Torque_Nm": 37.7,
+      "Tool_wear_min": 170.0,
+      "Temp_difference_K": 9.8,
+      "Mechanical_Power_W": 6016.65,
+      "Overstrain_Metric": 6409.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1524.0,
+        "shap_value": -1.2459,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 170.0,
+        "shap_value": -1.2012,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6016.65,
+        "shap_value": -0.9812,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.6,
+        "shap_value": -0.4176,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.8,
+        "shap_value": -0.3789,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6409.0,
+        "shap_value": -0.3781,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 216,
+    "product_id": "L47395",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0022,
+    "features": {
+      "Air_temperature_K": 298.3,
+      "Process_temperature_K": 308.6,
+      "Rotational_speed_rpm": 1548.0,
+      "Torque_Nm": 40.3,
+      "Tool_wear_min": 140.0,
+      "Temp_difference_K": 10.3,
+      "Mechanical_Power_W": 6532.88,
+      "Overstrain_Metric": 5642.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6532.88,
+        "shap_value": -1.4556,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1548.0,
+        "shap_value": -1.3399,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 140.0,
+        "shap_value": -1.313,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5642.0,
+        "shap_value": -0.5534,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 40.3,
+        "shap_value": -0.5214,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.6,
+        "shap_value": -0.4415,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9665,
+    "product_id": "L56844",
+    "type": "L",
+    "actual_failure": 1,
+    "failure_mode": "OSF",
+    "predicted_failure": 1,
+    "failure_probability": 0.9977,
+    "features": {
+      "Air_temperature_K": 299.1,
+      "Process_temperature_K": 310.2,
+      "Rotational_speed_rpm": 1317.0,
+      "Torque_Nm": 54.8,
+      "Tool_wear_min": 231.0,
+      "Temp_difference_K": 11.1,
+      "Mechanical_Power_W": 7557.79,
+      "Overstrain_Metric": 12658.8,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Overstrain_Metric",
+        "value": 12658.8,
+        "shap_value": 4.127,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 231.0,
+        "shap_value": 1.8056,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1317.0,
+        "shap_value": 1.1708,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7557.79,
+        "shap_value": -1.1553,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 54.8,
+        "shap_value": 0.4683,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.1,
+        "shap_value": -0.4372,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4633,
+    "product_id": "M19492",
+    "type": "M",
+    "actual_failure": 1,
+    "failure_mode": "HDF",
+    "predicted_failure": 1,
+    "failure_probability": 0.9815,
+    "features": {
+      "Air_temperature_K": 302.9,
+      "Process_temperature_K": 311.2,
+      "Rotational_speed_rpm": 1330.0,
+      "Torque_Nm": 53.7,
+      "Tool_wear_min": 200.0,
+      "Temp_difference_K": 8.3,
+      "Mechanical_Power_W": 7479.19,
+      "Overstrain_Metric": 10740.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1330.0,
+        "shap_value": 3.6572,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.3,
+        "shap_value": 2.2151,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7479.19,
+        "shap_value": -0.907,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 200.0,
+        "shap_value": -0.4958,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 10740.0,
+        "shap_value": -0.4686,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 302.9,
+        "shap_value": 0.3066,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 867,
+    "product_id": "L48046",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0017,
+    "features": {
+      "Air_temperature_K": 295.9,
+      "Process_temperature_K": 306.6,
+      "Rotational_speed_rpm": 1678.0,
+      "Torque_Nm": 26.7,
+      "Tool_wear_min": 53.0,
+      "Temp_difference_K": 10.7,
+      "Mechanical_Power_W": 4691.72,
+      "Overstrain_Metric": 1415.1,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 53.0,
+        "shap_value": -1.5837,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1678.0,
+        "shap_value": -1.3717,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 26.7,
+        "shap_value": -0.8294,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 295.9,
+        "shap_value": -0.8121,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4691.72,
+        "shap_value": -0.6873,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1415.1,
+        "shap_value": -0.6039,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6284,
+    "product_id": "L53463",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0083,
+    "features": {
+      "Air_temperature_K": 301.3,
+      "Process_temperature_K": 310.8,
+      "Rotational_speed_rpm": 1719.0,
+      "Torque_Nm": 29.5,
+      "Tool_wear_min": 62.0,
+      "Temp_difference_K": 9.5,
+      "Mechanical_Power_W": 5310.39,
+      "Overstrain_Metric": 1829.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1719.0,
+        "shap_value": -1.5304,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 62.0,
+        "shap_value": -1.4267,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5310.39,
+        "shap_value": -1.2491,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1829.0,
+        "shap_value": -0.2852,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 301.3,
+        "shap_value": -0.2463,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 310.8,
+        "shap_value": 0.2196,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7018,
+    "product_id": "M21877",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0026,
+    "features": {
+      "Air_temperature_K": 300.7,
+      "Process_temperature_K": 310.6,
+      "Rotational_speed_rpm": 1474.0,
+      "Torque_Nm": 37.0,
+      "Tool_wear_min": 33.0,
+      "Temp_difference_K": 9.9,
+      "Mechanical_Power_W": 5711.21,
+      "Overstrain_Metric": 1221.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 33.0,
+        "shap_value": -1.4128,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1474.0,
+        "shap_value": -1.3167,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5711.21,
+        "shap_value": -1.2537,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 37.0,
+        "shap_value": -0.8445,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1221.0,
+        "shap_value": -0.5501,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.9,
+        "shap_value": -0.3491,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1232,
+    "product_id": "M16091",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0034,
+    "features": {
+      "Air_temperature_K": 297.2,
+      "Process_temperature_K": 308.5,
+      "Rotational_speed_rpm": 1604.0,
+      "Torque_Nm": 40.7,
+      "Tool_wear_min": 158.0,
+      "Temp_difference_K": 11.3,
+      "Mechanical_Power_W": 6836.4,
+      "Overstrain_Metric": 6430.6,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1604.0,
+        "shap_value": -1.5205,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6836.4,
+        "shap_value": -1.3285,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 158.0,
+        "shap_value": -1.1046,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 40.7,
+        "shap_value": -0.4539,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.3,
+        "shap_value": -0.4386,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6430.6,
+        "shap_value": -0.3952,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1291,
+    "product_id": "L48470",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0201,
+    "features": {
+      "Air_temperature_K": 298.6,
+      "Process_temperature_K": 309.7,
+      "Rotational_speed_rpm": 1429.0,
+      "Torque_Nm": 45.8,
+      "Tool_wear_min": 113.0,
+      "Temp_difference_K": 11.1,
+      "Mechanical_Power_W": 6853.72,
+      "Overstrain_Metric": 5175.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6853.72,
+        "shap_value": -1.364,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 113.0,
+        "shap_value": -1.0878,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5175.4,
+        "shap_value": -0.4723,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.1,
+        "shap_value": -0.3771,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1429.0,
+        "shap_value": -0.324,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 298.6,
+        "shap_value": -0.2802,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6743,
+    "product_id": "H36156",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0115,
+    "features": {
+      "Air_temperature_K": 301.7,
+      "Process_temperature_K": 311.2,
+      "Rotational_speed_rpm": 1639.0,
+      "Torque_Nm": 30.0,
+      "Tool_wear_min": 161.0,
+      "Temp_difference_K": 9.5,
+      "Mechanical_Power_W": 5149.07,
+      "Overstrain_Metric": 4830.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1639.0,
+        "shap_value": -1.371,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5149.07,
+        "shap_value": -1.1605,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 161.0,
+        "shap_value": -1.0278,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4830.0,
+        "shap_value": -0.4633,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 311.2,
+        "shap_value": -0.2556,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.5,
+        "shap_value": -0.1385,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1850,
+    "product_id": "L49029",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0013,
+    "features": {
+      "Air_temperature_K": 297.7,
+      "Process_temperature_K": 307.2,
+      "Rotational_speed_rpm": 1668.0,
+      "Torque_Nm": 32.7,
+      "Tool_wear_min": 31.0,
+      "Temp_difference_K": 9.5,
+      "Mechanical_Power_W": 5711.79,
+      "Overstrain_Metric": 1013.7,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 31.0,
+        "shap_value": -1.6375,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5711.79,
+        "shap_value": -1.3715,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1668.0,
+        "shap_value": -1.3559,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 32.7,
+        "shap_value": -0.8524,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1013.7,
+        "shap_value": -0.7275,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 297.7,
+        "shap_value": -0.2863,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1020,
+    "product_id": "L48199",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0033,
+    "features": {
+      "Air_temperature_K": 296.3,
+      "Process_temperature_K": 307.3,
+      "Rotational_speed_rpm": 1398.0,
+      "Torque_Nm": 52.7,
+      "Tool_wear_min": 31.0,
+      "Temp_difference_K": 11.0,
+      "Mechanical_Power_W": 7715.19,
+      "Overstrain_Metric": 1633.7,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7715.19,
+        "shap_value": -1.3711,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 31.0,
+        "shap_value": -1.0805,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 296.3,
+        "shap_value": -0.9425,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1633.7,
+        "shap_value": -0.7491,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1398.0,
+        "shap_value": -0.7345,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 307.3,
+        "shap_value": -0.4236,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3965,
+    "product_id": "M18824",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0033,
+    "features": {
+      "Air_temperature_K": 302.3,
+      "Process_temperature_K": 311.6,
+      "Rotational_speed_rpm": 1668.0,
+      "Torque_Nm": 33.2,
+      "Tool_wear_min": 52.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 5799.13,
+      "Overstrain_Metric": 1726.4,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 52.0,
+        "shap_value": -1.4921,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1668.0,
+        "shap_value": -1.4616,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5799.13,
+        "shap_value": -1.2565,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 33.2,
+        "shap_value": -0.6508,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1726.4,
+        "shap_value": -0.5137,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.3,
+        "shap_value": -0.2467,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 352,
+    "product_id": "M15211",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0013,
+    "features": {
+      "Air_temperature_K": 297.6,
+      "Process_temperature_K": 308.4,
+      "Rotational_speed_rpm": 1611.0,
+      "Torque_Nm": 31.0,
+      "Tool_wear_min": 48.0,
+      "Temp_difference_K": 10.8,
+      "Mechanical_Power_W": 5229.81,
+      "Overstrain_Metric": 1488.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 48.0,
+        "shap_value": -1.6402,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1611.0,
+        "shap_value": -1.5064,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5229.81,
+        "shap_value": -1.258,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1488.0,
+        "shap_value": -0.6477,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 31.0,
+        "shap_value": -0.4681,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.8,
+        "shap_value": -0.4564,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5040,
+    "product_id": "H34453",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0016,
+    "features": {
+      "Air_temperature_K": 304.1,
+      "Process_temperature_K": 313.3,
+      "Rotational_speed_rpm": 1689.0,
+      "Torque_Nm": 32.5,
+      "Tool_wear_min": 134.0,
+      "Temp_difference_K": 9.2,
+      "Mechanical_Power_W": 5748.33,
+      "Overstrain_Metric": 4355.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 134.0,
+        "shap_value": -1.5026,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1689.0,
+        "shap_value": -1.4274,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5748.33,
+        "shap_value": -1.1963,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 313.3,
+        "shap_value": -0.8617,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 32.5,
+        "shap_value": -0.7648,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4355.0,
+        "shap_value": -0.5967,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7056,
+    "product_id": "L54235",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0102,
+    "features": {
+      "Air_temperature_K": 300.8,
+      "Process_temperature_K": 310.6,
+      "Rotational_speed_rpm": 1663.0,
+      "Torque_Nm": 30.6,
+      "Tool_wear_min": 139.0,
+      "Temp_difference_K": 9.8,
+      "Mechanical_Power_W": 5328.96,
+      "Overstrain_Metric": 4253.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 139.0,
+        "shap_value": -1.4126,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5328.96,
+        "shap_value": -1.3025,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1663.0,
+        "shap_value": -1.0963,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4253.4,
+        "shap_value": -0.5212,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.8,
+        "shap_value": -0.2897,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 310.6,
+        "shap_value": 0.1686,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 8108,
+    "product_id": "H37521",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0078,
+    "features": {
+      "Air_temperature_K": 300.3,
+      "Process_temperature_K": 311.9,
+      "Rotational_speed_rpm": 1390.0,
+      "Torque_Nm": 49.0,
+      "Tool_wear_min": 194.0,
+      "Temp_difference_K": 11.6,
+      "Mechanical_Power_W": 7132.46,
+      "Overstrain_Metric": 9506.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7132.46,
+        "shap_value": -1.2255,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.6,
+        "shap_value": -0.949,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 194.0,
+        "shap_value": -0.9426,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1390.0,
+        "shap_value": -0.4941,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 9506.0,
+        "shap_value": -0.4274,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 311.9,
+        "shap_value": -0.2632,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4618,
+    "product_id": "M19477",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.003,
+    "features": {
+      "Air_temperature_K": 303.1,
+      "Process_temperature_K": 311.4,
+      "Rotational_speed_rpm": 1831.0,
+      "Torque_Nm": 23.3,
+      "Tool_wear_min": 161.0,
+      "Temp_difference_K": 8.3,
+      "Mechanical_Power_W": 4467.59,
+      "Overstrain_Metric": 3751.3,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1831.0,
+        "shap_value": -2.779,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4467.59,
+        "shap_value": -1.2781,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 161.0,
+        "shap_value": -1.1248,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3751.3,
+        "shap_value": -0.4246,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.3,
+        "shap_value": 0.2785,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 311.4,
+        "shap_value": -0.2088,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 586,
+    "product_id": "L47765",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.3726,
+    "features": {
+      "Air_temperature_K": 297.6,
+      "Process_temperature_K": 309.5,
+      "Rotational_speed_rpm": 2001.0,
+      "Torque_Nm": 20.5,
+      "Tool_wear_min": 220.0,
+      "Temp_difference_K": 11.9,
+      "Mechanical_Power_W": 4295.66,
+      "Overstrain_Metric": 4510.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 220.0,
+        "shap_value": 2.4968,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 2001.0,
+        "shap_value": -0.9168,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.9,
+        "shap_value": -0.8136,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4510.0,
+        "shap_value": -0.5858,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4295.66,
+        "shap_value": -0.3926,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 309.5,
+        "shap_value": -0.2124,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6300,
+    "product_id": "L53479",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0226,
+    "features": {
+      "Air_temperature_K": 301.2,
+      "Process_temperature_K": 310.6,
+      "Rotational_speed_rpm": 1385.0,
+      "Torque_Nm": 49.2,
+      "Tool_wear_min": 105.0,
+      "Temp_difference_K": 9.4,
+      "Mechanical_Power_W": 7135.81,
+      "Overstrain_Metric": 5166.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7135.81,
+        "shap_value": -1.32,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 105.0,
+        "shap_value": -1.0215,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5166.0,
+        "shap_value": -0.5243,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.4,
+        "shap_value": -0.3793,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 301.2,
+        "shap_value": -0.3767,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1385.0,
+        "shap_value": -0.2436,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2138,
+    "product_id": "L49317",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0048,
+    "features": {
+      "Air_temperature_K": 299.3,
+      "Process_temperature_K": 308.9,
+      "Rotational_speed_rpm": 1623.0,
+      "Torque_Nm": 31.1,
+      "Tool_wear_min": 152.0,
+      "Temp_difference_K": 9.6,
+      "Mechanical_Power_W": 5285.76,
+      "Overstrain_Metric": 4727.2,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1623.0,
+        "shap_value": -1.3143,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5285.76,
+        "shap_value": -1.158,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 152.0,
+        "shap_value": -1.0737,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 31.1,
+        "shap_value": -0.7186,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4727.2,
+        "shap_value": -0.5452,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.9,
+        "shap_value": -0.3544,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9318,
+    "product_id": "L56497",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0058,
+    "features": {
+      "Air_temperature_K": 298.5,
+      "Process_temperature_K": 309.5,
+      "Rotational_speed_rpm": 1480.0,
+      "Torque_Nm": 38.1,
+      "Tool_wear_min": 160.0,
+      "Temp_difference_K": 11.0,
+      "Mechanical_Power_W": 5904.94,
+      "Overstrain_Metric": 6096.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1480.0,
+        "shap_value": -1.2376,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 160.0,
+        "shap_value": -1.2069,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5904.94,
+        "shap_value": -1.1344,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6096.0,
+        "shap_value": -0.4388,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 38.1,
+        "shap_value": -0.324,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.0,
+        "shap_value": -0.3238,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9925,
+    "product_id": "M24784",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0066,
+    "features": {
+      "Air_temperature_K": 298.5,
+      "Process_temperature_K": 308.6,
+      "Rotational_speed_rpm": 1384.0,
+      "Torque_Nm": 54.4,
+      "Tool_wear_min": 44.0,
+      "Temp_difference_K": 10.1,
+      "Mechanical_Power_W": 7884.31,
+      "Overstrain_Metric": 2393.6,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7884.31,
+        "shap_value": -1.327,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 44.0,
+        "shap_value": -1.2056,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2393.6,
+        "shap_value": -0.5963,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.6,
+        "shap_value": -0.5625,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1384.0,
+        "shap_value": -0.4414,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.1,
+        "shap_value": -0.4002,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 81,
+    "product_id": "H29494",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0042,
+    "features": {
+      "Air_temperature_K": 298.8,
+      "Process_temperature_K": 308.8,
+      "Rotational_speed_rpm": 1445.0,
+      "Torque_Nm": 49.9,
+      "Tool_wear_min": 4.0,
+      "Temp_difference_K": 10.0,
+      "Mechanical_Power_W": 7550.87,
+      "Overstrain_Metric": 199.6,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7550.87,
+        "shap_value": -1.5833,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 4.0,
+        "shap_value": -1.1344,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 199.6,
+        "shap_value": -0.6735,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1445.0,
+        "shap_value": -0.6392,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.8,
+        "shap_value": -0.516,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.0,
+        "shap_value": -0.4495,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 556,
+    "product_id": "M15415",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0016,
+    "features": {
+      "Air_temperature_K": 297.4,
+      "Process_temperature_K": 309.4,
+      "Rotational_speed_rpm": 1539.0,
+      "Torque_Nm": 42.2,
+      "Tool_wear_min": 134.0,
+      "Temp_difference_K": 12.0,
+      "Mechanical_Power_W": 6801.11,
+      "Overstrain_Metric": 5654.8,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1539.0,
+        "shap_value": -1.3343,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6801.11,
+        "shap_value": -1.2663,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 134.0,
+        "shap_value": -1.1335,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 42.2,
+        "shap_value": -0.8985,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 12.0,
+        "shap_value": -0.8438,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5654.8,
+        "shap_value": -0.3816,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3475,
+    "product_id": "M18334",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0051,
+    "features": {
+      "Air_temperature_K": 301.9,
+      "Process_temperature_K": 310.8,
+      "Rotational_speed_rpm": 1557.0,
+      "Torque_Nm": 35.3,
+      "Tool_wear_min": 65.0,
+      "Temp_difference_K": 8.9,
+      "Mechanical_Power_W": 5755.62,
+      "Overstrain_Metric": 2294.5,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 65.0,
+        "shap_value": -1.5601,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1557.0,
+        "shap_value": -1.4976,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5755.62,
+        "shap_value": -1.1682,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2294.5,
+        "shap_value": -0.6232,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 35.3,
+        "shap_value": -0.5742,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 310.8,
+        "shap_value": 0.2743,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5822,
+    "product_id": "L53001",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0366,
+    "features": {
+      "Air_temperature_K": 301.3,
+      "Process_temperature_K": 311.1,
+      "Rotational_speed_rpm": 1303.0,
+      "Torque_Nm": 49.2,
+      "Tool_wear_min": 212.0,
+      "Temp_difference_K": 9.8,
+      "Mechanical_Power_W": 6713.33,
+      "Overstrain_Metric": 10430.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6713.33,
+        "shap_value": -1.5029,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 212.0,
+        "shap_value": 1.4547,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.8,
+        "shap_value": -1.267,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 301.3,
+        "shap_value": -1.0762,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 10430.4,
+        "shap_value": -0.9862,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1303.0,
+        "shap_value": 0.4887,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6221,
+    "product_id": "L53400",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0037,
+    "features": {
+      "Air_temperature_K": 301.1,
+      "Process_temperature_K": 310.8,
+      "Rotational_speed_rpm": 1470.0,
+      "Torque_Nm": 49.3,
+      "Tool_wear_min": 116.0,
+      "Temp_difference_K": 9.7,
+      "Mechanical_Power_W": 7589.15,
+      "Overstrain_Metric": 5718.8,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7589.15,
+        "shap_value": -1.5418,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1470.0,
+        "shap_value": -1.5254,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 116.0,
+        "shap_value": -1.0877,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5718.8,
+        "shap_value": -0.6703,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.7,
+        "shap_value": -0.3964,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 301.1,
+        "shap_value": -0.3762,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3027,
+    "product_id": "M17886",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.4958,
+    "features": {
+      "Air_temperature_K": 300.4,
+      "Process_temperature_K": 309.5,
+      "Rotational_speed_rpm": 1888.0,
+      "Torque_Nm": 21.9,
+      "Tool_wear_min": 221.0,
+      "Temp_difference_K": 9.1,
+      "Mechanical_Power_W": 4329.87,
+      "Overstrain_Metric": 4839.9,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 221.0,
+        "shap_value": 2.435,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1888.0,
+        "shap_value": -0.9001,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4329.87,
+        "shap_value": -0.4903,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.1,
+        "shap_value": -0.3714,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4839.9,
+        "shap_value": -0.348,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 309.5,
+        "shap_value": -0.1964,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7974,
+    "product_id": "L55153",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0014,
+    "features": {
+      "Air_temperature_K": 301.1,
+      "Process_temperature_K": 312.3,
+      "Rotational_speed_rpm": 1682.0,
+      "Torque_Nm": 29.7,
+      "Tool_wear_min": 83.0,
+      "Temp_difference_K": 11.2,
+      "Mechanical_Power_W": 5231.32,
+      "Overstrain_Metric": 2465.1,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 83.0,
+        "shap_value": -1.4473,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1682.0,
+        "shap_value": -1.3067,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5231.32,
+        "shap_value": -1.238,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.3,
+        "shap_value": -0.9815,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2465.1,
+        "shap_value": -0.7373,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.2,
+        "shap_value": -0.5026,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3917,
+    "product_id": "L51096",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0034,
+    "features": {
+      "Air_temperature_K": 302.6,
+      "Process_temperature_K": 311.6,
+      "Rotational_speed_rpm": 1453.0,
+      "Torque_Nm": 37.0,
+      "Tool_wear_min": 135.0,
+      "Temp_difference_K": 9.0,
+      "Mechanical_Power_W": 5629.84,
+      "Overstrain_Metric": 4995.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5629.84,
+        "shap_value": -1.3207,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1453.0,
+        "shap_value": -1.3075,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 135.0,
+        "shap_value": -1.3016,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 37.0,
+        "shap_value": -0.8125,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4995.0,
+        "shap_value": -0.5939,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 311.6,
+        "shap_value": -0.3023,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 222,
+    "product_id": "H29635",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0048,
+    "features": {
+      "Air_temperature_K": 298.4,
+      "Process_temperature_K": 308.5,
+      "Rotational_speed_rpm": 1827.0,
+      "Torque_Nm": 24.3,
+      "Tool_wear_min": 153.0,
+      "Temp_difference_K": 10.1,
+      "Mechanical_Power_W": 4649.15,
+      "Overstrain_Metric": 3717.9,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1827.0,
+        "shap_value": -1.4339,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 153.0,
+        "shap_value": -1.2204,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 24.3,
+        "shap_value": -0.7327,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3717.9,
+        "shap_value": -0.5337,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4649.15,
+        "shap_value": -0.5267,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.1,
+        "shap_value": -0.3965,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 8705,
+    "product_id": "L55884",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0069,
+    "features": {
+      "Air_temperature_K": 297.1,
+      "Process_temperature_K": 308.5,
+      "Rotational_speed_rpm": 1425.0,
+      "Torque_Nm": 40.0,
+      "Tool_wear_min": 35.0,
+      "Temp_difference_K": 11.4,
+      "Mechanical_Power_W": 5969.03,
+      "Overstrain_Metric": 1400.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 35.0,
+        "shap_value": -1.3907,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5969.03,
+        "shap_value": -1.1361,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1400.0,
+        "shap_value": -0.5365,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 40.0,
+        "shap_value": -0.5356,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1425.0,
+        "shap_value": -0.5061,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.4,
+        "shap_value": -0.4175,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4112,
+    "product_id": "M18971",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0064,
+    "features": {
+      "Air_temperature_K": 302.0,
+      "Process_temperature_K": 310.6,
+      "Rotational_speed_rpm": 1563.0,
+      "Torque_Nm": 41.0,
+      "Tool_wear_min": 184.0,
+      "Temp_difference_K": 8.6,
+      "Mechanical_Power_W": 6710.76,
+      "Overstrain_Metric": 7544.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1563.0,
+        "shap_value": -2.3582,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 184.0,
+        "shap_value": -1.1361,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6710.76,
+        "shap_value": -1.0898,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 41.0,
+        "shap_value": -0.5492,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.6,
+        "shap_value": 0.3297,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 7544.0,
+        "shap_value": -0.1829,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4232,
+    "product_id": "L51411",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 1,
+    "failure_probability": 0.9759,
+    "features": {
+      "Air_temperature_K": 302.2,
+      "Process_temperature_K": 310.8,
+      "Rotational_speed_rpm": 1340.0,
+      "Torque_Nm": 47.8,
+      "Tool_wear_min": 54.0,
+      "Temp_difference_K": 8.6,
+      "Mechanical_Power_W": 6707.51,
+      "Overstrain_Metric": 2581.2,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1340.0,
+        "shap_value": 3.0962,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 8.6,
+        "shap_value": 1.5589,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6707.51,
+        "shap_value": -0.8923,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 54.0,
+        "shap_value": -0.6889,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2581.2,
+        "shap_value": -0.5781,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 302.2,
+        "shap_value": 0.4347,
+        "direction": "INCREASES_FAILURE_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7885,
+    "product_id": "L55064",
+    "type": "L",
+    "actual_failure": 1,
+    "failure_mode": "PWF",
+    "predicted_failure": 1,
+    "failure_probability": 0.7444,
+    "features": {
+      "Air_temperature_K": 300.8,
+      "Process_temperature_K": 312.4,
+      "Rotational_speed_rpm": 1465.0,
+      "Torque_Nm": 59.1,
+      "Tool_wear_min": 91.0,
+      "Temp_difference_K": 11.6,
+      "Mechanical_Power_W": 9066.79,
+      "Overstrain_Metric": 5378.1,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Torque_Nm",
+        "value": 59.1,
+        "shap_value": 2.6509,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 9066.79,
+        "shap_value": 2.5473,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1465.0,
+        "shap_value": -1.108,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.4,
+        "shap_value": -0.9813,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.6,
+        "shap_value": -0.8843,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5378.1,
+        "shap_value": -0.593,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 872,
+    "product_id": "L48051",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0025,
+    "features": {
+      "Air_temperature_K": 295.8,
+      "Process_temperature_K": 306.4,
+      "Rotational_speed_rpm": 1339.0,
+      "Torque_Nm": 53.2,
+      "Tool_wear_min": 67.0,
+      "Temp_difference_K": 10.6,
+      "Mechanical_Power_W": 7459.69,
+      "Overstrain_Metric": 3564.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7459.69,
+        "shap_value": -2.1076,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1339.0,
+        "shap_value": 1.7147,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3564.4,
+        "shap_value": -1.5896,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.6,
+        "shap_value": -1.4435,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 67.0,
+        "shap_value": -1.0808,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 295.8,
+        "shap_value": -0.871,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6751,
+    "product_id": "M21610",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0048,
+    "features": {
+      "Air_temperature_K": 301.7,
+      "Process_temperature_K": 311.0,
+      "Rotational_speed_rpm": 1505.0,
+      "Torque_Nm": 44.0,
+      "Tool_wear_min": 187.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 6934.54,
+      "Overstrain_Metric": 8228.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1505.0,
+        "shap_value": -1.368,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6934.54,
+        "shap_value": -1.3627,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 44.0,
+        "shap_value": -1.1115,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 187.0,
+        "shap_value": -0.9858,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 8228.0,
+        "shap_value": -0.2917,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.3,
+        "shap_value": -0.24,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5954,
+    "product_id": "M20813",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0047,
+    "features": {
+      "Air_temperature_K": 300.7,
+      "Process_temperature_K": 310.9,
+      "Rotational_speed_rpm": 1486.0,
+      "Torque_Nm": 38.9,
+      "Tool_wear_min": 106.0,
+      "Temp_difference_K": 10.2,
+      "Mechanical_Power_W": 6053.37,
+      "Overstrain_Metric": 4123.4,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 106.0,
+        "shap_value": -1.4113,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1486.0,
+        "shap_value": -1.2626,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6053.37,
+        "shap_value": -1.2529,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4123.4,
+        "shap_value": -0.5796,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 38.9,
+        "shap_value": -0.4807,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.2,
+        "shap_value": -0.3062,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 4382,
+    "product_id": "L51561",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.2923,
+    "features": {
+      "Air_temperature_K": 301.9,
+      "Process_temperature_K": 309.6,
+      "Rotational_speed_rpm": 1446.0,
+      "Torque_Nm": 43.2,
+      "Tool_wear_min": 225.0,
+      "Temp_difference_K": 7.7,
+      "Mechanical_Power_W": 6541.55,
+      "Overstrain_Metric": 9720.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 225.0,
+        "shap_value": 2.4624,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 43.2,
+        "shap_value": -1.2806,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1446.0,
+        "shap_value": -1.1951,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6541.55,
+        "shap_value": -0.9877,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 7.7,
+        "shap_value": 0.5152,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 9720.0,
+        "shap_value": -0.2926,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3641,
+    "product_id": "H33054",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0031,
+    "features": {
+      "Air_temperature_K": 302.4,
+      "Process_temperature_K": 311.6,
+      "Rotational_speed_rpm": 1544.0,
+      "Torque_Nm": 39.1,
+      "Tool_wear_min": 70.0,
+      "Temp_difference_K": 9.2,
+      "Mechanical_Power_W": 6321.97,
+      "Overstrain_Metric": 2737.0,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 70.0,
+        "shap_value": -1.5304,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1544.0,
+        "shap_value": -1.4905,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6321.97,
+        "shap_value": -1.131,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 39.1,
+        "shap_value": -0.6612,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2737.0,
+        "shap_value": -0.5557,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.2,
+        "shap_value": -0.2562,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9838,
+    "product_id": "M24697",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0039,
+    "features": {
+      "Air_temperature_K": 298.4,
+      "Process_temperature_K": 309.3,
+      "Rotational_speed_rpm": 1355.0,
+      "Torque_Nm": 50.6,
+      "Tool_wear_min": 8.0,
+      "Temp_difference_K": 10.9,
+      "Mechanical_Power_W": 7179.9,
+      "Overstrain_Metric": 404.8,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7179.9,
+        "shap_value": -2.3645,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.9,
+        "shap_value": -1.5508,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1355.0,
+        "shap_value": 1.5382,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 8.0,
+        "shap_value": -1.0854,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 404.8,
+        "shap_value": -0.6504,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 298.4,
+        "shap_value": -0.542,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7622,
+    "product_id": "L54801",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0023,
+    "features": {
+      "Air_temperature_K": 300.5,
+      "Process_temperature_K": 311.5,
+      "Rotational_speed_rpm": 1490.0,
+      "Torque_Nm": 38.4,
+      "Tool_wear_min": 67.0,
+      "Temp_difference_K": 11.0,
+      "Mechanical_Power_W": 5991.65,
+      "Overstrain_Metric": 2572.8,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 67.0,
+        "shap_value": -1.7009,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1490.0,
+        "shap_value": -1.3212,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5991.65,
+        "shap_value": -1.2649,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2572.8,
+        "shap_value": -0.6302,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 38.4,
+        "shap_value": -0.485,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.0,
+        "shap_value": -0.3173,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3978,
+    "product_id": "M18837",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.003,
+    "features": {
+      "Air_temperature_K": 302.2,
+      "Process_temperature_K": 311.3,
+      "Rotational_speed_rpm": 1510.0,
+      "Torque_Nm": 36.6,
+      "Tool_wear_min": 91.0,
+      "Temp_difference_K": 9.1,
+      "Mechanical_Power_W": 5787.44,
+      "Overstrain_Metric": 3330.6,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1510.0,
+        "shap_value": -1.4265,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 91.0,
+        "shap_value": -1.4017,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5787.44,
+        "shap_value": -1.2211,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 36.6,
+        "shap_value": -0.7755,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3330.6,
+        "shap_value": -0.5723,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 311.3,
+        "shap_value": -0.2397,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5497,
+    "product_id": "M20356",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0005,
+    "features": {
+      "Air_temperature_K": 302.9,
+      "Process_temperature_K": 312.5,
+      "Rotational_speed_rpm": 1924.0,
+      "Torque_Nm": 24.0,
+      "Tool_wear_min": 17.0,
+      "Temp_difference_K": 9.6,
+      "Mechanical_Power_W": 4835.54,
+      "Overstrain_Metric": 408.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1924.0,
+        "shap_value": -1.7914,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 17.0,
+        "shap_value": -1.492,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.5,
+        "shap_value": -1.2197,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 24.0,
+        "shap_value": -0.8985,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4835.54,
+        "shap_value": -0.8877,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 408.0,
+        "shap_value": -0.5924,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2791,
+    "product_id": "L49970",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0092,
+    "features": {
+      "Air_temperature_K": 300.4,
+      "Process_temperature_K": 309.6,
+      "Rotational_speed_rpm": 1356.0,
+      "Torque_Nm": 45.9,
+      "Tool_wear_min": 64.0,
+      "Temp_difference_K": 9.2,
+      "Mechanical_Power_W": 6517.8,
+      "Overstrain_Metric": 2937.6,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6517.8,
+        "shap_value": -2.0736,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1356.0,
+        "shap_value": 1.4575,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.2,
+        "shap_value": -1.4304,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 64.0,
+        "shap_value": -1.1128,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2937.6,
+        "shap_value": -1.1025,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 300.4,
+        "shap_value": -0.3733,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3133,
+    "product_id": "L50312",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.002,
+    "features": {
+      "Air_temperature_K": 300.1,
+      "Process_temperature_K": 309.5,
+      "Rotational_speed_rpm": 1557.0,
+      "Torque_Nm": 40.6,
+      "Tool_wear_min": 59.0,
+      "Temp_difference_K": 9.4,
+      "Mechanical_Power_W": 6619.78,
+      "Overstrain_Metric": 2395.4,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6619.78,
+        "shap_value": -1.4655,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 59.0,
+        "shap_value": -1.4453,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1557.0,
+        "shap_value": -1.4223,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2395.4,
+        "shap_value": -0.6744,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 40.6,
+        "shap_value": -0.5978,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.4,
+        "shap_value": -0.29,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 2262,
+    "product_id": "M17121",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0303,
+    "features": {
+      "Air_temperature_K": 299.1,
+      "Process_temperature_K": 308.2,
+      "Rotational_speed_rpm": 1435.0,
+      "Torque_Nm": 45.2,
+      "Tool_wear_min": 45.0,
+      "Temp_difference_K": 9.1,
+      "Mechanical_Power_W": 6792.33,
+      "Overstrain_Metric": 2034.0,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 45.0,
+        "shap_value": -1.2501,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6792.33,
+        "shap_value": -1.0337,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 45.2,
+        "shap_value": 0.5057,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 2034.0,
+        "shap_value": -0.4132,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.2,
+        "shap_value": -0.3542,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.1,
+        "shap_value": -0.335,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1427,
+    "product_id": "M16286",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0013,
+    "features": {
+      "Air_temperature_K": 298.7,
+      "Process_temperature_K": 309.7,
+      "Rotational_speed_rpm": 1622.0,
+      "Torque_Nm": 34.6,
+      "Tool_wear_min": 8.0,
+      "Temp_difference_K": 11.0,
+      "Mechanical_Power_W": 5877.0,
+      "Overstrain_Metric": 276.8,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1622.0,
+        "shap_value": -1.5825,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 8.0,
+        "shap_value": -1.5804,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5877.0,
+        "shap_value": -1.173,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 34.6,
+        "shap_value": -0.7249,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 276.8,
+        "shap_value": -0.655,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.0,
+        "shap_value": -0.3484,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 1734,
+    "product_id": "L48913",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0024,
+    "features": {
+      "Air_temperature_K": 298.4,
+      "Process_temperature_K": 308.0,
+      "Rotational_speed_rpm": 1515.0,
+      "Torque_Nm": 42.8,
+      "Tool_wear_min": 125.0,
+      "Temp_difference_K": 9.6,
+      "Mechanical_Power_W": 6790.24,
+      "Overstrain_Metric": 5350.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1515.0,
+        "shap_value": -1.3437,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 125.0,
+        "shap_value": -1.3277,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6790.24,
+        "shap_value": -1.3144,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 42.8,
+        "shap_value": -0.9363,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5350.0,
+        "shap_value": -0.4619,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.6,
+        "shap_value": -0.2692,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3081,
+    "product_id": "M17940",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0027,
+    "features": {
+      "Air_temperature_K": 299.9,
+      "Process_temperature_K": 309.2,
+      "Rotational_speed_rpm": 1539.0,
+      "Torque_Nm": 43.2,
+      "Tool_wear_min": 132.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 6962.27,
+      "Overstrain_Metric": 5702.4,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6962.27,
+        "shap_value": -1.5655,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1539.0,
+        "shap_value": -1.3103,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 132.0,
+        "shap_value": -1.0569,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 43.2,
+        "shap_value": -0.8657,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5702.4,
+        "shap_value": -0.3769,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 309.2,
+        "shap_value": -0.2809,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6539,
+    "product_id": "L53718",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.004,
+    "features": {
+      "Air_temperature_K": 301.4,
+      "Process_temperature_K": 310.7,
+      "Rotational_speed_rpm": 1487.0,
+      "Torque_Nm": 44.6,
+      "Tool_wear_min": 88.0,
+      "Temp_difference_K": 9.3,
+      "Mechanical_Power_W": 6945.04,
+      "Overstrain_Metric": 3924.8,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1487.0,
+        "shap_value": -1.646,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6945.04,
+        "shap_value": -1.4186,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 88.0,
+        "shap_value": -1.1685,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3924.8,
+        "shap_value": -0.6027,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 301.4,
+        "shap_value": -0.4178,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 44.6,
+        "shap_value": -0.3134,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 8024,
+    "product_id": "H37437",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.1158,
+    "features": {
+      "Air_temperature_K": 300.9,
+      "Process_temperature_K": 312.0,
+      "Rotational_speed_rpm": 1397.0,
+      "Torque_Nm": 42.7,
+      "Tool_wear_min": 212.0,
+      "Temp_difference_K": 11.1,
+      "Mechanical_Power_W": 6246.73,
+      "Overstrain_Metric": 9052.4,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 212.0,
+        "shap_value": 1.8997,
+        "direction": "INCREASES_FAILURE_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 42.7,
+        "shap_value": -1.1431,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1397.0,
+        "shap_value": -0.6644,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6246.73,
+        "shap_value": -0.4776,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.0,
+        "shap_value": -0.4198,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Air_temperature_K",
+        "value": 300.9,
+        "shap_value": -0.4041,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 7226,
+    "product_id": "M22085",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0038,
+    "features": {
+      "Air_temperature_K": 299.8,
+      "Process_temperature_K": 309.7,
+      "Rotational_speed_rpm": 1910.0,
+      "Torque_Nm": 21.8,
+      "Tool_wear_min": 141.0,
+      "Temp_difference_K": 9.9,
+      "Mechanical_Power_W": 4360.32,
+      "Overstrain_Metric": 3073.8,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 141.0,
+        "shap_value": -1.6072,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1910.0,
+        "shap_value": -1.4035,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 4360.32,
+        "shap_value": -0.9583,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.9,
+        "shap_value": -0.5342,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 3073.8,
+        "shap_value": -0.5121,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 21.8,
+        "shap_value": -0.2801,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 3837,
+    "product_id": "L51016",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0042,
+    "features": {
+      "Air_temperature_K": 302.4,
+      "Process_temperature_K": 311.2,
+      "Rotational_speed_rpm": 1466.0,
+      "Torque_Nm": 43.9,
+      "Tool_wear_min": 152.0,
+      "Temp_difference_K": 8.8,
+      "Mechanical_Power_W": 6739.49,
+      "Overstrain_Metric": 6672.8,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1466.0,
+        "shap_value": -1.4868,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6739.49,
+        "shap_value": -1.2148,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 43.9,
+        "shap_value": -1.0846,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 152.0,
+        "shap_value": -0.9433,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 6672.8,
+        "shap_value": -0.3348,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 311.2,
+        "shap_value": -0.2833,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 5449,
+    "product_id": "L52628",
+    "type": "L",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0008,
+    "features": {
+      "Air_temperature_K": 303.0,
+      "Process_temperature_K": 312.7,
+      "Rotational_speed_rpm": 1551.0,
+      "Torque_Nm": 41.8,
+      "Tool_wear_min": 111.0,
+      "Temp_difference_K": 9.7,
+      "Mechanical_Power_W": 6789.17,
+      "Overstrain_Metric": 4639.8,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1551.0,
+        "shap_value": -1.5732,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 111.0,
+        "shap_value": -1.2696,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 312.7,
+        "shap_value": -1.2358,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6789.17,
+        "shap_value": -1.2342,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 41.8,
+        "shap_value": -0.9275,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4639.8,
+        "shap_value": -0.538,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 6435,
+    "product_id": "M21294",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0044,
+    "features": {
+      "Air_temperature_K": 300.3,
+      "Process_temperature_K": 309.9,
+      "Rotational_speed_rpm": 1494.0,
+      "Torque_Nm": 38.5,
+      "Tool_wear_min": 33.0,
+      "Temp_difference_K": 9.6,
+      "Mechanical_Power_W": 6023.38,
+      "Overstrain_Metric": 1270.5,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Tool_wear_min",
+        "value": 33.0,
+        "shap_value": -1.4703,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1494.0,
+        "shap_value": -1.2843,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6023.38,
+        "shap_value": -1.2478,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 1270.5,
+        "shap_value": -0.5032,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 38.5,
+        "shap_value": -0.4692,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 9.6,
+        "shap_value": -0.2565,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 197,
+    "product_id": "H29610",
+    "type": "H",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0083,
+    "features": {
+      "Air_temperature_K": 298.3,
+      "Process_temperature_K": 308.6,
+      "Rotational_speed_rpm": 1432.0,
+      "Torque_Nm": 49.5,
+      "Tool_wear_min": 91.0,
+      "Temp_difference_K": 10.3,
+      "Mechanical_Power_W": 7422.96,
+      "Overstrain_Metric": 4504.5,
+      "Type_Code": 2.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 7422.96,
+        "shap_value": -1.5729,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 91.0,
+        "shap_value": -1.0371,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Process_temperature_K",
+        "value": 308.6,
+        "shap_value": -0.4588,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 10.3,
+        "shap_value": -0.4346,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 4504.5,
+        "shap_value": -0.4306,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1432.0,
+        "shap_value": -0.3467,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 562,
+    "product_id": "M15421",
+    "type": "M",
+    "actual_failure": 0,
+    "failure_mode": "Healthy",
+    "predicted_failure": 0,
+    "failure_probability": 0.0023,
+    "features": {
+      "Air_temperature_K": 297.5,
+      "Process_temperature_K": 309.4,
+      "Rotational_speed_rpm": 1678.0,
+      "Torque_Nm": 34.4,
+      "Tool_wear_min": 148.0,
+      "Temp_difference_K": 11.9,
+      "Mechanical_Power_W": 6044.76,
+      "Overstrain_Metric": 5091.2,
+      "Type_Code": 1.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1678.0,
+        "shap_value": -1.3069,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 6044.76,
+        "shap_value": -1.1299,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 148.0,
+        "shap_value": -1.0815,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.9,
+        "shap_value": -0.8639,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 34.4,
+        "shap_value": -0.4973,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5091.2,
+        "shap_value": -0.4084,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  },
+  {
+    "udi": 9175,
+    "product_id": "L56354",
+    "type": "L",
+    "actual_failure": 1,
+    "failure_mode": "TWF",
+    "predicted_failure": 0,
+    "failure_probability": 0.0086,
+    "features": {
+      "Air_temperature_K": 297.8,
+      "Process_temperature_K": 308.9,
+      "Rotational_speed_rpm": 1871.0,
+      "Torque_Nm": 25.6,
+      "Tool_wear_min": 200.0,
+      "Temp_difference_K": 11.1,
+      "Mechanical_Power_W": 5015.82,
+      "Overstrain_Metric": 5120.0,
+      "Type_Code": 0.0
+    },
+    "top_shap_attributions": [
+      {
+        "feature": "Rotational_speed_rpm",
+        "value": 1871.0,
+        "shap_value": -1.479,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Tool_wear_min",
+        "value": 200.0,
+        "shap_value": -0.9597,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Torque_Nm",
+        "value": 25.6,
+        "shap_value": -0.6303,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Mechanical_Power_W",
+        "value": 5015.82,
+        "shap_value": -0.4657,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Overstrain_Metric",
+        "value": 5120.0,
+        "shap_value": -0.4463,
+        "direction": "DECREASES_RISK"
+      },
+      {
+        "feature": "Temp_difference_K",
+        "value": 11.1,
+        "shap_value": -0.2873,
+        "direction": "DECREASES_RISK"
+      }
+    ]
+  }
+]

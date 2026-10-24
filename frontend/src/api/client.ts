@@ -72,5 +72,22 @@ export const api = {
   stopSimulator: () => fetchJson<SimulatorStatus>(`${API_BASE}/simulator/stop`, { method: 'POST' }),
 
   // System Status
-  getSystemStatus: () => fetchJson<SystemStatus>(`${API_BASE}/status`)
+  getSystemStatus: () => fetchJson<SystemStatus>(`${API_BASE}/status`),
+
+  // UCI AI4I 2020 Predictive Maintenance Benchmark
+  getAi4iBenchmark: () => fetchJson<import('../types').Ai4iBenchmarkMetrics>('/ml-api/ai4i/benchmark'),
+  getAi4iTestCases: () => fetchJson<import('../types').Ai4iTestCase[]>('/ml-api/ai4i/test-cases'),
+  predictAi4i: (payload: {
+    air_temp_k: number;
+    process_temp_k: number;
+    rotational_speed_rpm: number;
+    torque_nm: number;
+    tool_wear_min: number;
+    machine_type: string;
+  }) =>
+    fetchJson<import('../types').Ai4iPredictionResponse>('/ml-api/ai4i/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
 };
