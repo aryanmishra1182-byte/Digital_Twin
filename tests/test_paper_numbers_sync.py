@@ -58,3 +58,17 @@ def test_paper_numbers_sync_with_json_artifacts():
         loc = json.load(f)
     rps_str = f"{loc['requests_per_second']:.2f}"
     assert rps_str in doc_content, f"Locust RPS {rps_str} missing from paper_numbers.md"
+
+    # 6. Latency & Platform Provenance Integrity
+    lat_path = os.path.join(artifacts_dir, "latency_metrics.json")
+    with open(lat_path, "r", encoding="utf-8") as f:
+        lat = json.load(f)
+    timed_cnt = lat.get("benchmark_metadata", {}).get("benchmark_windows_evaluated", 0)
+    assert timed_cnt > 0, "latency_metrics.json benchmark_windows_evaluated must be > 0"
+    assert f"{timed_cnt} timed" in doc_content, f"Expected '{timed_cnt} timed' in paper_numbers.md"
+    assert "- **Platform:** N/A" not in doc_content, "Platform must not be N/A in paper_numbers.md"
+    assert "- **Benchmark Workload:** 0 timed" not in doc_content, "Workload must not be 0 windows"
+
+    # 7. Model selection partition & zero-window check
+    assert "VALIDATION" in doc_content, "Model selection must report VALIDATION partition"
+    assert "0 windows (0 runs)" not in doc_content, "Zero-window defect must not exist"

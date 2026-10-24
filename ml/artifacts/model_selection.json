@@ -1,81 +1,82 @@
 {
-  "selection_rule_timestamp": "2026-10-24T12:21:39.335296+00:00",
+  "selection_rule_timestamp": "2026-10-24T12:49:52.153032+00:00",
+  "evaluation_partition": "VALIDATION (dataset_val.csv, zero test leakage)",
   "algorithmic_criteria": {
     "f1_tolerance_band": 0.02,
     "latency_metric": "mean_ms",
-    "explainability_requirement": "Exact TreeSHAP support"
+    "explainability_requirement": "Exact TreeSHAP support",
+    "test_set_access": "STRICTLY FORBIDDEN (Held-out for final test only)"
   },
   "stage_1_anomaly_detection": {
     "candidate_models": {
       "IsolationForest": {
-        "f1_score": 0.8209989063069631,
-        "precision": 0.9851268591426072,
-        "recall": 0.70375,
-        "roc_auc": 0.8461140624999999,
+        "validation_f1_score": 0.8222384784198976,
+        "validation_precision": 0.9911816578483245,
+        "validation_recall": 0.7025,
+        "validation_roc_auc": 0.843853125,
+        "threshold": 0.0020079591157951215,
         "mean_latency_ms": 10.9,
         "p50_latency_ms": 10.706,
         "disk_size_kb": 2450.96,
-        "edge_suitability": "High (no PyTorch runtime required, fast CPU execution)"
+        "edge_suitability": "High (no PyTorch runtime required, fast CPU execution, controlled false alarm rate)"
       },
       "Autoencoder": {
-        "f1_score": 0.8919,
-        "precision": 0.8223,
-        "recall": 0.9744,
-        "roc_auc": 0.8556,
+        "validation_f1_score": 0.8891,
+        "threshold": 0.0583,
         "mean_latency_ms": 0.261,
         "p50_latency_ms": 0.234,
         "disk_size_kb": 9.44,
-        "edge_suitability": "Requires PyTorch runtime dependencies"
+        "edge_suitability": "Requires deep learning framework dependencies"
       }
     },
     "selected_model": "IsolationForest",
-    "decision_reasoning": "Isolation Forest achieved F1=0.8210, Precision=0.9851, and Recall=0.7037 with controlled FPR <= 5%. It is selected as the production filter because it does not require deep learning framework dependencies on industrial edge nodes."
+    "decision_reasoning": "Isolation Forest achieved Validation F1=0.8222, Validation Precision=0.9912, and Validation Recall=0.7025. It is selected for production edge deployment because it requires zero deep learning framework dependencies and operates with an empirical validation FPR <= 5%."
   },
   "stage_2_fault_classification": {
     "candidate_models": {
       "XGBoost": {
-        "accuracy": 0.964,
-        "macro_f1": 0.9638751914569301,
-        "healthy_recall": 0.85,
+        "validation_accuracy": 0.956,
+        "validation_macro_f1": 0.9558274509803922,
+        "validation_healthy_recall": 0.8275,
         "mean_latency_ms": 1.168,
         "p50_latency_ms": 1.04,
         "disk_size_kb": 874.32,
         "interpretability": "Exact TreeSHAP additive feature attributions supported in O(TLD^2)"
       },
-      "1D_CNN_Raw_Waveforms": {
-        "accuracy": 0.81,
-        "macro_f1": 0.7823,
-        "healthy_recall": 0.81,
-        "mean_latency_ms": 2.252,
-        "p50_latency_ms": 2.049,
-        "disk_size_kb": 0.0,
-        "interpretability": "Requires approximate Gradient*Input or Integrated Gradients with higher compute"
-      },
       "RandomForest": {
-        "accuracy": 0.957,
-        "macro_f1": 0.9569758230791706,
-        "healthy_recall": 0.8075,
+        "validation_accuracy": 0.9595,
+        "validation_macro_f1": 0.959178175741026,
+        "validation_healthy_recall": 0.805,
         "mean_latency_ms": 8.003,
         "p50_latency_ms": 7.847,
         "disk_size_kb": 1020.95,
         "interpretability": "TreeSHAP supported but larger memory footprint"
       },
       "SVM_RBF": {
-        "accuracy": 0.9125,
-        "macro_f1": 0.9147091832396933,
-        "healthy_recall": 0.75,
+        "validation_accuracy": 0.916,
+        "validation_macro_f1": 0.9181203772939593,
+        "validation_healthy_recall": 0.75,
         "mean_latency_ms": 0.593,
         "p50_latency_ms": 0.523,
         "disk_size_kb": 508.41,
         "interpretability": "Kernel SHAP required (expensive O(2^M) background sampling)"
+      },
+      "1D_CNN_Raw_Waveforms": {
+        "validation_accuracy": 0.804,
+        "validation_macro_f1": 0.778,
+        "validation_healthy_recall": 0.795,
+        "mean_latency_ms": 2.252,
+        "p50_latency_ms": 2.049,
+        "disk_size_kb": 0.0,
+        "interpretability": "Requires approximate Gradient*Input or Integrated Gradients with higher compute"
       }
     },
-    "top_macro_f1": 0.9639,
+    "top_validation_macro_f1": 0.9592,
     "competitive_set": [
       "XGBoost",
       "RandomForest"
     ],
-    "selected_model": "XGBoost",
-    "decision_reasoning": "Top Macro F1 is 0.9639. Candidates within 0.02 tolerance: ['XGBoost', 'RandomForest']. 'XGBoost' is algorithmically selected because it achieves competitive performance (Macro F1 = 0.9639, Accuracy = 96.40%) while offering the lowest inference latency (1.17 ms mean, 1.04 ms p50) and native exact TreeSHAP explainability."
+    "selected_champion": "XGBoost",
+    "decision_reasoning": "Top Validation Macro F1 is 0.9592. Candidates within 0.02 tolerance band: ['XGBoost', 'RandomForest']. 'XGBoost' is algorithmically selected based on validation performance (Val Macro F1 = 0.9558, Val Accuracy = 95.60%) while offering the lowest inference latency (1.17 ms mean, 1.04 ms p50) and native exact TreeSHAP explainability."
   }
 }

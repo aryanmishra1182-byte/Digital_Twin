@@ -78,12 +78,12 @@ This audit report documents the formal integrity verification of the MACHINA-X p
   - Screen 3: **System Architecture (`/about`)** — Technical methodology, physical specifications, and benchmark metrics.
   - Plain-English translation engine (`src/lib/plain.ts`) providing operator-understandable explanations for raw model features.
 - **Verified Code Budget:**
-  - `src/pages/Monitor.tsx`: 482 lines
-  - `src/pages/CheckFile.tsx`: 433 lines
-  - `src/pages/About.tsx`: 355 lines
-  - `src/lib/plain.ts`: 127 lines
-  - `src/App.tsx`: 38 lines
-  - **Total Codebase:** **1,435 lines** (Strictly complies with the $\le 1,500$ lines limit).
+  - `src/pages/Monitor.tsx`: 507 lines
+  - `src/pages/CheckFile.tsx`: 267 lines
+  - `src/pages/About.tsx`: 157 lines
+  - `src/lib/plain.ts`: 118 lines
+  - `src/App.tsx`: 106 lines
+  - **Total Codebase:** **1,155 lines** (Strictly verified under the $\le 1,500$ lines limit).
   - Vitest Suite: 16 passing tests (`test/no-hardcoded-numbers.test.ts` validates zero hardcoded mock values).
 
 ---

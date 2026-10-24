@@ -17,19 +17,19 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
-Write-Host "`n[1/6] Generating synthetic motor simulation dataset..." -ForegroundColor Yellow
+Write-Host "`n[1/8] Generating synthetic motor simulation dataset..." -ForegroundColor Yellow
 python scripts/generate_dataset.py
 
-Write-Host "`n[2/6] Training motor digital twin models (Stages 1, 2, 3 + SHAP)..." -ForegroundColor Yellow
+Write-Host "`n[2/8] Training motor digital twin models (Stages 1, 2, 3 + SHAP)..." -ForegroundColor Yellow
 python scripts/train_all_models.py
 
-Write-Host "`n[3/6] Training UCI AI4I 2020 benchmark models (4-model comparison + 5-fold CV)..." -ForegroundColor Yellow
+Write-Host "`n[3/8] Training UCI AI4I 2020 benchmark models (4-model comparison + 5-fold CV)..." -ForegroundColor Yellow
 python ml/training/train_ai4i_models.py
 
-Write-Host "`n[4/6] Executing hardware latency benchmark (500 windows)..." -ForegroundColor Yellow
+Write-Host "`n[4/8] Executing hardware latency benchmark (500 windows)..." -ForegroundColor Yellow
 python scripts/benchmark_latency.py
 
-Write-Host "`n[5/6] Executing robustness evaluation (5 seeds + Leave-One-Load-Out)..." -ForegroundColor Yellow
+Write-Host "`n[5/8] Executing robustness evaluation (5 seeds + Leave-One-Load-Out)..." -ForegroundColor Yellow
 python scripts/run_robustness_eval.py
 
 Write-Host "`n[6/8] Running algorithmic model selection and Stage 1 diagnosis..." -ForegroundColor Yellow

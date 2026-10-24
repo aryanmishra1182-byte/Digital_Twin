@@ -55,21 +55,29 @@ def main():
     # Section 1: Benchmark Hardware & Execution Latency
     lines.append("## 1. Hardware Benchmarking & Latency Metrics")
     lines.append(f"- **Source Artifact:** `ml/artifacts/latency_metrics.json`")
-    lines.append(f"- **Platform:** {bench_meta.get('platform', 'N/A')} ({bench_meta.get('processor', 'N/A')}), Python {bench_meta.get('python_version', 'N/A')}")
-    lines.append(f"- **Benchmark Workload:** {bench_meta.get('timing_windows_evaluated', 0)} timed 1-second telemetry windows ({bench_meta.get('warmup_windows', 0)} warmup windows, {bench_meta.get('samples_per_window', 0):,} samples/window).")
+    cpu = bench_meta.get('cpu_model', bench_meta.get('processor', 'N/A'))
+    os_name = bench_meta.get('os', bench_meta.get('platform', 'N/A'))
+    arch = bench_meta.get('architecture', '')
+    py_ver = bench_meta.get('python_version', 'N/A')
+    platform_str = f"{os_name} ({cpu}{', ' + arch if arch else ''}), Python {py_ver}"
+    timed_windows = bench_meta.get('benchmark_windows_evaluated', bench_meta.get('timing_windows_evaluated', 0))
+    warmup_windows = bench_meta.get('warmup_windows', 0)
+    samples_per_window = bench_meta.get('samples_per_window', 10000)
+    lines.append(f"- **Platform:** {platform_str}")
+    lines.append(f"- **Benchmark Workload:** {timed_windows} timed 1-second telemetry windows ({warmup_windows} warmup windows, {samples_per_window:,} samples/window).")
     lines.append("")
     lines.append("| Pipeline Stage | Mean (ms) | Std (ms) | Median p50 (ms) | 95th Percentile p95 (ms) | 99th Percentile p99 (ms) | File Size (KB) |")
     lines.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: |")
 
     stage_order = [
-        ("Physics Feature Extraction (26 features)", "feature_extraction", "feature_extractor"),
-        ("Stage 1: Isolation Forest Anomaly Detection", "stage_1_isolation_forest", "anomaly_detector"),
-        ("Stage 1 Baseline: Reconstruction Autoencoder", "stage_1_autoencoder", "autoencoder_pt"),
-        ("Stage 2: XGBoost 5-Class Classifier", "stage_2_xgboost", "fault_classifier"),
-        ("Stage 2 Baseline: Random Forest", "stage_2_random_forest", "rf_model"),
-        ("Stage 2 Baseline: Support Vector Machine (RBF)", "stage_2_svm", "svm_model"),
-        ("Stage 2 Baseline: 1-D Waveform CNN", "stage_2_1d_cnn", "cnn_1d_pt"),
-        ("Stage 3: LSTM Sequence Regressor (RUL)", "stage_3_lstm_rul", "rul_model_bundle"),
+        ("Physics Feature Extraction (26 features)", "feature_extraction", None),
+        ("Stage 1: Isolation Forest Anomaly Detection", "stage_1_isolation_forest", "isolation_forest_kb"),
+        ("Stage 1 Baseline: Reconstruction Autoencoder", "stage_1_autoencoder", "autoencoder_kb"),
+        ("Stage 2: XGBoost 5-Class Classifier", "stage_2_xgboost", "xgboost_kb"),
+        ("Stage 2 Baseline: Random Forest", "stage_2_random_forest", "random_forest_kb"),
+        ("Stage 2 Baseline: Support Vector Machine (RBF)", "stage_2_svm", "svm_kb"),
+        ("Stage 2 Baseline: 1-D Waveform CNN", "stage_2_1d_cnn", "cnn_1d_kb"),
+        ("Stage 3: LSTM Sequence Regressor (RUL)", "stage_3_lstm_rul", "rul_lstm_kb"),
         ("Stage 4: Fast TreeSHAP Attribution (Top 5)", "stage_4_shap_attribution", None),
         ("Complete End-to-End Decision Pipeline", "full_production_pipeline", None),
     ]
@@ -201,10 +209,16 @@ def main():
     lines.append("## 4. Algorithmic Model Selection Rule & Provenance")
     lines.append(f"- **Source Artifact:** `ml/artifacts/model_selection.json`")
     lines.append(f"- **Execution Timestamp (UTC):** {sel.get('selection_rule_timestamp', 'N/A')}")
+    lines.append(f"- **Evaluation Partition:** {sel.get('evaluation_partition', 'VALIDATION (zero test leakage)')}")
     crit = sel.get("algorithmic_criteria", {})
-    lines.append(f"- **Selection Criteria:** {crit.get('rule', 'N/A')} (Macro F1 margin threshold $\\le {crit.get('macro_f1_margin_threshold', 0.02)}$)")
-    lines.append(f"- **Stage 1 Selected:** `{sel.get('stage_1_anomaly_detection', {}).get('selected_champion', 'N/A')}` ({sel.get('stage_1_anomaly_detection', {}).get('selection_reason', 'N/A')})")
-    lines.append(f"- **Stage 2 Selected:** `{sel.get('stage_2_fault_classification', {}).get('selected_champion', 'N/A')}` ({sel.get('stage_2_fault_classification', {}).get('selection_reason', 'N/A')})")
+    tol = crit.get('f1_tolerance_band', crit.get('macro_f1_margin_threshold', 0.02))
+    lines.append(f"- **Selection Criteria:** Top candidate by validation macro F1; Pareto-competitive band $\\le {tol}$; lowest latency and native TreeSHAP support.")
+    s1_champ = sel.get('stage_1_anomaly_detection', {}).get('selected_champion', sel.get('stage_1_anomaly_detection', {}).get('selected_model', 'N/A'))
+    s1_reason = sel.get('stage_1_anomaly_detection', {}).get('selection_reason', sel.get('stage_1_anomaly_detection', {}).get('decision_reasoning', 'N/A'))
+    s2_champ = sel.get('stage_2_fault_classification', {}).get('selected_champion', 'N/A')
+    s2_reason = sel.get('stage_2_fault_classification', {}).get('selection_reason', sel.get('stage_2_fault_classification', {}).get('decision_reasoning', 'N/A'))
+    lines.append(f"- **Stage 1 Selected:** `{s1_champ}` ({s1_reason})")
+    lines.append(f"- **Stage 2 Selected:** `{s2_champ}` ({s2_reason})")
     lines.append("")
     lines.append("---")
     lines.append("")
