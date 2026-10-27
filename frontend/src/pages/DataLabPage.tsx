@@ -313,9 +313,15 @@ export const DataLabPage: React.FC = () => {
                 </h3>
               </div>
               <p className="text-xs text-[#718096] font-mono mt-0.5">
-                Target: {results.mode.toUpperCase()} · Anomaly Rate:{' '}
+                Target: {(results.mode || mode).toUpperCase()} · Anomaly Rate:{' '}
                 {results.valid_rows_count > 0
-                  ? ((results.analysis_results.filter((r) => r.is_anomaly).length / results.valid_rows_count) * 100).toFixed(1)
+                  ? (
+                      ((results.analysis_results || []).filter(
+                        (r) => r.is_anomaly || r.is_failure_predicted
+                      ).length /
+                        results.valid_rows_count) *
+                      100
+                    ).toFixed(1)
                   : '0.0'}%
               </p>
             </div>
@@ -346,7 +352,7 @@ export const DataLabPage: React.FC = () => {
           <div className="rounded-md bg-white border border-[#E2E8F0] shadow-sm overflow-hidden">
             <div className="h-9 px-4 bg-[#F8FAFC] border-b border-[#E2E8F0] flex items-center justify-between">
               <h4 className="font-mono text-xs font-bold text-[#253746] uppercase tracking-wider">
-                Inference Records ({results.analysis_results.length} Displayed)
+                Inference Records ({(results.analysis_results || []).length} Displayed)
               </h4>
               <span className="text-[10px] font-mono text-[#718096]">
                 Click row to inspect local TreeSHAP attributions
@@ -367,26 +373,50 @@ export const DataLabPage: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#E2E8F0] text-[#253746]">
-                  {results.analysis_results.map((rec) => {
-                    const isExpanded = expandedRow === rec.row_index;
+                  {(results.analysis_results || []).map((rec, idx) => {
+                    const rowId = rec.row_number ?? rec.row_index ?? idx + 1;
+                    const isExpanded = expandedRow === rowId;
+
+                    // Safely extract condition / verdict
+                    let conditionName = 'Healthy';
+                    if (rec.predicted_fault_class) {
+                      conditionName =
+                        rec.predicted_fault_class === 'HEALTHY'
+                          ? 'Healthy'
+                          : rec.predicted_fault_class.replace(/_/g, ' ');
+                    } else if (rec.is_failure_predicted != null) {
+                      conditionName = rec.is_failure_predicted ? 'Machine Failure' : 'No Failure';
+                    } else if (rec.predicted_condition) {
+                      conditionName = rec.predicted_condition;
+                    }
+
                     const isHealthy =
                       rec.risk_level === 'LOW' ||
-                      rec.predicted_condition.toLowerCase().includes('healthy') ||
-                      rec.predicted_condition.toLowerCase().includes('no failure');
-                    const info = getPlainInfo(rec.predicted_condition);
+                      rec.risk_level === 'HEALTHY' ||
+                      conditionName.toLowerCase().includes('healthy') ||
+                      conditionName.toLowerCase().includes('no failure');
+
+                    const info = getPlainInfo(conditionName);
+                    const topDriver = rec.top_driver || rec.top_shap_driver;
+                    const actionText =
+                      rec.recommendation ||
+                      rec.recommended_action ||
+                      'Operational within nominal tolerances.';
+                    const inputVals = rec.inputs || rec.input_data;
+                    const isFlagged = Boolean(rec.is_anomaly || rec.is_failure_predicted);
 
                     return (
-                      <React.Fragment key={rec.row_index}>
+                      <React.Fragment key={rowId}>
                         <tr
-                          onClick={() => setExpandedRow(isExpanded ? null : rec.row_index)}
+                          onClick={() => setExpandedRow(isExpanded ? null : rowId)}
                           className={`cursor-pointer transition-colors ${
                             isExpanded ? 'bg-[#F3EBF9]/40' : 'hover:bg-[#F8FAFC]'
                           }`}
                         >
-                          <td className="py-2 px-3 text-[#718096]">{rec.row_index}</td>
+                          <td className="py-2 px-3 text-[#718096]">{rowId}</td>
                           <td className="py-2 px-3 font-semibold">
                             <span className={isHealthy ? 'text-[#27866F]' : 'text-[#C94B50]'}>
-                              {info.verdict || rec.predicted_condition}
+                              {info.verdict || conditionName}
                             </span>
                           </td>
                           <td className="py-2 px-3 font-bold text-[#355D8B]">
@@ -399,22 +429,28 @@ export const DataLabPage: React.FC = () => {
                           <td className="py-2 px-3">
                             <span
                               className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
-                                rec.is_anomaly
+                                isFlagged
                                   ? 'bg-[#C94B50]/15 text-[#C94B50]'
                                   : 'bg-[#27866F]/15 text-[#27866F]'
                               }`}
                             >
-                              {rec.is_anomaly ? 'FLAGGED' : 'NOMINAL'}
+                              {isFlagged ? 'FLAGGED' : 'NOMINAL'}
                             </span>
                           </td>
                           <td className="py-2 px-3 text-[#718096]">
-                            {rec.estimated_rul_hours != null ? `${rec.estimated_rul_hours.toFixed(1)} hrs` : '–'}
+                            {rec.estimated_rul_hours != null
+                              ? `${rec.estimated_rul_hours.toFixed(1)} hrs`
+                              : '–'}
                           </td>
                           <td className="py-2 px-3 text-[#718096]">
-                            {rec.top_shap_driver ? getFriendlyFeatureName(rec.top_shap_driver) : '–'}
+                            {topDriver ? getFriendlyFeatureName(topDriver) : '–'}
                           </td>
                           <td className="py-2 px-3 text-right text-[#718096]">
-                            {isExpanded ? <ChevronUp className="w-3.5 h-3.5 inline" /> : <ChevronDown className="w-3.5 h-3.5 inline" />}
+                            {isExpanded ? (
+                              <ChevronUp className="w-3.5 h-3.5 inline" />
+                            ) : (
+                              <ChevronDown className="w-3.5 h-3.5 inline" />
+                            )}
                           </td>
                         </tr>
 
@@ -425,44 +461,84 @@ export const DataLabPage: React.FC = () => {
                               <div className="space-y-2.5">
                                 <div className="flex items-center justify-between">
                                   <span className="text-[10px] font-mono text-[#718096] uppercase font-bold">
-                                    Prescriptive Action & Diagnostics (Row #{rec.row_index})
+                                    Prescriptive Action & Diagnostics (Row #{rowId})
                                   </span>
-                                  <span
-                                    className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
-                                      rec.risk_level === 'CRITICAL'
-                                        ? 'bg-[#C94B50]/15 text-[#C94B50] border border-[#C94B50]/30'
-                                        : rec.risk_level === 'HIGH' || rec.risk_level === 'MEDIUM'
-                                        ? 'bg-[#D99A35]/15 text-[#D99A35] border border-[#D99A35]/30'
-                                        : 'bg-[#27866F]/15 text-[#27866F] border border-[#27866F]/30'
-                                    }`}
-                                  >
-                                    {rec.risk_level} RISK
-                                  </span>
+                                  {rec.risk_level && (
+                                    <span
+                                      className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
+                                        rec.risk_level === 'CRITICAL'
+                                          ? 'bg-[#C94B50]/15 text-[#C94B50] border border-[#C94B50]/30'
+                                          : rec.risk_level === 'HIGH' ||
+                                            rec.risk_level === 'MEDIUM' ||
+                                            rec.risk_level === 'ELEVATED'
+                                          ? 'bg-[#D99A35]/15 text-[#D99A35] border border-[#D99A35]/30'
+                                          : 'bg-[#27866F]/15 text-[#27866F] border border-[#27866F]/30'
+                                      }`}
+                                    >
+                                      {rec.risk_level} RISK
+                                    </span>
+                                  )}
                                 </div>
                                 <p className="text-xs text-[#253746]">
                                   <span className="font-semibold text-[#718096]">Action: </span>
-                                  {rec.recommended_action}
+                                  {actionText}
                                 </p>
-                                {rec.top_shap_driver && (
+                                {topDriver && (
                                   <div className="p-2.5 rounded bg-white border border-[#E2E8F0] flex items-center justify-between text-xs">
                                     <span className="text-[#718096]">Key Explanatory Driver (SHAP):</span>
                                     <span className="font-mono font-bold text-[#68409A]">
-                                      {getFriendlyFeatureName(rec.top_shap_driver)}
+                                      {getFriendlyFeatureName(topDriver)}
                                     </span>
                                   </div>
                                 )}
-                                {rec.input_data && Object.keys(rec.input_data).length > 0 && (
+                                {rec.top_shap_attributions && rec.top_shap_attributions.length > 0 && (
+                                  <div className="pt-1">
+                                    <span className="text-[10px] font-mono text-[#718096] uppercase block mb-1">
+                                      Top TreeSHAP Feature Attributions:
+                                    </span>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                                      {rec.top_shap_attributions.map((attr) => (
+                                        <div
+                                          key={attr.feature}
+                                          className="p-2 rounded bg-white border border-[#E2E8F0] flex items-center justify-between text-xs"
+                                        >
+                                          <span className="truncate max-w-[140px] text-[#253746]">
+                                            {getFriendlyFeatureName(attr.feature)}
+                                          </span>
+                                          <span
+                                            className={`font-mono font-bold ${
+                                              attr.shap_value > 0
+                                                ? 'text-[#C94B50]'
+                                                : 'text-[#27866F]'
+                                            }`}
+                                          >
+                                            {attr.shap_value > 0 ? '+' : ''}
+                                            {attr.shap_value.toFixed(4)}
+                                          </span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                                {inputVals && Object.keys(inputVals).length > 0 && (
                                   <div className="pt-1">
                                     <span className="text-[10px] font-mono text-[#718096] uppercase block mb-1">
                                       Sampled Feature Values:
                                     </span>
                                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                                      {Object.entries(rec.input_data).slice(0, 8).map(([k, v]) => (
-                                        <div key={k} className="p-1.5 rounded bg-white border border-[#E2E8F0] text-[11px] font-mono">
-                                          <span className="text-[#718096] block truncate">{k}</span>
-                                          <span className="font-bold text-[#253746]">{typeof v === 'number' ? v.toFixed(2) : String(v)}</span>
-                                        </div>
-                                      ))}
+                                      {Object.entries(inputVals)
+                                        .slice(0, 8)
+                                        .map(([k, v]) => (
+                                          <div
+                                            key={k}
+                                            className="p-1.5 rounded bg-white border border-[#E2E8F0] text-[11px] font-mono"
+                                          >
+                                            <span className="text-[#718096] block truncate">{k}</span>
+                                            <span className="font-bold text-[#253746]">
+                                              {typeof v === 'number' ? v.toFixed(2) : String(v)}
+                                            </span>
+                                          </div>
+                                        ))}
                                     </div>
                                   </div>
                                 )}

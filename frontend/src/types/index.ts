@@ -239,18 +239,32 @@ export interface CsvFieldGuideResponse {
   fields: CsvFieldGuideItem[];
 }
 
+export interface CsvShapAttribution {
+  feature: string;
+  value: number;
+  shap_value: number;
+  direction: 'INCREASES_RISK' | 'DECREASES_RISK';
+}
+
 export interface CsvAnalysisRowResult {
-  row_index: number;
-  predicted_condition: string;
-  risk_level: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-  top_shap_driver?: string;
-  recommended_action: string;
+  row_number?: number;
+  row_index?: number;
+  predicted_fault_class?: string;
+  predicted_condition?: string;
+  is_failure_predicted?: boolean;
   failure_probability?: number;
-  input_data?: Record<string, any>;
+  confidence?: number;
   is_anomaly?: boolean;
   anomaly_score?: number;
-  confidence?: number;
   estimated_rul_hours?: number;
+  risk_level?: string;
+  top_driver?: string;
+  top_shap_driver?: string;
+  recommendation?: string;
+  recommended_action?: string;
+  inputs?: Record<string, any>;
+  input_data?: Record<string, any>;
+  top_shap_attributions?: CsvShapAttribution[];
 }
 
 export interface CsvAnalysisResponse {
