@@ -102,6 +102,7 @@ export const App: React.FC = () => {
                       onRefreshTwins={fetchTwins}
                       connectionError={backendError}
                       onRetryConnection={fetchTwins}
+                      onSelectMotor={setSelectedMotorId}
                     />
                   }
                 />
@@ -114,6 +115,7 @@ export const App: React.FC = () => {
                       onRefreshTwins={fetchTwins}
                       connectionError={backendError}
                       onRetryConnection={fetchTwins}
+                      onSelectMotor={setSelectedMotorId}
                     />
                   }
                 />
