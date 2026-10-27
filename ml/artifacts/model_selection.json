@@ -1,5 +1,5 @@
 {
-  "selection_rule_timestamp": "2026-10-27T17:03:43.737847+00:00",
+  "selection_rule_timestamp": "2026-10-27T17:33:59.332816+00:00",
   "evaluation_partition": "VALIDATION (dataset_val.csv, zero test leakage)",
   "algorithmic_criteria": {
     "f1_tolerance_band": 0.02,
@@ -10,10 +10,10 @@
   "stage_1_anomaly_detection": {
     "candidate_models": {
       "IsolationForest": {
-        "validation_f1_score": 0.8222384784198976,
-        "validation_precision": 0.9911816578483245,
-        "validation_recall": 0.7025,
-        "validation_roc_auc": 0.843853125,
+        "validation_f1_score": 0.8232445520581114,
+        "validation_precision": 0.9826589595375722,
+        "validation_recall": 0.7083333333333334,
+        "validation_roc_auc": 0.8613020833333334,
         "threshold": 0.0020079591157951215,
         "mean_latency_ms": 10.9,
         "p50_latency_ms": 10.706,
@@ -30,32 +30,32 @@
       }
     },
     "selected_model": "IsolationForest",
-    "decision_reasoning": "Isolation Forest achieved Validation F1=0.8222, Validation Precision=0.9912, and Validation Recall=0.7025. It is selected for production edge deployment because it requires zero deep learning framework dependencies and operates with an empirical validation FPR <= 5%."
+    "decision_reasoning": "Isolation Forest achieved Validation F1=0.8232, Validation Precision=0.9827, and Validation Recall=0.7083. It is selected for production edge deployment because it requires zero deep learning framework dependencies and operates with an empirical validation FPR <= 5%."
   },
   "stage_2_fault_classification": {
     "candidate_models": {
       "XGBoost": {
-        "validation_accuracy": 0.956,
-        "validation_macro_f1": 0.9558274509803922,
-        "validation_healthy_recall": 0.8275,
+        "validation_accuracy": 0.965,
+        "validation_macro_f1": 0.964779258896906,
+        "validation_healthy_recall": 0.8333333333333334,
         "mean_latency_ms": 1.168,
         "p50_latency_ms": 1.04,
         "disk_size_kb": 874.32,
         "interpretability": "Exact TreeSHAP additive feature attributions supported in O(TLD^2)"
       },
       "RandomForest": {
-        "validation_accuracy": 0.9595,
-        "validation_macro_f1": 0.959178175741026,
-        "validation_healthy_recall": 0.805,
+        "validation_accuracy": 0.9583333333333334,
+        "validation_macro_f1": 0.9582532465207629,
+        "validation_healthy_recall": 0.8083333333333333,
         "mean_latency_ms": 8.003,
         "p50_latency_ms": 7.847,
         "disk_size_kb": 1020.95,
         "interpretability": "TreeSHAP supported but larger memory footprint"
       },
       "SVM_RBF": {
-        "validation_accuracy": 0.916,
-        "validation_macro_f1": 0.9181203772939593,
-        "validation_healthy_recall": 0.75,
+        "validation_accuracy": 0.9166666666666666,
+        "validation_macro_f1": 0.9188157636755767,
+        "validation_healthy_recall": 0.7666666666666667,
         "mean_latency_ms": 0.593,
         "p50_latency_ms": 0.523,
         "disk_size_kb": 508.41,
@@ -71,16 +71,16 @@
         "interpretability": "Requires approximate Gradient*Input or Integrated Gradients with higher compute"
       }
     },
-    "top_validation_macro_f1": 0.9592,
+    "top_validation_macro_f1": 0.9648,
     "competitive_set": [
       "XGBoost",
       "RandomForest"
     ],
     "selected_champion": "XGBoost",
-    "decision_reasoning": "Top Validation Macro F1 is 0.9592. Candidates within 0.02 tolerance band: ['XGBoost', 'RandomForest']. 'XGBoost' is algorithmically selected based on validation performance (Val Macro F1 = 0.9558, Val Accuracy = 95.60%) while offering the lowest inference latency (1.17 ms mean, 1.04 ms p50) and native exact TreeSHAP explainability."
+    "decision_reasoning": "Top Validation Macro F1 is 0.9648. Candidates within 0.02 tolerance band: ['XGBoost', 'RandomForest']. 'XGBoost' is algorithmically selected based on validation performance (Val Macro F1 = 0.9648, Val Accuracy = 96.50%) while offering the lowest inference latency (1.17 ms mean, 1.04 ms p50) and native exact TreeSHAP explainability."
   },
   "metric_provenance": {
-    "validation_dataset": "..\\..\\data\\processed\\dataset_val.csv",
+    "validation_dataset": "../../data/processed/dataset_val.csv",
     "latency_artifact": "latency_metrics.json",
     "stage1_isolation_forest": "anomaly_detector.joblib",
     "stage1_autoencoder": "autoencoder_metrics.json",

@@ -31,6 +31,10 @@ jobs:
         run: |
           python -m pytest tests/ -v
 
+      - name: Verify Research Invariants & System Integrity
+        run: |
+          python scripts/verify_integrity.py
+
   spring-boot-backend:
     name: Spring Boot 3 Backend Test Suite
     runs-on: ubuntu-latest

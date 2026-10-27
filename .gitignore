@@ -81,9 +81,12 @@ tools/
 *.sublime-workspace
 .DS_Store
 
-# Data (raw and processed signal caches excluded; models kept for turnkey execution)
+# Data (raw signal caches excluded; evaluation datasets and models kept for turnkey execution)
 data/raw/*
 !data/raw/README.md
 data/processed/*
 !data/processed/README.md
+!data/processed/dataset_val.csv
+!data/processed/dataset_test.csv
+!data/processed/dataset_metadata.json
 

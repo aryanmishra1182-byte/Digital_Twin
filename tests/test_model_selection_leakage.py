@@ -19,9 +19,29 @@ import tempfile
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from scripts.run_model_selection import run_model_selection
 
+def _ensure_val_dataset(root: str) -> str:
+    val_path = os.path.join(root, "data", "processed", "dataset_val.csv")
+    if not os.path.exists(val_path):
+        os.makedirs(os.path.dirname(val_path), exist_ok=True)
+        from simulator.motor_simulator import FAULT_CLASSES
+        from ml.features.feature_extractor import FEATURE_NAMES
+        import numpy as np
+        import pandas as pd
+        rows = []
+        rng = np.random.RandomState(42)
+        for fc in FAULT_CLASSES:
+            for _ in range(20):
+                row = {f: float(rng.uniform(0.1, 10.0)) for f in FEATURE_NAMES}
+                row["fault_class"] = fc
+                row["split"] = "val"
+                rows.append(row)
+        pd.DataFrame(rows).to_csv(val_path, index=False)
+    return val_path
+
 def test_model_selection_uses_validation_metrics_only():
     """Verify that model_selection.json records validation metrics and forbids test metrics."""
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    _ensure_val_dataset(root)
     artifacts_dir = os.path.join(root, "ml", "artifacts")
 
     # Run model selection
@@ -46,6 +66,7 @@ def test_model_selection_uses_validation_metrics_only():
 def test_model_selection_immune_to_test_set_absence_and_poisoning(tmp_path):
     """Verify that model selection succeeds and produces identical results even if test set is missing or poisoned."""
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    _ensure_val_dataset(root)
     orig_artifacts = os.path.join(root, "ml", "artifacts")
     orig_data = os.path.join(root, "data", "processed")
 
@@ -93,6 +114,7 @@ def test_model_selection_fails_cleanly_on_missing_artifact(tmp_path):
     temp_data_dir = str(tmp_path / "data")
     os.makedirs(temp_data_dir, exist_ok=True)
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    _ensure_val_dataset(root)
     shutil.copy(os.path.join(root, "data", "processed", "dataset_val.csv"), os.path.join(temp_data_dir, "dataset_val.csv"))
 
     # Missing latency metrics

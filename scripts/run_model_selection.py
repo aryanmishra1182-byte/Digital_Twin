@@ -259,14 +259,14 @@ def run_model_selection(
             "decision_reasoning": s2_reasoning
         },
         "metric_provenance": {
-            "validation_dataset": os.path.relpath(val_csv, artifacts_dir),
-            "latency_artifact": os.path.relpath(latency_file, artifacts_dir),
-            "stage1_isolation_forest": os.path.relpath(iso_bundle_path, artifacts_dir),
-            "stage1_autoencoder": os.path.relpath(ae_metrics_file, artifacts_dir),
-            "stage2_xgboost": os.path.relpath(xgb_bundle_path, artifacts_dir),
-            "stage2_random_forest": os.path.relpath(rf_bundle_path, artifacts_dir),
-            "stage2_svm": os.path.relpath(svm_bundle_path, artifacts_dir),
-            "stage2_1d_cnn": os.path.relpath(cnn_metrics_file, artifacts_dir),
+            "validation_dataset": os.path.relpath(val_csv, artifacts_dir).replace("\\", "/"),
+            "latency_artifact": os.path.relpath(latency_file, artifacts_dir).replace("\\", "/"),
+            "stage1_isolation_forest": os.path.relpath(iso_bundle_path, artifacts_dir).replace("\\", "/"),
+            "stage1_autoencoder": os.path.relpath(ae_metrics_file, artifacts_dir).replace("\\", "/"),
+            "stage2_xgboost": os.path.relpath(xgb_bundle_path, artifacts_dir).replace("\\", "/"),
+            "stage2_random_forest": os.path.relpath(rf_bundle_path, artifacts_dir).replace("\\", "/"),
+            "stage2_svm": os.path.relpath(svm_bundle_path, artifacts_dir).replace("\\", "/"),
+            "stage2_1d_cnn": os.path.relpath(cnn_metrics_file, artifacts_dir).replace("\\", "/"),
             "test_set_isolation_verified": True
         }
     }

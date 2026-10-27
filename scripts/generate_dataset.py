@@ -14,8 +14,8 @@ def main():
     print("==========================================================")
     df, meta = generate_full_dataset(
         output_dir="data/processed",
-        runs_per_condition=4,
-        windows_per_run=6,
+        runs_per_condition=10,
+        windows_per_run=10,
         loads=[25.0, 50.0, 75.0, 100.0],
         seed=42
     )

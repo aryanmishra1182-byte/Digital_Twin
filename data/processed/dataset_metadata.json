@@ -1,0 +1,65 @@
+{
+  "total_samples": 10000,
+  "total_runs": 1000,
+  "train_samples": 6000,
+  "val_samples": 2000,
+  "test_samples": 2000,
+  "fault_classes": [
+    "HEALTHY",
+    "BROKEN_ROTOR_BAR",
+    "STATOR_INTER_TURN_SHORT",
+    "BEARING_DEFECT",
+    "AIR_GAP_ECCENTRICITY"
+  ],
+  "class_distribution": {
+    "HEALTHY": 2000,
+    "BROKEN_ROTOR_BAR": 2000,
+    "STATOR_INTER_TURN_SHORT": 2000,
+    "BEARING_DEFECT": 2000,
+    "AIR_GAP_ECCENTRICITY": 2000
+  },
+  "load_distribution": {
+    "25.0": 2500,
+    "50.0": 2500,
+    "75.0": 2500,
+    "100.0": 2500
+  },
+  "feature_names": [
+    "current_rms",
+    "current_fundamental_amp",
+    "current_dominant_freq",
+    "current_thd",
+    "current_harm_3_ratio",
+    "current_harm_5_ratio",
+    "brb_left_sideband_amp",
+    "brb_right_sideband_amp",
+    "brb_sideband_ratio",
+    "eccentricity_sideband_amp",
+    "vib_rms",
+    "vib_std",
+    "vib_peak",
+    "vib_peak_to_peak",
+    "vib_crest_factor",
+    "vib_kurtosis",
+    "vib_skewness",
+    "vib_bpfo_energy",
+    "vib_bpfi_energy",
+    "vib_1x_shaft_amp",
+    "temp_mean",
+    "temp_max",
+    "temp_rate_of_rise",
+    "load_pct",
+    "estimated_speed_rpm",
+    "estimated_slip"
+  ],
+  "incipient_severities": [
+    0.05,
+    0.2,
+    0.4,
+    0.7,
+    0.95
+  ],
+  "runs_per_condition": 10,
+  "windows_per_run": 10,
+  "provenance": "Synthetic Simulation (IEEE Paper Spec 3kW 415V 50Hz Motor with unbalance, speed wander, sensor drift)"
+}
