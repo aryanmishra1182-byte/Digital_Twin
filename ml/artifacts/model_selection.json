@@ -1,5 +1,5 @@
 {
-  "selection_rule_timestamp": "2026-10-24T12:49:52.153032+00:00",
+  "selection_rule_timestamp": "2026-10-27T16:35:52.414699+00:00",
   "evaluation_partition": "VALIDATION (dataset_val.csv, zero test leakage)",
   "algorithmic_criteria": {
     "f1_tolerance_band": 0.02,
