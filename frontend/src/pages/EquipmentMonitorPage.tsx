@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { api } from '../api/client';
 import { DigitalTwinState, TelemetryPoint } from '../types';
 import { MotorSchematic, SENSORS } from '../components/equipment/MotorSchematic';
-import { TelemetryChart } from '../components/telemetry/TelemetryChart';
+import { TelemetryChart, SignalKey } from '../components/telemetry/TelemetryChart';
 import {
   Activity,
   Zap,
@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   AlertTriangle,
   Sliders,
+  Crosshair,
 } from 'lucide-react';
 
 interface EquipmentMonitorPageProps {
@@ -29,7 +30,8 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
   onSelectMotor,
 }) => {
   const [telemetry, setTelemetry] = useState<TelemetryPoint[]>([]);
-  const [selectedSensorId, setSelectedSensorId] = useState<string | null>(null);
+  const [selectedSensorId, setSelectedSensorId] = useState<string | null>('S1');
+  const [activeSignal, setActiveSignal] = useState<SignalKey>('vibRms');
   const [loading, setLoading] = useState(false);
 
   const currentTwin = twins.find((t) => t.motorId === selectedMotorId) || twins[0] || null;
@@ -46,7 +48,7 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
 
   useEffect(() => {
     loadTelemetry();
-    const interval = setInterval(loadTelemetry, 3000);
+    const interval = setInterval(loadTelemetry, 2000);
     return () => clearInterval(interval);
   }, [loadTelemetry]);
 
@@ -61,6 +63,24 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
 
   // Selected sensor metadata
   const selectedSensor = SENSORS.find((s) => s.id === selectedSensorId);
+
+  const handleSelectSensor = (sensorId: string | null) => {
+    setSelectedSensorId(sensorId);
+    if (!sensorId) return;
+    if (sensorId === 'S1' || sensorId === 'S4') setActiveSignal('vibRms');
+    else if (sensorId === 'S2') setActiveSignal('temperatureC');
+    else if (sensorId === 'S3') setActiveSignal('currentRms');
+    else if (sensorId === 'S5') setActiveSignal('speed');
+  };
+
+  const handleSignalChange = (key: SignalKey) => {
+    setActiveSignal(key);
+    if (key === 'vibRms') setSelectedSensorId('S1');
+    else if (key === 'currentRms') setSelectedSensorId('S3');
+    else if (key === 'temperatureC') setSelectedSensorId('S2');
+    else if (key === 'speed') setSelectedSensorId('S5');
+    else if (key === 'loadPct') setSelectedSensorId(null);
+  };
 
   return (
     <div className="space-y-6 py-6">
@@ -145,12 +165,12 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
         <MotorSchematic
           twin={currentTwin}
           selectedSensorId={selectedSensorId}
-          onSelectSensor={(id) => setSelectedSensorId(id)}
+          onSelectSensor={handleSelectSensor}
         />
         {selectedSensor && (
           <div className="mt-2 p-3 rounded-lg bg-aerospace/10 border border-aerospace/30 flex items-center justify-between text-xs font-mono">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-aerospace"></span>
+              <Crosshair className="w-4 h-4 text-aerospace animate-spin" />
               <span className="font-bold text-aerospace">
                 Active Inspection Pin: {selectedSensor.id} ({selectedSensor.label})
               </span>
@@ -167,15 +187,22 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
         )}
       </div>
 
-      {/* Sensor Deep Dive Cards with Engineering Limits */}
+      {/* Sensor Deep Dive Cards with Interactive Click-to-Focus */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1: Stator Current */}
-        <div className="p-4 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark space-y-2">
+        <div
+          onClick={() => handleSelectSensor('S3')}
+          className={`p-4 rounded-xl bg-panel dark:bg-panel-dark border transition-all cursor-pointer space-y-2 ${
+            selectedSensorId === 'S3'
+              ? 'border-aerospace ring-2 ring-aerospace/20 shadow-md'
+              : 'border-rule dark:border-rule-dark hover:border-aerospace/50'
+          }`}
+        >
           <div className="flex items-center justify-between text-xs font-mono text-ink-muted">
             <span className="uppercase flex items-center gap-1.5">
               <Zap className="w-3.5 h-3.5 text-telemetry-cyan" /> Stator Current RMS
             </span>
-            <span>Sensor S3</span>
+            <span className={selectedSensorId === 'S3' ? 'text-aerospace font-bold' : ''}>Sensor S3</span>
           </div>
           <div className="text-2xl font-mono font-bold text-ink dark:text-ink-inverse">
             {current.toFixed(2)} <span className="text-xs text-ink-muted font-normal">A</span>
@@ -201,12 +228,21 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
         </div>
 
         {/* Card 2: Radial Vibration RMS */}
-        <div className="p-4 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark space-y-2">
+        <div
+          onClick={() => handleSelectSensor('S1')}
+          className={`p-4 rounded-xl bg-panel dark:bg-panel-dark border transition-all cursor-pointer space-y-2 ${
+            selectedSensorId === 'S1' || selectedSensorId === 'S4'
+              ? 'border-state-warning ring-2 ring-state-warning/20 shadow-md'
+              : 'border-rule dark:border-rule-dark hover:border-state-warning/50'
+          }`}
+        >
           <div className="flex items-center justify-between text-xs font-mono text-ink-muted">
             <span className="uppercase flex items-center gap-1.5">
               <Activity className="w-3.5 h-3.5 text-state-warning" /> Radial Vibration
             </span>
-            <span>Sensor S1/S4</span>
+            <span className={selectedSensorId === 'S1' || selectedSensorId === 'S4' ? 'text-state-warning font-bold' : ''}>
+              Sensor S1/S4
+            </span>
           </div>
           <div className="text-2xl font-mono font-bold text-ink dark:text-ink-inverse">
             {vib.toFixed(2)} <span className="text-xs text-ink-muted font-normal">mm/s RMS</span>
@@ -229,12 +265,19 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
         </div>
 
         {/* Card 3: Winding Temperature */}
-        <div className="p-4 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark space-y-2">
+        <div
+          onClick={() => handleSelectSensor('S2')}
+          className={`p-4 rounded-xl bg-panel dark:bg-panel-dark border transition-all cursor-pointer space-y-2 ${
+            selectedSensorId === 'S2'
+              ? 'border-state-critical ring-2 ring-state-critical/20 shadow-md'
+              : 'border-rule dark:border-rule-dark hover:border-state-critical/50'
+          }`}
+        >
           <div className="flex items-center justify-between text-xs font-mono text-ink-muted">
             <span className="uppercase flex items-center gap-1.5">
               <Flame className="w-3.5 h-3.5 text-state-critical" /> Winding RTD Temp
             </span>
-            <span>Sensor S2</span>
+            <span className={selectedSensorId === 'S2' ? 'text-state-critical font-bold' : ''}>Sensor S2</span>
           </div>
           <div className="text-2xl font-mono font-bold text-ink dark:text-ink-inverse">
             {temp.toFixed(1)} <span className="text-xs text-ink-muted font-normal">°C</span>
@@ -258,12 +301,19 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
         </div>
 
         {/* Card 4: Shaft Speed & Slip */}
-        <div className="p-4 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark space-y-2">
+        <div
+          onClick={() => handleSelectSensor('S5')}
+          className={`p-4 rounded-xl bg-panel dark:bg-panel-dark border transition-all cursor-pointer space-y-2 ${
+            selectedSensorId === 'S5'
+              ? 'border-aerospace ring-2 ring-aerospace/20 shadow-md'
+              : 'border-rule dark:border-rule-dark hover:border-aerospace/50'
+          }`}
+        >
           <div className="flex items-center justify-between text-xs font-mono text-ink-muted">
             <span className="uppercase flex items-center gap-1.5">
               <Gauge className="w-3.5 h-3.5 text-aerospace" /> Speed & Slip
             </span>
-            <span>Sensor S5</span>
+            <span className={selectedSensorId === 'S5' ? 'text-aerospace font-bold' : ''}>Sensor S5</span>
           </div>
           <div className="text-2xl font-mono font-bold text-ink dark:text-ink-inverse">
             {Math.round(speed)} <span className="text-xs text-ink-muted font-normal">RPM</span>
@@ -287,8 +337,13 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
         </div>
       </div>
 
-      {/* Historical Telemetry Chart */}
-      <TelemetryChart telemetry={telemetry} loading={loading} />
+      {/* Historical Telemetry Chart with Active Signal Synced */}
+      <TelemetryChart
+        telemetry={telemetry}
+        loading={loading}
+        activeSignal={activeSignal}
+        onSignalChange={handleSignalChange}
+      />
 
       {/* Raw Telemetry Records Ingestion Table */}
       <div className="p-4 sm:p-5 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark">

@@ -88,12 +88,20 @@ export const ResearchPage: React.FC = () => {
         {/* Paper Deliverables Download Row */}
         <div className="pt-2 flex flex-wrap items-center gap-3">
           <a
-            href="/docs/reports/MACHINA_X_Experimental_Results.pdf"
+            href="/docs/reports/MACHINA_X_Presentation_Study_Guide.pdf"
             download
             className="px-3.5 py-2 rounded-lg bg-aerospace text-white text-xs font-mono font-semibold hover:bg-aerospace-bright transition-colors flex items-center gap-2 shadow-sm"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Download Paper Report (PDF)</span>
+            <span>Presentation Study Guide (PDF)</span>
+          </a>
+          <a
+            href="/docs/reports/MACHINA_X_Experimental_Results.pdf"
+            download
+            className="px-3.5 py-2 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark text-ink dark:text-ink-inverse text-xs font-mono font-semibold hover:bg-rule dark:hover:bg-rule-dark transition-colors flex items-center gap-2"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Experimental Results (PDF)</span>
           </a>
           <a
             href="/docs/reports/MACHINA_X_Experimental_Results.docx"

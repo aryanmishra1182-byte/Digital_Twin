@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { api } from '../api/client';
 import { DigitalTwinState, TelemetryPoint, AlertRecord } from '../types';
-import { MotorSchematic } from '../components/equipment/MotorSchematic';
-import { TelemetryChart } from '../components/telemetry/TelemetryChart';
+import { MotorSchematic, SENSORS } from '../components/equipment/MotorSchematic';
+import { TelemetryChart, SignalKey } from '../components/telemetry/TelemetryChart';
 import { SimulatorControlPanel } from '../components/simulator/SimulatorControlPanel';
 import { useToast } from '../context/ToastContext';
 import {
@@ -16,6 +16,10 @@ import {
   Check,
   ChevronRight,
   ShieldAlert,
+  Play,
+  Square,
+  Crosshair,
+  Zap,
 } from 'lucide-react';
 
 interface OverviewPageProps {
@@ -36,9 +40,11 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   const { showToast } = useToast();
   const [telemetry, setTelemetry] = useState<TelemetryPoint[]>([]);
   const [alerts, setAlerts] = useState<AlertRecord[]>([]);
-  const [selectedSensorId, setSelectedSensorId] = useState<string | null>(null);
+  const [selectedSensorId, setSelectedSensorId] = useState<string | null>('S1');
+  const [activeSignal, setActiveSignal] = useState<SignalKey>('vibRms');
   const [showSimulator, setShowSimulator] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [injectingScenario, setInjectingScenario] = useState<string | null>(null);
 
   // Active twin record
   const currentTwin = twins.find((t) => t.motorId === selectedMotorId) || twins[0] || null;
@@ -47,7 +53,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
     if (!currentTwin) return;
     try {
       const [hist, al] = await Promise.all([
-        api.getTelemetryHistory(currentTwin.motorId, 25),
+        api.getTelemetryHistory(currentTwin.motorId, 30),
         api.getAlerts(currentTwin.motorId),
       ]);
       setTelemetry(hist || []);
@@ -59,9 +65,48 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
 
   useEffect(() => {
     loadData();
-    const timer = setInterval(loadData, 4000);
+    const timer = setInterval(loadData, 2000);
     return () => clearInterval(timer);
   }, [loadData]);
+
+  // Synchronize sensor pin selection with telemetry chart signal
+  const handleSelectSensor = (sensorId: string | null) => {
+    setSelectedSensorId(sensorId);
+    if (!sensorId) return;
+    if (sensorId === 'S1' || sensorId === 'S4') {
+      setActiveSignal('vibRms');
+    } else if (sensorId === 'S2') {
+      setActiveSignal('temperatureC');
+    } else if (sensorId === 'S3') {
+      setActiveSignal('currentRms');
+    } else if (sensorId === 'S5') {
+      setActiveSignal('speed');
+    }
+  };
+
+  const handleSignalChange = (key: SignalKey) => {
+    setActiveSignal(key);
+    if (key === 'vibRms') setSelectedSensorId('S1');
+    else if (key === 'currentRms') setSelectedSensorId('S3');
+    else if (key === 'temperatureC') setSelectedSensorId('S2');
+    else if (key === 'speed') setSelectedSensorId('S5');
+    else if (key === 'loadPct') setSelectedSensorId(null);
+  };
+
+  // Quick live scenario injector
+  const handleQuickInject = async (scenario: string, severity: number = 0.65, load: number = 100) => {
+    setInjectingScenario(scenario);
+    try {
+      await api.startSimulator(currentTwin?.motorId || 'MOTOR-001', scenario, severity, load);
+      showToast('success', 'Scenario Injected', `Streaming dynamic ${scenario.replace(/_/g, ' ')} telemetry.`);
+      loadData();
+      if (onRefreshTwins) onRefreshTwins();
+    } catch (err: any) {
+      showToast('error', 'Injection Failed', err.message);
+    } finally {
+      setInjectingScenario(null);
+    }
+  };
 
   const handleAcknowledgeAlert = async (id: number) => {
     try {
@@ -151,6 +196,9 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   const confidence = currentTwin?.confidence ?? 1.0;
   const rulHours = currentTwin?.estimatedRulHours ?? null;
 
+  // Selected sensor metadata
+  const selectedSensor = SENSORS.find((s) => s.id === selectedSensorId);
+
   return (
     <div className="space-y-6 py-6">
       {/* Top Mission Control Bar */}
@@ -163,9 +211,13 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark text-ink-muted">
               STREAM: SIMULATED (10 kHz)
             </span>
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-state-normal opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-state-normal"></span>
+            </span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-ink dark:text-ink-inverse mt-1">
-            Equipment Intelligence & Condition Monitoring
+            Equipment Intelligence & Operational Command
           </h2>
           <p className="text-xs text-ink-secondary dark:text-ink-muted font-mono mt-0.5">
             Active Target: {currentTwin?.motorId} · {currentTwin?.motorName}
@@ -184,12 +236,53 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             }`}
           >
             <Sliders className="w-3.5 h-3.5" />
-            <span>{showSimulator ? 'Hide Controls' : 'Physics Simulator'}</span>
+            <span>{showSimulator ? 'Hide Simulator Drawer' : 'Physics Simulator Drawer'}</span>
           </button>
         </div>
       </div>
 
-      {/* Collapsible Simulator Control Panel */}
+      {/* Interactive Scenario Injection Strip for Live Demos & Presentation */}
+      <div className="p-3.5 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Zap className="w-4 h-4 text-aerospace animate-pulse" />
+          <span className="text-xs font-mono font-bold text-ink dark:text-ink-inverse uppercase">
+            Interactive Fault Injection:
+          </span>
+          <span className="text-[11px] text-ink-muted hidden md:inline">
+            (Instantly modulates physics engine & triggers multi-stage AI response)
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {[
+            { id: 'HEALTHY', label: 'Healthy Baseline' },
+            { id: 'BROKEN_ROTOR_BAR', label: 'Broken Rotor Bar' },
+            { id: 'BEARING_DEFECT', label: 'Bearing Knock' },
+            { id: 'STATOR_INTER_TURN_SHORT', label: 'Winding Short' },
+            { id: 'AIR_GAP_ECCENTRICITY', label: 'Eccentricity' },
+          ].map((sc) => {
+            const isActive = faultClass === sc.id;
+            const isPending = injectingScenario === sc.id;
+            return (
+              <button
+                key={sc.id}
+                type="button"
+                disabled={injectingScenario !== null}
+                onClick={() => handleQuickInject(sc.id)}
+                className={`px-2.5 py-1 rounded-md text-xs font-mono font-medium transition-all border ${
+                  isActive
+                    ? 'bg-aerospace text-white border-aerospace shadow-sm font-semibold'
+                    : 'bg-surface-secondary dark:bg-panel-dark-subtle text-ink dark:text-ink-inverse border-rule dark:border-rule-dark hover:border-aerospace/50'
+                }`}
+              >
+                {isPending ? 'Injecting...' : sc.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Collapsible Full Simulator Drawer */}
       {showSimulator && (
         <div className="transition-all animate-in fade-in slide-in-from-top-2">
           <SimulatorControlPanel
@@ -319,14 +412,49 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
       <MotorSchematic
         twin={currentTwin}
         selectedSensorId={selectedSensorId}
-        onSelectSensor={(id) => setSelectedSensorId(id)}
+        onSelectSensor={handleSelectSensor}
       />
+
+      {/* Interactive Sensor Pin Inspection HUD Banner */}
+      {selectedSensor && (
+        <div className="p-3 rounded-xl bg-aerospace/10 border border-aerospace/30 flex flex-wrap items-center justify-between gap-3 text-xs font-mono animate-in fade-in">
+          <div className="flex items-center gap-2.5">
+            <Crosshair className="w-4 h-4 text-aerospace animate-spin" />
+            <div>
+              <span className="font-bold text-aerospace uppercase">
+                Active Telemetry Pin: {selectedSensor.id} ({selectedSensor.label})
+              </span>
+              <span className="text-ink-muted block sm:inline sm:ml-2">
+                Physical Location: {selectedSensor.location}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="text-[11px] text-ink-secondary dark:text-ink-muted">
+              Chart Focused on: <strong className="text-ink dark:text-ink-inverse">{activeSignal}</strong>
+            </span>
+            <button
+              type="button"
+              onClick={() => setSelectedSensorId(null)}
+              className="text-aerospace hover:underline text-[11px]"
+            >
+              Reset Pin Focus
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Split Row: Multi-Signal Telemetry Chart + Recent Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left 2 Cols: Telemetry Chart */}
         <div className="lg:col-span-2">
-          <TelemetryChart telemetry={telemetry} loading={loading} />
+          <TelemetryChart
+            telemetry={telemetry}
+            loading={loading}
+            activeSignal={activeSignal}
+            onSignalChange={handleSignalChange}
+          />
         </div>
 
         {/* Right Col: Recent Operational Alerts Feed */}

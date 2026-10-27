@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Menu, Moon, Sun, Server, ShieldCheck, AlertCircle, RefreshCw, Layers } from 'lucide-react';
+import { Menu, Moon, Sun, Server, ShieldCheck, AlertCircle, RefreshCw, Layers, Play, Square, Radio } from 'lucide-react';
 import { api } from '../../api/client';
-import { SystemStatus, DigitalTwinState } from '../../types';
+import { SystemStatus, DigitalTwinState, SimulatorStatus } from '../../types';
 
 interface GlobalHeaderProps {
   onOpenMobile: () => void;
@@ -27,7 +27,9 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
 }) => {
   const location = useLocation();
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
+  const [simStatus, setSimStatus] = useState<SimulatorStatus | null>(null);
   const [currentTime, setCurrentTime] = useState<string>('');
+  const [simLoading, setSimLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -46,25 +48,41 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
     return () => clearInterval(timer);
   }, []);
 
+  const fetchStatus = () => {
+    api
+      .getSystemStatus()
+      .then((st) => setSystemStatus(st))
+      .catch(() => setSystemStatus(null));
+
+    api
+      .getSimulatorStatus()
+      .then((s) => setSimStatus(s))
+      .catch(() => setSimStatus(null));
+  };
+
   useEffect(() => {
-    let mounted = true;
-    const fetchStatus = () => {
-      api
-        .getSystemStatus()
-        .then((st) => {
-          if (mounted) setSystemStatus(st);
-        })
-        .catch(() => {
-          if (mounted) setSystemStatus(null);
-        });
-    };
     fetchStatus();
-    const interval = setInterval(fetchStatus, 15000);
-    return () => {
-      mounted = false;
-      clearInterval(interval);
-    };
+    const interval = setInterval(fetchStatus, 4000);
+    return () => clearInterval(interval);
   }, []);
+
+  const handleToggleSimulator = async () => {
+    setSimLoading(true);
+    try {
+      if (simStatus?.isRunning) {
+        const s = await api.stopSimulator();
+        setSimStatus(s);
+      } else {
+        const s = await api.startSimulator(selectedMotorId, 'HEALTHY', 0.5, 100);
+        setSimStatus(s);
+      }
+      if (onRefresh) onRefresh();
+    } catch {
+      // Ignored
+    } finally {
+      setSimLoading(false);
+    }
+  };
 
   // Compute breadcrumb title based on path
   const getBreadcrumb = () => {
@@ -80,6 +98,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   const breadcrumb = getBreadcrumb();
   const isBackendUp = systemStatus?.backendService === 'UP';
   const isMlUp = systemStatus?.mlService?.status === 'UP';
+  const isSimRunning = simStatus?.isRunning ?? false;
 
   return (
     <header className="h-16 px-4 sm:px-6 border-b border-rule dark:border-rule-dark bg-panel/90 dark:bg-panel-dark/90 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between transition-colors">
@@ -112,8 +131,8 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
         </div>
       </div>
 
-      {/* Center/Right: Motor Selector, Data Source, System Health, Theme Toggle */}
-      <div className="flex items-center gap-2 sm:gap-4">
+      {/* Center/Right: Motor Selector, Simulator Toggle, System Health, Theme Toggle */}
+      <div className="flex items-center gap-2 sm:gap-3">
         {/* Motor Selector Dropdown */}
         {twins.length > 0 && (
           <div className="hidden md:flex items-center gap-2 bg-surface-secondary dark:bg-panel-dark-subtle px-2.5 py-1.5 rounded-lg border border-rule dark:border-rule-dark">
@@ -134,9 +153,36 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
           </div>
         )}
 
+        {/* Live Simulator Stream Toggle Pill */}
+        <button
+          type="button"
+          onClick={handleToggleSimulator}
+          disabled={simLoading}
+          className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono border transition-all ${
+            isSimRunning
+              ? 'bg-state-normal/10 text-state-normal border-state-normal/30 hover:bg-state-normal/20'
+              : 'bg-surface-secondary dark:bg-panel-dark-subtle text-ink-muted border-rule dark:border-rule-dark hover:text-ink'
+          }`}
+          title={isSimRunning ? 'Simulator is streaming live telemetry (Click to pause)' : 'Simulator is paused (Click to start)'}
+        >
+          {isSimRunning ? (
+            <>
+              <span className="w-2 h-2 rounded-full bg-state-normal animate-pulse" />
+              <span className="font-semibold">STREAMING</span>
+              <Square className="w-3 h-3 ml-0.5 opacity-60 hover:opacity-100 fill-current" />
+            </>
+          ) : (
+            <>
+              <span className="w-2 h-2 rounded-full bg-ink-muted" />
+              <span>PAUSED</span>
+              <Play className="w-3 h-3 ml-0.5 opacity-60 hover:opacity-100 fill-current" />
+            </>
+          )}
+        </button>
+
         {/* Real-time UTC Clock */}
         <div className="hidden xl:flex items-center gap-1.5 font-mono text-xs text-ink-muted bg-surface-secondary dark:bg-panel-dark-subtle px-2.5 py-1.5 rounded-lg border border-rule dark:border-rule-dark">
-          <span className="w-1.5 h-1.5 rounded-full bg-telemetry-cyan animate-pulse"></span>
+          <Radio className="w-3.5 h-3.5 text-telemetry-cyan animate-pulse" />
           <span>{currentTime || '12:00:00 UTC'}</span>
         </div>
 

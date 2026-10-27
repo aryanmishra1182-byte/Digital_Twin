@@ -1,13 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { TelemetryPoint } from '../../types';
 import { Activity, Zap, Flame, Gauge, Disc } from 'lucide-react';
 
-interface TelemetryChartProps {
-  telemetry: TelemetryPoint[];
-  loading?: boolean;
-}
-
-type SignalKey = 'currentRms' | 'vibRms' | 'temperatureC' | 'loadPct' | 'speed';
+export type SignalKey = 'currentRms' | 'vibRms' | 'temperatureC' | 'loadPct' | 'speed';
 
 interface SignalConfig {
   key: SignalKey;
@@ -20,7 +15,7 @@ interface SignalConfig {
   getValue: (p: TelemetryPoint) => number;
 }
 
-const SIGNALS: SignalConfig[] = [
+export const SIGNALS: SignalConfig[] = [
   {
     key: 'vibRms',
     label: 'Vibration RMS',
@@ -60,11 +55,40 @@ const SIGNALS: SignalConfig[] = [
     icon: Disc,
     getValue: (p) => p.loadPct ?? 0,
   },
+  {
+    key: 'speed',
+    label: 'Shaft Speed',
+    unit: 'RPM',
+    color: '#3979F6',
+    darkColor: '#60A5FA',
+    icon: Gauge,
+    limit: { value: 1440, label: 'Rated Speed (1440 RPM)' },
+    getValue: (p) => Math.round(1500 - ((p.loadPct || 100) / 100) * 60),
+  },
 ];
 
-export const TelemetryChart: React.FC<TelemetryChartProps> = ({ telemetry, loading }) => {
-  const [selectedSignal, setSelectedSignal] = useState<SignalKey>('vibRms');
+interface TelemetryChartProps {
+  telemetry: TelemetryPoint[];
+  loading?: boolean;
+  activeSignal?: SignalKey;
+  onSignalChange?: (key: SignalKey) => void;
+}
+
+export const TelemetryChart: React.FC<TelemetryChartProps> = ({
+  telemetry,
+  loading,
+  activeSignal,
+  onSignalChange,
+}) => {
+  const [internalSignal, setInternalSignal] = useState<SignalKey>('vibRms');
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+
+  const selectedSignal = activeSignal || internalSignal;
+
+  const handleSelectSignal = (key: SignalKey) => {
+    setInternalSignal(key);
+    if (onSignalChange) onSignalChange(key);
+  };
 
   const activeConfig = SIGNALS.find((s) => s.key === selectedSignal) || SIGNALS[0];
 
@@ -159,7 +183,7 @@ export const TelemetryChart: React.FC<TelemetryChartProps> = ({ telemetry, loadi
               <button
                 key={sig.key}
                 type="button"
-                onClick={() => setSelectedSignal(sig.key)}
+                onClick={() => handleSelectSignal(sig.key)}
                 className={`px-2.5 py-1 rounded text-xs font-mono font-medium flex items-center gap-1.5 transition-all ${
                   isSelected
                     ? 'bg-panel dark:bg-panel-dark text-aerospace shadow-sm font-semibold border border-rule dark:border-rule-dark'
