@@ -107,8 +107,11 @@ Directly timed over **500 consecutive 1-second telemetry windows** on host hardw
 
 ---
 
-## 8. Limitations & Future Work
-1. **Cross-Load Frequency Shifts**: In real bearing testbeds, load changes shift ball-pass frequencies (BPFO/BPFI). While Normal and Inner Race generalize well, Ball and Outer Race require few-shot calibration ($k=10$ windows).
-2. **Inverter Carrier Harmonics**: The physical simulation assumes balanced sinusoidal grid supply; pulse-width modulation (PWM) drive carrier harmonics should be included in future testbed extensions.
-3. **Multi-Fault Compound Coupling**: When electrical and mechanical faults co-occur, feature attribution correctly detects ambiguity; threshold-based rejection routes uncertain cases to human operators.
+## 8. Scientific Limitations & Research Boundaries
+1. **Simulated RUL Trajectory Boundaries**: Stage 3 LSTM RUL predictions are evaluated across 12 held-out simulated degradation runs (1,152 test sequences, MAE = 0.7466 hrs, RMSE = 1.1849 hrs). While mathematically rigorous on the simulated multi-law degradation model, these results must not be claimed as physical motor remaining-life validation without multi-month physical endurance bench testing.
+2. **CWRU Physical Generalization Bounds**: The 70.00% zero-shot cross-load accuracy on CWRU bearing vibration (tested on Load 3 after training on Loads 0-1) exhibits class imbalance: Normal recall is 100.0%, but fault mode shifts require few-shot real-window fine-tuning (reaching 81.57% at k=10) to accommodate load-dependent slip and contact angle alterations.
+3. **Severe Class Imbalance in AI4I Benchmark**: The 98.45% test accuracy on UCI AI4I 2020 operates against a 96.61% healthy baseline. Model evaluation must emphasize the minority failure-class binary F1 (0.7862) and macro F1 (0.8891) rather than raw accuracy alone.
+4. **Simulator vs Physical IoT Telemetry**: The live streaming motor telemetry in the demonstrator originates from an in-memory physical differential simulator; it demonstrates edge architecture and explainability readiness, not a deployed industrial field IoT sensor network.
+5. **Inverter Carrier Harmonics**: The current physical model assumes pure sinusoidal line voltage; variable-frequency drive (VFD) carrier harmonics (2-16 kHz) remain an area for future hardware-in-the-loop validation.
+6. **Compound Fault Coupling**: When electrical stator shorts and mechanical bearing defects occur concurrently, feature attributions reflect both fault vectors; out-of-distribution rejection routes cases with posterior entropy > 0.40 to human engineer review.
 

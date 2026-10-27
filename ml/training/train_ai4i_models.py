@@ -152,26 +152,51 @@ def train_and_evaluate():
         acc = accuracy_score(y_test, y_pred)
         prec = precision_score(y_test, y_pred, zero_division=0)
         rec = recall_score(y_test, y_pred, zero_division=0)
-        f1 = f1_score(y_test, y_pred, zero_division=0)
+        f1_bin = f1_score(y_test, y_pred, zero_division=0)
+        f1_macro = f1_score(y_test, y_pred, average="macro", zero_division=0)
+        f1_weighted = f1_score(y_test, y_pred, average="weighted", zero_division=0)
         roc = roc_auc_score(y_test, y_prob)
         cm = confusion_matrix(y_test, y_pred).tolist()
+        
+        tn, fp, fn, tp = cm[0][0], cm[0][1], cm[1][0], cm[1][1]
+        prec_0 = tn / (tn + fn) if (tn + fn) > 0 else 0.0
+        rec_0 = tn / (tn + fp) if (tn + fp) > 0 else 0.0
+        f1_0 = 2 * prec_0 * rec_0 / (prec_0 + rec_0) if (prec_0 + rec_0) > 0 else 0.0
         
         results[name] = {
             "test_accuracy": round(float(acc), 4),
             "test_precision": round(float(prec), 4),
             "test_recall": round(float(rec), 4),
-            "test_f1": round(float(f1), 4),
+            "test_f1": round(float(f1_bin), 4),
+            "test_f1_binary": round(float(f1_bin), 4),
+            "test_f1_macro": round(float(f1_macro), 4),
+            "test_f1_weighted": round(float(f1_weighted), 4),
             "test_roc_auc": round(float(roc), 4),
             "confusion_matrix": cm,
+            "metric_semantics": "test_f1 is binary F1 on positive minority class (Machine Failure, pos_label=1). test_f1_macro is unweighted average of Healthy and Failure classes.",
+            "per_class_metrics": {
+                "healthy_class_0": {
+                    "precision": round(float(prec_0), 4),
+                    "recall": round(float(rec_0), 4),
+                    "f1": round(float(f1_0), 4),
+                    "support": int(tn + fp)
+                },
+                "failure_class_1": {
+                    "precision": round(float(prec), 4),
+                    "recall": round(float(rec), 4),
+                    "f1": round(float(f1_bin), 4),
+                    "support": int(fn + tp)
+                }
+            },
             "cv_f1_mean": round(float(np.mean(cv_scores["test_f1"])), 4),
             "cv_f1_std": round(float(np.std(cv_scores["test_f1"])), 4),
             "cv_roc_auc_mean": round(float(np.mean(cv_scores["test_roc_auc"])), 4)
         }
         
-        print(f"Test Accuracy: {acc*100:.2f}%, Precision: {prec*100:.2f}%, Recall: {rec*100:.2f}%, F1: {f1:.4f}, ROC-AUC: {roc:.4f}")
+        print(f"Test Accuracy: {acc*100:.2f}%, Precision (Failure): {prec*100:.2f}%, Recall (Failure): {rec*100:.2f}%, Binary F1: {f1_bin:.4f}, Macro F1: {f1_macro:.4f}, ROC-AUC: {roc:.4f}")
         
-        if f1 > best_f1:
-            best_f1 = f1
+        if f1_bin > best_f1:
+            best_f1 = f1_bin
             best_model_name = name
             best_model = clf
 

@@ -62,7 +62,7 @@ def test_model_selection_immune_to_test_set_absence_and_poisoning(tmp_path):
     os.makedirs(temp_art_dir, exist_ok=True)
     essential_files = [
         "latency_metrics.json", "anomaly_detector.joblib", "autoencoder_metrics.json",
-        "fault_classifier.joblib", "rf_model.joblib", "svm_model.joblib"
+        "fault_classifier.joblib", "rf_model.joblib", "svm_model.joblib", "cnn_1d_metrics.json"
     ]
     for ef in essential_files:
         src = os.path.join(orig_artifacts, ef)
@@ -86,3 +86,19 @@ def test_model_selection_immune_to_test_set_absence_and_poisoning(tmp_path):
     xgb_c = decision["stage_2_fault_classification"]["candidate_models"]["XGBoost"]
     assert xgb_c["validation_accuracy"] > 0.90, "Must be computed on validation split, not poisoned test metric"
     assert xgb_c["validation_macro_f1"] > 0.90
+
+
+def test_model_selection_fails_cleanly_on_missing_artifact(tmp_path):
+    """Verify that model selection does NOT silently substitute research fallbacks when an artifact is missing."""
+    temp_data_dir = str(tmp_path / "data")
+    os.makedirs(temp_data_dir, exist_ok=True)
+    root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    shutil.copy(os.path.join(root, "data", "processed", "dataset_val.csv"), os.path.join(temp_data_dir, "dataset_val.csv"))
+
+    # Missing latency metrics
+    temp_art_dir = str(tmp_path / "artifacts")
+    os.makedirs(temp_art_dir, exist_ok=True)
+
+    with pytest.raises(FileNotFoundError, match="Missing latency metrics"):
+        run_model_selection(data_dir=temp_data_dir, artifacts_dir=temp_art_dir)
+

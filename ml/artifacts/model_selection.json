@@ -1,5 +1,5 @@
 {
-  "selection_rule_timestamp": "2026-10-27T16:35:52.414699+00:00",
+  "selection_rule_timestamp": "2026-10-27T17:03:43.737847+00:00",
   "evaluation_partition": "VALIDATION (dataset_val.csv, zero test leakage)",
   "algorithmic_criteria": {
     "f1_tolerance_band": 0.02,
@@ -62,9 +62,9 @@
         "interpretability": "Kernel SHAP required (expensive O(2^M) background sampling)"
       },
       "1D_CNN_Raw_Waveforms": {
-        "validation_accuracy": 0.804,
-        "validation_macro_f1": 0.778,
-        "validation_healthy_recall": 0.795,
+        "validation_accuracy": 0.81,
+        "validation_macro_f1": 0.7823,
+        "validation_healthy_recall": 0.8,
         "mean_latency_ms": 2.252,
         "p50_latency_ms": 2.049,
         "disk_size_kb": 0.0,
@@ -78,5 +78,16 @@
     ],
     "selected_champion": "XGBoost",
     "decision_reasoning": "Top Validation Macro F1 is 0.9592. Candidates within 0.02 tolerance band: ['XGBoost', 'RandomForest']. 'XGBoost' is algorithmically selected based on validation performance (Val Macro F1 = 0.9558, Val Accuracy = 95.60%) while offering the lowest inference latency (1.17 ms mean, 1.04 ms p50) and native exact TreeSHAP explainability."
+  },
+  "metric_provenance": {
+    "validation_dataset": "..\\..\\data\\processed\\dataset_val.csv",
+    "latency_artifact": "latency_metrics.json",
+    "stage1_isolation_forest": "anomaly_detector.joblib",
+    "stage1_autoencoder": "autoencoder_metrics.json",
+    "stage2_xgboost": "fault_classifier.joblib",
+    "stage2_random_forest": "rf_model.joblib",
+    "stage2_svm": "svm_model.joblib",
+    "stage2_1d_cnn": "cnn_1d_metrics.json",
+    "test_set_isolation_verified": true
   }
 }
