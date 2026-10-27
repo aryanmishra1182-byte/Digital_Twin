@@ -66,8 +66,8 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <ToastProvider>
-        <div className="min-h-screen bg-bg dark:bg-bg-dark text-ink dark:text-ink-inverse flex transition-colors duration-200">
-          {/* Left Aerospace Mission Control Navigation Rail */}
+        <div className="min-h-screen bg-[#102A38] text-[#253746] flex">
+          {/* Left IBM Watson IoT Navigation Rail */}
           <NavigationRail
             collapsed={collapsed}
             onToggleCollapse={() => setCollapsed(!collapsed)}
@@ -76,8 +76,8 @@ export const App: React.FC = () => {
           />
 
           {/* Main Viewport Column */}
-          <div className="flex-1 flex flex-col min-w-0">
-            {/* Global Mission Control Header */}
+          <div className="flex-1 flex flex-col min-w-0 bg-[#102A38]">
+            {/* Global IBM Watson IoT Header */}
             <GlobalHeader
               onOpenMobile={() => setMobileOpen(true)}
               isDark={isDark}
@@ -90,7 +90,7 @@ export const App: React.FC = () => {
             />
 
             {/* Page Content Container */}
-            <main className="flex-1 px-4 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto pb-12">
+            <main className="flex-1 px-3 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto pb-12">
               <Routes>
                 {/* 1. Overview / Mission Control */}
                 <Route
@@ -155,9 +155,9 @@ export const App: React.FC = () => {
               </Routes>
             </main>
 
-            {/* Slim Engineering Mission Control Footer */}
-            <footer className="border-t border-rule dark:border-rule-dark py-4 text-center text-xs text-ink-muted font-mono px-4">
-              MACHINA-X · An Explainable AI-Driven Digital Twin Framework · IEEE 112 3-Phase Induction Motor · Advisory Decision Support Only
+            {/* Slim Industrial IoT Footer */}
+            <footer className="border-t border-[#1C3B4E] py-3.5 text-center text-xs text-[#718096] font-mono px-4 bg-[#0B202C]/60">
+              MACHINA-X · Industrial Digital Twin Framework · IEEE 112 3-Phase Induction Motor · Advisory Decision Support Only
             </footer>
           </div>
         </div>

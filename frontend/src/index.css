@@ -18,6 +18,18 @@
     --ok: #16856B;
     --warn: #D58B22;
     --bad: #D74444;
+    --watson-shell: #102A38;
+    --watson-rail: #0B202C;
+    --watson-rail-border: #1C3B4E;
+    --watson-panel: #FFFFFF;
+    --watson-panel-border: #E2E8F0;
+    --watson-text: #253746;
+    --watson-muted: #718096;
+    --watson-purple: #68409A;
+    --watson-blue: #355D8B;
+    --watson-ok: #27866F;
+    --watson-warn: #D99A35;
+    --watson-bad: #C94B50;
     color-scheme: light;
   }
 

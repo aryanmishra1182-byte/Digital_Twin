@@ -13,7 +13,6 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
-  FileCheck2,
   RefreshCw,
   Play,
 } from 'lucide-react';
@@ -99,28 +98,25 @@ export const DataLabPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 py-6">
+    <div className="space-y-4 py-4">
       {/* Top Page Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-aerospace dark:text-aerospace-bright">
-              DATASET INGESTION WORKSPACE
-            </span>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark text-ink-muted">
-              BATCH CSV & BENCHMARKS
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              Data Lab — Batch Ingestion & Benchmarks
+            </h2>
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#0B202C] text-[#9B6DCC] border border-[#1C3B4E]">
+              CSV INGESTION
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-ink dark:text-ink-inverse mt-1">
-            Data Lab · Schema Validation & Offline Inference
-          </h2>
-          <p className="text-xs text-ink-secondary dark:text-ink-muted font-mono mt-0.5">
-            Ingest external telemetry streams or UCI AI4I 2020 predictive maintenance benchmark logs.
+          <p className="text-xs text-[#94A3B8] font-mono mt-0.5">
+            Offline Telemetry Batch Validation · UCI AI4I 2020 Predictive Maintenance Benchmark Ingestion
           </p>
         </div>
 
         {/* Mode Selector Tabs */}
-        <div className="flex items-center gap-1.5 bg-panel dark:bg-panel-dark p-1 rounded-lg border border-rule dark:border-rule-dark">
+        <div className="flex items-center gap-1.5 bg-[#0B202C] p-1 rounded border border-[#1C3B4E]">
           <button
             type="button"
             onClick={() => {
@@ -128,10 +124,10 @@ export const DataLabPage: React.FC = () => {
               setResults(null);
               setErrorMsg(null);
             }}
-            className={`px-3 py-1.5 rounded-md text-xs font-mono font-semibold transition-all ${
+            className={`px-2.5 py-1 rounded text-xs font-mono font-semibold transition-all ${
               mode === 'motor'
-                ? 'bg-aerospace text-white shadow-sm'
-                : 'text-ink-secondary dark:text-ink-muted hover:text-ink dark:hover:text-ink-inverse'
+                ? 'bg-[#68409A] text-white shadow-xs'
+                : 'text-[#94A3B8] hover:text-white'
             }`}
           >
             Induction Motor Telemetry
@@ -143,28 +139,28 @@ export const DataLabPage: React.FC = () => {
               setResults(null);
               setErrorMsg(null);
             }}
-            className={`px-3 py-1.5 rounded-md text-xs font-mono font-semibold transition-all ${
+            className={`px-2.5 py-1 rounded text-xs font-mono font-semibold transition-all ${
               mode === 'ai4i'
-                ? 'bg-aerospace text-white shadow-sm'
-                : 'text-ink-secondary dark:text-ink-muted hover:text-ink dark:hover:text-ink-inverse'
+                ? 'bg-[#68409A] text-white shadow-xs'
+                : 'text-[#94A3B8] hover:text-white'
             }`}
           >
-            UCI AI4I 2020 Benchmark
+            UCI AI4I Benchmark
           </button>
         </div>
       </div>
 
       {/* Dataset Specification Card */}
-      <div className="p-4 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark flex flex-wrap items-center justify-between gap-3">
+      <div className="rounded-md bg-white border border-[#E2E8F0] p-3.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark flex items-center justify-center text-aerospace">
-            <Database className="w-5 h-5" />
+          <div className="w-8 h-8 rounded bg-[#F8FAFC] border border-[#E2E8F0] flex items-center justify-center text-[#355D8B]">
+            <Database className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-ink dark:text-ink-inverse">
+            <h3 className="text-sm font-semibold text-[#253746]">
               {guide?.name || (mode === 'motor' ? '3-Phase Induction Motor Format' : 'UCI AI4I Benchmark Format')}
             </h3>
-            <p className="text-xs text-ink-secondary dark:text-ink-muted mt-0.5">
+            <p className="text-xs text-[#718096] mt-0.5">
               {guide?.description || 'Validated schema for automated feature extraction, anomaly screening, and classification.'}
             </p>
           </div>
@@ -174,7 +170,7 @@ export const DataLabPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setShowGuideModal(!showGuideModal)}
-            className="px-3 py-1.5 rounded-lg border border-rule dark:border-rule-dark text-xs font-mono text-ink-secondary hover:text-ink dark:hover:text-ink-inverse hover:bg-surface-secondary dark:hover:bg-panel-dark-subtle flex items-center gap-1.5"
+            className="px-2.5 py-1 rounded border border-[#E2E8F0] text-xs font-mono text-[#718096] hover:text-[#253746] hover:bg-[#F8FAFC] flex items-center gap-1.5"
           >
             <HelpCircle className="w-3.5 h-3.5" />
             <span>{showGuideModal ? 'Hide Schema Guide' : 'View Field Guide'}</span>
@@ -183,9 +179,9 @@ export const DataLabPage: React.FC = () => {
             type="button"
             onClick={handleTryExample}
             disabled={loading}
-            className="px-3 py-1.5 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark text-xs font-mono text-aerospace font-semibold hover:bg-rule dark:hover:bg-rule-dark transition-colors flex items-center gap-1.5"
+            className="px-2.5 py-1 rounded bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-mono text-[#355D8B] font-semibold hover:bg-[#E2E8F0] transition-colors flex items-center gap-1.5"
           >
-            <Play className="w-3.5 h-3.5 fill-current" />
+            <Play className="w-3 h-3 fill-current" />
             <span>Inject Sample Record</span>
           </button>
         </div>
@@ -193,17 +189,17 @@ export const DataLabPage: React.FC = () => {
 
       {/* Collapsible Schema Field Guide Drawer */}
       {showGuideModal && guide?.fields && (
-        <div className="p-4 sm:p-5 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark animate-in fade-in space-y-3">
+        <div className="rounded-md bg-white border border-[#E2E8F0] p-4 shadow-sm space-y-3">
           <div className="flex items-center justify-between">
-            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-ink dark:text-ink-inverse">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#253746]">
               Expected Column Specifications ({guide.fields.length} Fields)
             </h4>
-            <span className="text-[10px] font-mono text-ink-muted">Server-Side Validated</span>
+            <span className="text-[10px] font-mono text-[#718096]">Server-Side Validated</span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-mono">
               <thead>
-                <tr className="border-b border-rule dark:border-rule-dark text-ink-muted text-[10px] uppercase">
+                <tr className="border-b border-[#E2E8F0] text-[#718096] text-[10px] uppercase">
                   <th className="py-2 px-3">Column Name</th>
                   <th className="py-2 px-3">Description</th>
                   <th className="py-2 px-3">Unit</th>
@@ -213,22 +209,22 @@ export const DataLabPage: React.FC = () => {
                   <th className="py-2 px-3">Example</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-rule/60 dark:divide-rule-dark/60 text-ink dark:text-ink-inverse">
+              <tbody className="divide-y divide-[#E2E8F0] text-[#253746]">
                 {guide.fields.map((f, i) => (
-                  <tr key={f.column || i} className="hover:bg-surface-secondary/50 dark:hover:bg-panel-dark-subtle">
-                    <td className="py-2 px-3 font-bold text-aerospace">{f.column}</td>
-                    <td className="py-2 px-3 font-sans text-ink-secondary dark:text-ink-muted text-[11px]">{f.description}</td>
-                    <td className="py-2 px-3 text-ink-muted">{f.unit || '–'}</td>
+                  <tr key={f.column || i} className="hover:bg-[#F8FAFC]">
+                    <td className="py-2 px-3 font-bold text-[#355D8B]">{f.column}</td>
+                    <td className="py-2 px-3 font-sans text-[#718096] text-[11px]">{f.description}</td>
+                    <td className="py-2 px-3 text-[#718096]">{f.unit || '–'}</td>
                     <td className="py-2 px-3 text-[10px]">{f.type}</td>
                     <td className="py-2 px-3">
                       {f.required ? (
-                        <span className="px-1.5 py-0.5 rounded text-[9px] bg-state-critical-pale text-state-critical font-bold">YES</span>
+                        <span className="px-1.5 py-0.2 rounded text-[9px] bg-[#C94B50]/15 text-[#C94B50] font-bold">YES</span>
                       ) : (
-                        <span className="px-1.5 py-0.5 rounded text-[9px] bg-surface-secondary text-ink-muted">OPT</span>
+                        <span className="px-1.5 py-0.2 rounded text-[9px] bg-[#F8FAFC] text-[#718096]">OPT</span>
                       )}
                     </td>
-                    <td className="py-2 px-3 text-ink-muted text-[10px]">{f.valid_range || '–'}</td>
-                    <td className="py-2 px-3 text-state-normal font-semibold">{String(f.example)}</td>
+                    <td className="py-2 px-3 text-[#718096] text-[10px]">{f.valid_range || '–'}</td>
+                    <td className="py-2 px-3 text-[#27866F] font-semibold">{String(f.example)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -253,85 +249,82 @@ export const DataLabPage: React.FC = () => {
             }
           }}
           onClick={() => fileInputRef.current?.click()}
-          className={`p-8 sm:p-12 rounded-xl border-2 border-dashed transition-all cursor-pointer text-center flex flex-col items-center justify-center gap-3 ${
+          className={`p-8 rounded-md border-2 border-dashed text-center cursor-pointer transition-all bg-white shadow-sm ${
             isDragOver
-              ? 'border-aerospace bg-aerospace/5 dark:bg-aerospace-pale-dark/20'
-              : 'border-rule dark:border-rule-dark bg-panel dark:bg-panel-dark hover:border-aerospace/60'
+              ? 'border-[#68409A] bg-[#F3EBF9]/30'
+              : 'border-[#CBD5E1] hover:border-[#68409A]/60 hover:bg-[#F8FAFC]'
           }`}
         >
           <input
             ref={fileInputRef}
             type="file"
             accept=".csv"
+            className="hidden"
             onChange={(e) => {
               if (e.target.files && e.target.files[0]) {
                 handleFileUpload(e.target.files[0]);
               }
             }}
-            className="hidden"
           />
-
-          <div className="w-12 h-12 rounded-full bg-surface-secondary dark:bg-panel-dark-subtle flex items-center justify-center text-aerospace">
-            {loading ? (
-              <RefreshCw className="w-6 h-6 animate-spin text-aerospace" />
-            ) : (
-              <Upload className="w-6 h-6" />
-            )}
-          </div>
-
-          <div>
-            <h3 className="text-base font-semibold text-ink dark:text-ink-inverse">
-              {loading ? 'Evaluating Dataset against Trained ML Models...' : 'Drop Telemetry CSV File Here'}
-            </h3>
-            <p className="text-xs text-ink-secondary dark:text-ink-muted mt-1 max-w-sm">
-              Click to select or drag and drop a valid CSV file. Files are processed securely through the local ML microservice.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 text-[10px] font-mono text-ink-muted">
-            <span className="px-2 py-0.5 rounded bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-              Format: .csv
-            </span>
-            <span className="px-2 py-0.5 rounded bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-              Max Size: 25 MB
-            </span>
-          </div>
+          <Upload className="w-8 h-8 text-[#355D8B] mx-auto mb-2 opacity-80" />
+          <h3 className="text-sm font-semibold text-[#253746]">
+            Upload {mode === 'motor' ? 'Motor Telemetry' : 'AI4I Benchmark'} CSV
+          </h3>
+          <p className="text-xs text-[#718096] max-w-md mx-auto mt-1">
+            Drag and drop your dataset here, or click to browse. Strict validation ensures zero missing columns or non-numeric entries.
+          </p>
+          <span className="inline-block mt-3 px-3 py-1 rounded bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-mono text-[#355D8B] font-semibold">
+            {loading ? 'Validating schema...' : 'Select .CSV File'}
+          </span>
         </div>
       )}
 
-      {/* Error Message Alert */}
+      {/* Validation / Parsing Error Message Banner */}
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-state-critical-pale text-state-critical border border-state-critical/30 flex items-start gap-3 text-xs font-mono">
-          <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+        <div className="p-3.5 rounded-md bg-[#C94B50]/10 border border-[#C94B50]/30 text-xs flex items-start gap-2.5">
+          <AlertCircle className="w-4 h-4 text-[#C94B50] flex-shrink-0 mt-0.5" />
           <div className="flex-1">
-            <span className="font-bold block">Validation Error</span>
-            <p className="mt-0.5 text-state-critical/90 font-sans">{errorMsg}</p>
+            <span className="font-bold text-[#C94B50] block">Dataset Validation Error:</span>
+            <p className="text-[#C94B50] mt-0.5 leading-relaxed font-mono">{errorMsg}</p>
           </div>
+          <button
+            type="button"
+            onClick={() => setErrorMsg(null)}
+            className="text-xs font-mono text-[#C94B50] hover:underline"
+          >
+            Dismiss
+          </button>
         </div>
       )}
 
       {/* Analysis Results View */}
       {results && (
-        <div className="space-y-4">
-          {/* Results Summary Bar */}
-          <div className="p-4 sm:p-5 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark flex flex-wrap items-center justify-between gap-4">
+        <div className="space-y-3.5 animate-in fade-in">
+          {/* Summary KPI Strip */}
+          <div className="p-4 rounded-md bg-white border border-[#E2E8F0] shadow-sm flex flex-wrap items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2">
-                <FileCheck2 className="w-5 h-5 text-state-normal" />
-                <h3 className="text-base font-bold text-ink dark:text-ink-inverse">
-                  Dataset Batch Analysis Report ({results.valid_rows_count} / {results.total_rows_received} Valid Rows)
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#718096] block">
+                Batch Validation Verdict
+              </span>
+              <div className="flex items-center gap-2 mt-0.5">
+                <CheckCircle2 className="w-4 h-4 text-[#27866F]" />
+                <h3 className="text-base font-bold text-[#253746]">
+                  {results.valid_rows_count} Rows Validated & Inferred
                 </h3>
               </div>
-              <p className="text-xs text-ink-secondary dark:text-ink-muted font-mono mt-0.5">
-                Model: {mode === 'motor' ? 'XGBoost 3kW Motor Pipeline' : 'RandomForest AI4I Benchmark'} · TreeSHAP Attributed
+              <p className="text-xs text-[#718096] font-mono mt-0.5">
+                Target: {results.mode.toUpperCase()} · Anomaly Rate:{' '}
+                {results.valid_rows_count > 0
+                  ? ((results.analysis_results.filter((r) => r.is_anomaly).length / results.valid_rows_count) * 100).toFixed(1)
+                  : '0.0'}%
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={handleDownloadResults}
-                className="px-4 py-2 rounded-lg bg-aerospace text-white text-xs font-mono font-semibold hover:bg-aerospace-bright transition-colors flex items-center gap-1.5 shadow-sm"
+                className="px-3 py-1.5 rounded bg-[#355D8B] text-white text-xs font-mono font-semibold hover:bg-[#355D8B]/90 transition-colors flex items-center gap-1.5 shadow-xs"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Export Analyzed CSV</span>
@@ -342,96 +335,146 @@ export const DataLabPage: React.FC = () => {
                   setResults(null);
                   setErrorMsg(null);
                 }}
-                className="px-3 py-2 rounded-lg border border-rule dark:border-rule-dark bg-surface-secondary dark:bg-panel-dark-subtle text-xs font-mono text-ink dark:text-ink-inverse hover:bg-rule dark:hover:bg-rule-dark transition-colors"
+                className="px-3 py-1.5 rounded bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-mono text-[#718096] hover:text-[#253746] transition-colors"
               >
-                Analyze Another File
+                Upload Another File
               </button>
             </div>
           </div>
 
           {/* Results Table */}
-          <div className="rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark overflow-hidden">
-            <div className="p-3 border-b border-rule dark:border-rule-dark flex items-center justify-between text-xs font-mono text-ink-muted">
-              <span>ANALYZED RECORDS</span>
-              <span>Click any row for SHAP driver details</span>
+          <div className="rounded-md bg-white border border-[#E2E8F0] shadow-sm overflow-hidden">
+            <div className="h-9 px-4 bg-[#F8FAFC] border-b border-[#E2E8F0] flex items-center justify-between">
+              <h4 className="font-mono text-xs font-bold text-[#253746] uppercase tracking-wider">
+                Inference Records ({results.analysis_results.length} Displayed)
+              </h4>
+              <span className="text-[10px] font-mono text-[#718096]">
+                Click row to inspect local TreeSHAP attributions
+              </span>
             </div>
 
-            <div className="divide-y divide-rule dark:divide-rule-dark">
-              {results.analysis_results.map((row) => {
-                const isExpanded = expandedRow === row.row_index;
-                const isCritical = row.risk_level === 'CRITICAL';
-                const isHigh = row.risk_level === 'HIGH' || row.risk_level === 'MEDIUM';
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs font-mono">
+                <thead>
+                  <tr className="border-b border-[#E2E8F0] text-[#718096] text-[10px] uppercase bg-[#FAFCFE]">
+                    <th className="py-2.5 px-3">#</th>
+                    <th className="py-2.5 px-3">Diagnostic Verdict</th>
+                    <th className="py-2.5 px-3">Confidence</th>
+                    <th className="py-2.5 px-3">Anomaly Status</th>
+                    <th className="py-2.5 px-3">Estimated RUL</th>
+                    <th className="py-2.5 px-3">Top SHAP Feature</th>
+                    <th className="py-2.5 px-3 text-right">Details</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#E2E8F0] text-[#253746]">
+                  {results.analysis_results.map((rec) => {
+                    const isExpanded = expandedRow === rec.row_index;
+                    const isHealthy =
+                      rec.risk_level === 'LOW' ||
+                      rec.predicted_condition.toLowerCase().includes('healthy') ||
+                      rec.predicted_condition.toLowerCase().includes('no failure');
+                    const info = getPlainInfo(rec.predicted_condition);
 
-                return (
-                  <div
-                    key={row.row_index}
-                    className="p-4 hover:bg-surface-secondary/40 dark:hover:bg-panel-dark-subtle cursor-pointer transition-colors"
-                    onClick={() => setExpandedRow(isExpanded ? null : row.row_index)}
-                  >
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono text-xs text-ink-muted w-14">
-                          Row #{row.row_index}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`w-2 h-2 rounded-full ${
-                              isCritical ? 'bg-state-critical' : isHigh ? 'bg-state-warning' : 'bg-state-normal'
-                            }`}
-                          />
-                          <span className="font-semibold text-sm text-ink dark:text-ink-inverse">
-                            {row.predicted_condition}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold uppercase ${
-                            isCritical
-                              ? 'bg-state-critical-pale text-state-critical border border-state-critical/30'
-                              : isHigh
-                              ? 'bg-state-warning-pale text-state-warning border border-state-warning/30'
-                              : 'bg-state-normal-pale text-state-normal border border-state-normal/30'
+                    return (
+                      <React.Fragment key={rec.row_index}>
+                        <tr
+                          onClick={() => setExpandedRow(isExpanded ? null : rec.row_index)}
+                          className={`cursor-pointer transition-colors ${
+                            isExpanded ? 'bg-[#F3EBF9]/40' : 'hover:bg-[#F8FAFC]'
                           }`}
                         >
-                          {row.risk_level} RISK
-                        </span>
-                        {isExpanded ? (
-                          <ChevronUp className="w-4 h-4 text-ink-muted" />
-                        ) : (
-                          <ChevronDown className="w-4 h-4 text-ink-muted" />
-                        )}
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-ink-secondary dark:text-ink-muted mt-1.5 font-sans">
-                      {row.recommended_action}
-                    </p>
-
-                    {/* Expanded SHAP Drivers */}
-                    {isExpanded && (
-                      <div className="mt-3 pt-3 border-t border-rule dark:border-rule-dark text-xs font-mono space-y-2">
-                        {row.top_shap_driver && (
-                          <div className="p-2.5 rounded bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-                            <span className="text-ink-muted block text-[10px] uppercase font-bold">
-                              Key Predictive Driver (SHAP):
+                          <td className="py-2 px-3 text-[#718096]">{rec.row_index}</td>
+                          <td className="py-2 px-3 font-semibold">
+                            <span className={isHealthy ? 'text-[#27866F]' : 'text-[#C94B50]'}>
+                              {info.verdict || rec.predicted_condition}
                             </span>
-                            <span className="font-semibold text-aerospace dark:text-aerospace-bright">
-                              {getFriendlyFeatureName(row.top_shap_driver)}
+                          </td>
+                          <td className="py-2 px-3 font-bold text-[#355D8B]">
+                            {rec.confidence != null
+                              ? `${(rec.confidence * 100).toFixed(1)}%`
+                              : rec.failure_probability != null
+                              ? `${(rec.failure_probability * 100).toFixed(1)}%`
+                              : '–'}
+                          </td>
+                          <td className="py-2 px-3">
+                            <span
+                              className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
+                                rec.is_anomaly
+                                  ? 'bg-[#C94B50]/15 text-[#C94B50]'
+                                  : 'bg-[#27866F]/15 text-[#27866F]'
+                              }`}
+                            >
+                              {rec.is_anomaly ? 'FLAGGED' : 'NOMINAL'}
                             </span>
-                          </div>
+                          </td>
+                          <td className="py-2 px-3 text-[#718096]">
+                            {rec.estimated_rul_hours != null ? `${rec.estimated_rul_hours.toFixed(1)} hrs` : '–'}
+                          </td>
+                          <td className="py-2 px-3 text-[#718096]">
+                            {rec.top_shap_driver ? getFriendlyFeatureName(rec.top_shap_driver) : '–'}
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#718096]">
+                            {isExpanded ? <ChevronUp className="w-3.5 h-3.5 inline" /> : <ChevronDown className="w-3.5 h-3.5 inline" />}
+                          </td>
+                        </tr>
+
+                        {/* Expanded TreeSHAP Attributions Drawer */}
+                        {isExpanded && (
+                          <tr className="bg-[#FAFCFE]">
+                            <td colSpan={7} className="p-4 border-t border-[#E2E8F0]">
+                              <div className="space-y-2.5">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[10px] font-mono text-[#718096] uppercase font-bold">
+                                    Prescriptive Action & Diagnostics (Row #{rec.row_index})
+                                  </span>
+                                  <span
+                                    className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
+                                      rec.risk_level === 'CRITICAL'
+                                        ? 'bg-[#C94B50]/15 text-[#C94B50] border border-[#C94B50]/30'
+                                        : rec.risk_level === 'HIGH' || rec.risk_level === 'MEDIUM'
+                                        ? 'bg-[#D99A35]/15 text-[#D99A35] border border-[#D99A35]/30'
+                                        : 'bg-[#27866F]/15 text-[#27866F] border border-[#27866F]/30'
+                                    }`}
+                                  >
+                                    {rec.risk_level} RISK
+                                  </span>
+                                </div>
+                                <p className="text-xs text-[#253746]">
+                                  <span className="font-semibold text-[#718096]">Action: </span>
+                                  {rec.recommended_action}
+                                </p>
+                                {rec.top_shap_driver && (
+                                  <div className="p-2.5 rounded bg-white border border-[#E2E8F0] flex items-center justify-between text-xs">
+                                    <span className="text-[#718096]">Key Explanatory Driver (SHAP):</span>
+                                    <span className="font-mono font-bold text-[#68409A]">
+                                      {getFriendlyFeatureName(rec.top_shap_driver)}
+                                    </span>
+                                  </div>
+                                )}
+                                {rec.input_data && Object.keys(rec.input_data).length > 0 && (
+                                  <div className="pt-1">
+                                    <span className="text-[10px] font-mono text-[#718096] uppercase block mb-1">
+                                      Sampled Feature Values:
+                                    </span>
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                                      {Object.entries(rec.input_data).slice(0, 8).map(([k, v]) => (
+                                        <div key={k} className="p-1.5 rounded bg-white border border-[#E2E8F0] text-[11px] font-mono">
+                                          <span className="text-[#718096] block truncate">{k}</span>
+                                          <span className="font-bold text-[#253746]">{typeof v === 'number' ? v.toFixed(2) : String(v)}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
                         )}
-                        {row.failure_probability != null && (
-                          <div className="text-ink-muted text-[11px]">
-                            Failure Probability: <span className="font-bold text-ink dark:text-ink-inverse">{(row.failure_probability * 100).toFixed(1)}%</span>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      </React.Fragment>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

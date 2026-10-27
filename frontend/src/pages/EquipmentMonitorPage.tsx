@@ -11,11 +11,8 @@ import {
   Disc,
   Info,
   Layers,
-  ArrowRight,
-  ShieldCheck,
-  AlertTriangle,
-  Sliders,
   Crosshair,
+  Radio,
 } from 'lucide-react';
 
 interface EquipmentMonitorPageProps {
@@ -59,7 +56,7 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
   const kurtosis = currentTwin?.latestVibKurtosis ?? 0.05;
   const temp = currentTwin?.latestTemperatureC ?? 42.0;
   const load = currentTwin?.latestLoadPct ?? 100;
-  const slip = ((1500 - speed) / 1500) * 100;
+  const slip = Math.max(0, ((1500 - speed) / 1500) * 100);
 
   // Selected sensor metadata
   const selectedSensor = SENSORS.find((s) => s.id === selectedSensorId);
@@ -83,38 +80,37 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
   };
 
   return (
-    <div className="space-y-6 py-6">
+    <div className="space-y-4 py-4">
       {/* Top Equipment Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-aerospace dark:text-aerospace-bright">
-              EQUIPMENT ANALYTICAL MONITOR
-            </span>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark text-ink-muted">
-              IEC 60034-1 / IEEE 112
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              Digital Twins — Equipment Monitor
+            </h2>
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#0B202C] text-[#27866F] border border-[#1C3B4E] flex items-center gap-1">
+              <Radio className="w-2.5 h-2.5 animate-pulse" />
+              SIMULATED TELEMETRY
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-ink dark:text-ink-inverse mt-1">
-            {currentTwin?.motorName || '3-Phase Induction Motor'}
-          </h2>
-          <p className="text-xs text-ink-secondary dark:text-ink-muted font-mono mt-0.5">
-            Asset ID: {currentTwin?.motorId || 'MOTOR-001'} · Location: {cfg?.location || 'Manufacturing Plant - Line A'}
+          <p className="text-xs text-[#94A3B8] font-mono mt-0.5">
+            Asset: {currentTwin?.motorId || 'MOTOR-001'} · {currentTwin?.motorName || '3-Phase Induction Motor'} · Simulation Mode (IEEE 112 3kW Spec)
           </p>
         </div>
 
         {/* Equipment Selector Pill Tabs */}
         {twins.length > 1 && (
-          <div className="flex items-center gap-1.5 bg-panel dark:bg-panel-dark p-1 rounded-lg border border-rule dark:border-rule-dark">
+          <div className="flex items-center gap-1.5 bg-[#0B202C] p-1 rounded border border-[#1C3B4E]">
+            <span className="text-[10px] font-mono text-[#718096] uppercase px-1">Unit:</span>
             {twins.map((t) => (
               <button
                 key={t.motorId}
                 type="button"
                 onClick={() => onSelectMotor(t.motorId)}
-                className={`px-3 py-1.5 rounded-md text-xs font-mono font-semibold transition-all ${
+                className={`px-2.5 py-1 rounded text-xs font-mono font-semibold transition-all ${
                   t.motorId === selectedMotorId
-                    ? 'bg-aerospace text-white shadow-sm'
-                    : 'text-ink-secondary dark:text-ink-muted hover:text-ink dark:hover:text-ink-inverse'
+                    ? 'bg-[#68409A] text-white shadow-xs'
+                    : 'text-[#94A3B8] hover:text-white hover:bg-[#102A38]'
                 }`}
               >
                 {t.motorId}
@@ -125,61 +121,67 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
       </div>
 
       {/* Nameplate Specifications Strip */}
-      <div className="p-4 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark">
-        <div className="flex items-center gap-2 mb-3">
-          <Info className="w-4 h-4 text-aerospace" />
-          <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-ink dark:text-ink-inverse">
-            Rated Nameplate Specifications
-          </h3>
+      <div className="rounded-md bg-white border border-[#E2E8F0] shadow-sm overflow-hidden">
+        <div className="h-9 px-3.5 bg-[#F8FAFC] border-b border-[#E2E8F0] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Info className="w-3.5 h-3.5 text-[#355D8B]" />
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#253746]">
+              Nameplate Rated Parameters (IEC 60034-1 / IEEE 112)
+            </h3>
+          </div>
+          <span className="text-[10px] font-mono text-[#718096]">
+            3-Phase Squirrel Cage Design B
+          </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
-          <div className="p-2.5 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-            <span className="text-[10px] text-ink-muted block uppercase">Rated Power</span>
-            <span className="font-bold text-ink dark:text-ink-inverse">{cfg?.ratedPowerKw?.toFixed(1) ?? '3.0'} kW</span>
+
+        <div className="p-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs font-mono">
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] text-[#718096] block uppercase">Rated Power</span>
+            <span className="font-bold text-[#253746] mt-0.5 block">{cfg?.ratedPowerKw?.toFixed(1) ?? '3.0'} kW</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-            <span className="text-[10px] text-ink-muted block uppercase">Supply Voltage</span>
-            <span className="font-bold text-ink dark:text-ink-inverse">{cfg?.supplyVoltageV?.toFixed(0) ?? '415'} V (3Φ)</span>
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] text-[#718096] block uppercase">Supply Voltage</span>
+            <span className="font-bold text-[#253746] mt-0.5 block">{cfg?.supplyVoltageV?.toFixed(0) ?? '415'} V (3Φ)</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-            <span className="text-[10px] text-ink-muted block uppercase">Supply Freq</span>
-            <span className="font-bold text-ink dark:text-ink-inverse">{cfg?.supplyFreqHz?.toFixed(0) ?? '50'} Hz</span>
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] text-[#718096] block uppercase">Supply Freq</span>
+            <span className="font-bold text-[#253746] mt-0.5 block">{cfg?.supplyFreqHz?.toFixed(0) ?? '50'} Hz</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-            <span className="text-[10px] text-ink-muted block uppercase">Poles / Synch</span>
-            <span className="font-bold text-ink dark:text-ink-inverse">{cfg?.poles ?? '4'} Poles (1500 RPM)</span>
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] text-[#718096] block uppercase">Poles / Synch</span>
+            <span className="font-bold text-[#253746] mt-0.5 block">{cfg?.poles ?? '4'} Poles (1500 RPM)</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-            <span className="text-[10px] text-ink-muted block uppercase">Rated Speed</span>
-            <span className="font-bold text-ink dark:text-ink-inverse">{cfg?.ratedSpeedRpm?.toFixed(0) ?? '1440'} RPM</span>
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] text-[#718096] block uppercase">Rated Speed</span>
+            <span className="font-bold text-[#253746] mt-0.5 block">{cfg?.ratedSpeedRpm?.toFixed(0) ?? '1440'} RPM</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-            <span className="text-[10px] text-ink-muted block uppercase">Insulation Class</span>
-            <span className="font-bold text-ink dark:text-ink-inverse">Class F (155°C)</span>
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] text-[#718096] block uppercase">Insulation Class</span>
+            <span className="font-bold text-[#253746] mt-0.5 block">Class F (155°C)</span>
           </div>
         </div>
       </div>
 
-      {/* Interactive Motor Schematic with Sensor Pin Selection */}
-      <div>
+      {/* Cyber-Physical Motor Schematic */}
+      <div className="rounded-md bg-white border border-[#E2E8F0] shadow-sm overflow-hidden p-3.5">
         <MotorSchematic
           twin={currentTwin}
           selectedSensorId={selectedSensorId}
           onSelectSensor={handleSelectSensor}
         />
         {selectedSensor && (
-          <div className="mt-2 p-3 rounded-lg bg-aerospace/10 border border-aerospace/30 flex items-center justify-between text-xs font-mono">
+          <div className="mt-2.5 p-2 rounded bg-[#F3EBF9] border border-[#68409A]/30 flex items-center justify-between text-xs font-mono">
             <div className="flex items-center gap-2">
-              <Crosshair className="w-4 h-4 text-aerospace animate-spin" />
-              <span className="font-bold text-aerospace">
-                Active Inspection Pin: {selectedSensor.id} ({selectedSensor.label})
+              <Crosshair className="w-3.5 h-3.5 text-[#68409A]" />
+              <span className="font-bold text-[#68409A]">
+                Pin {selectedSensor.id}: {selectedSensor.label}
               </span>
-              <span className="text-ink-muted">· Location: {selectedSensor.location}</span>
+              <span className="text-[#718096]">· Location: {selectedSensor.location}</span>
             </div>
             <button
               type="button"
               onClick={() => setSelectedSensorId(null)}
-              className="text-aerospace hover:underline"
+              className="text-[#68409A] hover:underline text-[11px]"
             >
               Clear Focus
             </button>
@@ -187,41 +189,41 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
         )}
       </div>
 
-      {/* Sensor Deep Dive Cards with Interactive Click-to-Focus */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Sensor Deep Dive Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
         {/* Card 1: Stator Current */}
         <div
           onClick={() => handleSelectSensor('S3')}
-          className={`p-4 rounded-xl bg-panel dark:bg-panel-dark border transition-all cursor-pointer space-y-2 ${
+          className={`p-3.5 rounded-md bg-white border transition-all cursor-pointer space-y-2 shadow-sm ${
             selectedSensorId === 'S3'
-              ? 'border-aerospace ring-2 ring-aerospace/20 shadow-md'
-              : 'border-rule dark:border-rule-dark hover:border-aerospace/50'
+              ? 'border-[#355D8B] ring-2 ring-[#355D8B]/20'
+              : 'border-[#E2E8F0] hover:border-[#355D8B]/50'
           }`}
         >
-          <div className="flex items-center justify-between text-xs font-mono text-ink-muted">
+          <div className="flex items-center justify-between text-xs font-mono text-[#718096]">
             <span className="uppercase flex items-center gap-1.5">
-              <Zap className="w-3.5 h-3.5 text-telemetry-cyan" /> Stator Current RMS
+              <Zap className="w-3.5 h-3.5 text-[#355D8B]" /> Current RMS
             </span>
-            <span className={selectedSensorId === 'S3' ? 'text-aerospace font-bold' : ''}>Sensor S3</span>
+            <span className={selectedSensorId === 'S3' ? 'text-[#355D8B] font-bold' : ''}>Pin S3</span>
           </div>
-          <div className="text-2xl font-mono font-bold text-ink dark:text-ink-inverse">
-            {current.toFixed(2)} <span className="text-xs text-ink-muted font-normal">A</span>
+          <div className="text-2xl font-mono font-bold text-[#253746]">
+            {current.toFixed(2)} <span className="text-xs text-[#718096] font-normal">A</span>
           </div>
           <div className="space-y-1 text-[11px] font-mono">
-            <div className="flex justify-between text-ink-muted">
-              <span>Rated Full Load (FLA):</span>
-              <span className="font-semibold text-ink dark:text-ink-inverse">5.80 A</span>
+            <div className="flex justify-between text-[#718096]">
+              <span>Rated FLA:</span>
+              <span className="font-semibold text-[#253746]">5.80 A</span>
             </div>
-            <div className="flex justify-between text-ink-muted">
+            <div className="flex justify-between text-[#718096]">
               <span>Current Loading:</span>
-              <span className={`font-semibold ${current > 6.0 ? 'text-state-warning' : 'text-state-normal'}`}>
+              <span className={`font-semibold ${current > 6.0 ? 'text-[#D99A35]' : 'text-[#27866F]'}`}>
                 {((current / 5.8) * 100).toFixed(1)}%
               </span>
             </div>
           </div>
-          <div className="w-full bg-surface-secondary dark:bg-panel-dark-subtle h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-[#E2E8F0] h-1.5 rounded-full overflow-hidden">
             <div
-              className={`h-full ${current > 6.0 ? 'bg-state-warning' : 'bg-aerospace'}`}
+              className={`h-full ${current > 6.0 ? 'bg-[#D99A35]' : 'bg-[#355D8B]'}`}
               style={{ width: `${Math.min(100, (current / 7.0) * 100)}%` }}
             />
           </div>
@@ -230,172 +232,121 @@ export const EquipmentMonitorPage: React.FC<EquipmentMonitorPageProps> = ({
         {/* Card 2: Radial Vibration RMS */}
         <div
           onClick={() => handleSelectSensor('S1')}
-          className={`p-4 rounded-xl bg-panel dark:bg-panel-dark border transition-all cursor-pointer space-y-2 ${
+          className={`p-3.5 rounded-md bg-white border transition-all cursor-pointer space-y-2 shadow-sm ${
             selectedSensorId === 'S1' || selectedSensorId === 'S4'
-              ? 'border-state-warning ring-2 ring-state-warning/20 shadow-md'
-              : 'border-rule dark:border-rule-dark hover:border-state-warning/50'
+              ? 'border-[#D99A35] ring-2 ring-[#D99A35]/20'
+              : 'border-[#E2E8F0] hover:border-[#D99A35]/50'
           }`}
         >
-          <div className="flex items-center justify-between text-xs font-mono text-ink-muted">
+          <div className="flex items-center justify-between text-xs font-mono text-[#718096]">
             <span className="uppercase flex items-center gap-1.5">
-              <Activity className="w-3.5 h-3.5 text-state-warning" /> Radial Vibration
+              <Activity className="w-3.5 h-3.5 text-[#D99A35]" /> Radial Vibration
             </span>
-            <span className={selectedSensorId === 'S1' || selectedSensorId === 'S4' ? 'text-state-warning font-bold' : ''}>
-              Sensor S1/S4
+            <span className={selectedSensorId === 'S1' || selectedSensorId === 'S4' ? 'text-[#D99A35] font-bold' : ''}>
+              Pin S1/S4
             </span>
           </div>
-          <div className="text-2xl font-mono font-bold text-ink dark:text-ink-inverse">
-            {vib.toFixed(2)} <span className="text-xs text-ink-muted font-normal">mm/s RMS</span>
+          <div className="text-2xl font-mono font-bold text-[#253746]">
+            {vib.toFixed(2)} <span className="text-xs text-[#718096] font-normal">mm/s RMS</span>
           </div>
           <div className="space-y-1 text-[11px] font-mono">
-            <div className="flex justify-between text-ink-muted">
-              <span>ISO 10816 Zone A Limit:</span>
-              <span className="font-semibold text-state-normal">&lt; 1.80 mm/s (Good)</span>
+            <div className="flex justify-between text-[#718096]">
+              <span>ISO 10816 Limit:</span>
+              <span className="font-semibold text-[#253746]">1.80 mm/s</span>
             </div>
-            <div className="flex justify-between text-ink-muted">
-              <span>Kurtosis (Knock Sharpness):</span>
-              <span className="font-semibold text-ink dark:text-ink-inverse">{kurtosis.toFixed(3)}</span>
-            </div>
-          </div>
-          <div className="w-full bg-surface-secondary dark:bg-panel-dark-subtle h-2 rounded-full overflow-hidden flex">
-            <div className="h-full bg-state-normal" style={{ width: '30%' }} title="Zone A: <1.8" />
-            <div className="h-full bg-state-warning" style={{ width: '40%' }} title="Zone B/C: 1.8 - 4.5" />
-            <div className="h-full bg-state-critical" style={{ width: '30%' }} title="Zone D: >4.5" />
-          </div>
-        </div>
-
-        {/* Card 3: Winding Temperature */}
-        <div
-          onClick={() => handleSelectSensor('S2')}
-          className={`p-4 rounded-xl bg-panel dark:bg-panel-dark border transition-all cursor-pointer space-y-2 ${
-            selectedSensorId === 'S2'
-              ? 'border-state-critical ring-2 ring-state-critical/20 shadow-md'
-              : 'border-rule dark:border-rule-dark hover:border-state-critical/50'
-          }`}
-        >
-          <div className="flex items-center justify-between text-xs font-mono text-ink-muted">
-            <span className="uppercase flex items-center gap-1.5">
-              <Flame className="w-3.5 h-3.5 text-state-critical" /> Winding RTD Temp
-            </span>
-            <span className={selectedSensorId === 'S2' ? 'text-state-critical font-bold' : ''}>Sensor S2</span>
-          </div>
-          <div className="text-2xl font-mono font-bold text-ink dark:text-ink-inverse">
-            {temp.toFixed(1)} <span className="text-xs text-ink-muted font-normal">°C</span>
-          </div>
-          <div className="space-y-1 text-[11px] font-mono">
-            <div className="flex justify-between text-ink-muted">
-              <span>Class F Rise Limit:</span>
-              <span className="font-semibold text-ink dark:text-ink-inverse">105°C rise (145°C max)</span>
-            </div>
-            <div className="flex justify-between text-ink-muted">
-              <span>Thermal Margin:</span>
-              <span className="font-semibold text-state-normal">{(145 - temp).toFixed(1)}°C remaining</span>
+            <div className="flex justify-between text-[#718096]">
+              <span>Kurtosis:</span>
+              <span className="font-semibold text-[#253746]">{kurtosis.toFixed(2)}</span>
             </div>
           </div>
-          <div className="w-full bg-surface-secondary dark:bg-panel-dark-subtle h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-[#E2E8F0] h-1.5 rounded-full overflow-hidden">
             <div
-              className={`h-full ${temp > 90 ? 'bg-state-critical' : temp > 70 ? 'bg-state-warning' : 'bg-state-normal'}`}
-              style={{ width: `${Math.min(100, (temp / 145) * 100)}%` }}
+              className={`h-full ${vib > 1.8 ? 'bg-[#C94B50]' : vib > 1.0 ? 'bg-[#D99A35]' : 'bg-[#27866F]'}`}
+              style={{ width: `${Math.min(100, (vib / 2.5) * 100)}%` }}
             />
           </div>
         </div>
 
-        {/* Card 4: Shaft Speed & Slip */}
+        {/* Card 3: Stator Temperature */}
         <div
-          onClick={() => handleSelectSensor('S5')}
-          className={`p-4 rounded-xl bg-panel dark:bg-panel-dark border transition-all cursor-pointer space-y-2 ${
-            selectedSensorId === 'S5'
-              ? 'border-aerospace ring-2 ring-aerospace/20 shadow-md'
-              : 'border-rule dark:border-rule-dark hover:border-aerospace/50'
+          onClick={() => handleSelectSensor('S2')}
+          className={`p-3.5 rounded-md bg-white border transition-all cursor-pointer space-y-2 shadow-sm ${
+            selectedSensorId === 'S2'
+              ? 'border-[#C94B50] ring-2 ring-[#C94B50]/20'
+              : 'border-[#E2E8F0] hover:border-[#C94B50]/50'
           }`}
         >
-          <div className="flex items-center justify-between text-xs font-mono text-ink-muted">
+          <div className="flex items-center justify-between text-xs font-mono text-[#718096]">
             <span className="uppercase flex items-center gap-1.5">
-              <Gauge className="w-3.5 h-3.5 text-aerospace" /> Speed & Slip
+              <Flame className="w-3.5 h-3.5 text-[#C94B50]" /> Winding Temp
             </span>
-            <span className={selectedSensorId === 'S5' ? 'text-aerospace font-bold' : ''}>Sensor S5</span>
+            <span className={selectedSensorId === 'S2' ? 'text-[#C94B50] font-bold' : ''}>Pin S2 (PT100)</span>
           </div>
-          <div className="text-2xl font-mono font-bold text-ink dark:text-ink-inverse">
-            {Math.round(speed)} <span className="text-xs text-ink-muted font-normal">RPM</span>
+          <div className="text-2xl font-mono font-bold text-[#253746]">
+            {temp.toFixed(1)} <span className="text-xs text-[#718096] font-normal">°C</span>
           </div>
           <div className="space-y-1 text-[11px] font-mono">
-            <div className="flex justify-between text-ink-muted">
-              <span>Synchronous Speed:</span>
-              <span className="font-semibold text-ink dark:text-ink-inverse">1500 RPM (50Hz / 4P)</span>
+            <div className="flex justify-between text-[#718096]">
+              <span>Warning Threshold:</span>
+              <span className="font-semibold text-[#253746]">80.0 °C</span>
             </div>
-            <div className="flex justify-between text-ink-muted">
-              <span>Calculated Slip ($s$):</span>
-              <span className="font-semibold text-ink dark:text-ink-inverse">{slip.toFixed(2)}%</span>
+            <div className="flex justify-between text-[#718096]">
+              <span>Class F Max:</span>
+              <span className="font-semibold text-[#253746]">155.0 °C</span>
             </div>
           </div>
-          <div className="w-full bg-surface-secondary dark:bg-panel-dark-subtle h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-[#E2E8F0] h-1.5 rounded-full overflow-hidden">
             <div
-              className="h-full bg-telemetry-cyan"
+              className={`h-full ${temp > 80 ? 'bg-[#C94B50]' : temp > 60 ? 'bg-[#D99A35]' : 'bg-[#27866F]'}`}
+              style={{ width: `${Math.min(100, (temp / 100) * 100)}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Card 4: Rotational Speed & Slip */}
+        <div
+          onClick={() => handleSelectSensor('S5')}
+          className={`p-3.5 rounded-md bg-white border transition-all cursor-pointer space-y-2 shadow-sm ${
+            selectedSensorId === 'S5'
+              ? 'border-[#68409A] ring-2 ring-[#68409A]/20'
+              : 'border-[#E2E8F0] hover:border-[#68409A]/50'
+          }`}
+        >
+          <div className="flex items-center justify-between text-xs font-mono text-[#718096]">
+            <span className="uppercase flex items-center gap-1.5">
+              <Gauge className="w-3.5 h-3.5 text-[#68409A]" /> Shaft Speed
+            </span>
+            <span className={selectedSensorId === 'S5' ? 'text-[#68409A] font-bold' : ''}>Pin S5 (Encoder)</span>
+          </div>
+          <div className="text-2xl font-mono font-bold text-[#253746]">
+            {speed} <span className="text-xs text-[#718096] font-normal">RPM</span>
+          </div>
+          <div className="space-y-1 text-[11px] font-mono">
+            <div className="flex justify-between text-[#718096]">
+              <span>Synchronous:</span>
+              <span className="font-semibold text-[#253746]">1500 RPM</span>
+            </div>
+            <div className="flex justify-between text-[#718096]">
+              <span>Calculated Slip:</span>
+              <span className="font-semibold text-[#253746]">{slip.toFixed(2)}%</span>
+            </div>
+          </div>
+          <div className="w-full bg-[#E2E8F0] h-1.5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[#68409A]"
               style={{ width: `${Math.min(100, (speed / 1500) * 100)}%` }}
             />
           </div>
         </div>
       </div>
 
-      {/* Historical Telemetry Chart with Active Signal Synced */}
+      {/* Telemetry Stream Chart */}
       <TelemetryChart
         telemetry={telemetry}
         loading={loading}
         activeSignal={activeSignal}
         onSignalChange={handleSignalChange}
       />
-
-      {/* Raw Telemetry Records Ingestion Table */}
-      <div className="p-4 sm:p-5 rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-aerospace" />
-            <h3 className="text-sm font-semibold text-ink dark:text-ink-inverse">
-              Authoritative Telemetry Ingestion Log
-            </h3>
-          </div>
-          <span className="text-xs font-mono text-ink-muted">
-            {telemetry.length} Buffered Windows
-          </span>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs font-mono">
-            <thead>
-              <tr className="border-b border-rule dark:border-rule-dark text-ink-muted text-[10px] uppercase">
-                <th className="py-2 px-3">Timestamp (UTC)</th>
-                <th className="py-2 px-3">Current RMS (A)</th>
-                <th className="py-2 px-3">Fundamental (A)</th>
-                <th className="py-2 px-3">Vib RMS (mm/s)</th>
-                <th className="py-2 px-3">Vib Kurtosis</th>
-                <th className="py-2 px-3">Temp (°C)</th>
-                <th className="py-2 px-3">Load (%)</th>
-                <th className="py-2 px-3">Provenance</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-rule/60 dark:divide-rule-dark/60 text-ink dark:text-ink-inverse">
-              {telemetry.slice(0, 8).map((pt, i) => (
-                <tr key={pt.id || i} className="hover:bg-surface-secondary/50 dark:hover:bg-panel-dark-subtle">
-                  <td className="py-2 px-3 text-ink-muted">
-                    {new Date(pt.timestamp).toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                  </td>
-                  <td className="py-2 px-3 font-semibold">{pt.currentRms?.toFixed(3) ?? '–'}</td>
-                  <td className="py-2 px-3">{pt.fundamentalAmp?.toFixed(3) ?? '–'}</td>
-                  <td className="py-2 px-3 font-semibold">{pt.vibRms?.toFixed(3) ?? '–'}</td>
-                  <td className="py-2 px-3">{pt.vibKurtosis?.toFixed(3) ?? '–'}</td>
-                  <td className="py-2 px-3">{pt.temperatureC?.toFixed(1) ?? '–'}</td>
-                  <td className="py-2 px-3">{pt.loadPct?.toFixed(0) ?? '–'}%</td>
-                  <td className="py-2 px-3 text-ink-muted text-[10px]">
-                    <span className="px-1.5 py-0.5 rounded bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark">
-                      {pt.provenance || 'Simulation'}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 };

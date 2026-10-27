@@ -55,40 +55,40 @@ export const RulDegradationChart: React.FC<RulDegradationChartProps> = ({
   const failureThresholdY = height - paddingBottom - 0.2 * plotHeight;
 
   return (
-    <div className="rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark p-5 flex flex-col justify-between">
+    <div className="rounded-md bg-white border border-[#E2E8F0] p-4 shadow-sm flex flex-col justify-between">
       {/* Header */}
       <div>
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-aerospace dark:text-aerospace-bright">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#355D8B]">
               STAGE 3 · REMAINING USEFUL LIFE
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-surface-secondary dark:bg-panel-dark-subtle border border-rule dark:border-rule-dark text-[10px] font-mono text-ink-muted">
+            <span className="px-1.5 py-0.5 rounded bg-[#F8FAFC] border border-[#E2E8F0] text-[10px] font-mono text-[#718096]">
               LSTM Sequence Regressor ({modelVersion})
             </span>
           </div>
-          <Clock className="w-4 h-4 text-aerospace" />
+          <Clock className="w-3.5 h-3.5 text-[#355D8B]" />
         </div>
 
-        <div className="mt-3 flex items-baseline gap-3">
-          <div className="text-2xl sm:text-3xl font-mono font-bold text-ink dark:text-ink-inverse">
+        <div className="mt-2.5 flex items-baseline gap-3">
+          <div className="text-2xl sm:text-3xl font-mono font-bold text-[#253746]">
             {rulHours != null ? (
               <>
-                {rulHours.toFixed(1)} <span className="text-xs font-normal text-ink-muted">{rulUnit}</span>
+                {rulHours.toFixed(1)} <span className="text-xs font-normal text-[#718096]">{rulUnit}</span>
               </>
             ) : (
-              <span className="text-base text-state-normal font-sans font-medium flex items-center gap-1.5">
+              <span className="text-base text-[#27866F] font-sans font-medium flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4" /> Normal Life Expectancy (&gt;48 hrs)
               </span>
             )}
           </div>
           {isUrgent && (
-            <span className="px-2 py-0.5 rounded bg-state-critical-pale text-state-critical text-xs font-mono font-semibold border border-state-critical/30 flex items-center gap-1">
+            <span className="px-2 py-0.5 rounded bg-[#C94B50]/15 text-[#C94B50] text-xs font-mono font-semibold border border-[#C94B50]/30 flex items-center gap-1">
               <AlertTriangle className="w-3 h-3" /> ACTION RECOMMENDED
             </span>
           )}
         </div>
-        <p className="text-xs text-ink-secondary dark:text-ink-muted mt-1">
+        <p className="text-xs text-[#718096] mt-0.5 font-mono">
           Estimated operational window until component failure threshold ($H &lt; 20\%$) under current load.
         </p>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { TelemetryPoint } from '../../types';
 import { Activity, Zap, Flame, Gauge, Disc } from 'lucide-react';
 
@@ -20,8 +20,8 @@ export const SIGNALS: SignalConfig[] = [
     key: 'vibRms',
     label: 'Vibration RMS',
     unit: 'mm/s',
-    color: '#D58B22',
-    darkColor: '#F59E0B',
+    color: '#D99A35',
+    darkColor: '#D99A35',
     icon: Activity,
     limit: { value: 1.8, label: 'ISO 10816 Limit (1.8 mm/s)' },
     getValue: (p) => p.vibRms ?? 0,
@@ -30,8 +30,8 @@ export const SIGNALS: SignalConfig[] = [
     key: 'currentRms',
     label: 'Current RMS',
     unit: 'A',
-    color: '#2458D3',
-    darkColor: '#3B82F6',
+    color: '#355D8B',
+    darkColor: '#355D8B',
     icon: Zap,
     limit: { value: 5.8, label: 'Rated FLA (5.80 A)' },
     getValue: (p) => p.currentRms ?? 0,
@@ -40,8 +40,8 @@ export const SIGNALS: SignalConfig[] = [
     key: 'temperatureC',
     label: 'Temperature',
     unit: '°C',
-    color: '#D74444',
-    darkColor: '#EF4444',
+    color: '#C94B50',
+    darkColor: '#C94B50',
     icon: Flame,
     limit: { value: 80.0, label: 'Max Thermal Alert (80°C)' },
     getValue: (p) => p.temperatureC ?? 0,
@@ -50,8 +50,8 @@ export const SIGNALS: SignalConfig[] = [
     key: 'loadPct',
     label: 'Load',
     unit: '%',
-    color: '#11A7B5',
-    darkColor: '#14B8A6',
+    color: '#68409A',
+    darkColor: '#9B6DCC',
     icon: Disc,
     getValue: (p) => p.loadPct ?? 0,
   },
@@ -59,8 +59,8 @@ export const SIGNALS: SignalConfig[] = [
     key: 'speed',
     label: 'Shaft Speed',
     unit: 'RPM',
-    color: '#3979F6',
-    darkColor: '#60A5FA',
+    color: '#27866F',
+    darkColor: '#27866F',
     icon: Gauge,
     limit: { value: 1440, label: 'Rated Speed (1440 RPM)' },
     getValue: (p) => Math.round(1500 - ((p.loadPct || 100) / 100) * 60),
@@ -122,13 +122,13 @@ export const TelemetryChart: React.FC<TelemetryChartProps> = ({
     };
   }, [values, activeConfig]);
 
-  // Chart coordinates calculation
+  // Chart dimensions
   const width = 800;
-  const height = 240;
+  const height = 230;
   const paddingLeft = 50;
   const paddingRight = 20;
-  const paddingTop = 20;
-  const paddingBottom = 30;
+  const paddingTop = 15;
+  const paddingBottom = 28;
 
   const plotWidth = width - paddingLeft - paddingRight;
   const plotHeight = height - paddingTop - paddingBottom;
@@ -157,25 +157,21 @@ export const TelemetryChart: React.FC<TelemetryChartProps> = ({
   const latestValue = values.length > 0 ? values[values.length - 1] : null;
 
   return (
-    <div className="rounded-xl bg-panel dark:bg-panel-dark border border-rule dark:border-rule-dark p-4 sm:p-5 flex flex-col justify-between">
-      {/* Chart Header: Title + Signal Toggles */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-aerospace dark:text-aerospace-bright">
-              TELEMETRY STREAM ANALYZER
-            </span>
-            <span className="text-[10px] font-mono text-ink-muted">
-              {sortedPoints.length} SAMPLES RECORDED
-            </span>
-          </div>
-          <h3 className="text-sm font-semibold text-ink dark:text-ink-inverse mt-0.5">
-            {activeConfig.label} Trend History
+    <div className="rounded-md bg-white border border-[#E2E8F0] shadow-sm overflow-hidden flex flex-col justify-between">
+      {/* Chart Header: IBM Watson IoT Header Bar */}
+      <div className="h-10 px-4 bg-[#F8FAFC] border-b border-[#E2E8F0] flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded bg-[#68409A]" />
+          <h3 className="font-mono text-xs font-bold text-[#253746] uppercase tracking-wider">
+            Telemetry Trend — {activeConfig.label}
           </h3>
+          <span className="text-[10px] font-mono text-[#718096]">
+            ({sortedPoints.length} windows)
+          </span>
         </div>
 
-        {/* Signal Selector Buttons */}
-        <div className="flex items-center gap-1 bg-surface-secondary dark:bg-panel-dark-subtle p-1 rounded-lg border border-rule dark:border-rule-dark">
+        {/* Signal Selector Tabs */}
+        <div className="flex items-center gap-1">
           {SIGNALS.map((sig) => {
             const Icon = sig.icon;
             const isSelected = selectedSignal === sig.key;
@@ -184,15 +180,15 @@ export const TelemetryChart: React.FC<TelemetryChartProps> = ({
                 key={sig.key}
                 type="button"
                 onClick={() => handleSelectSignal(sig.key)}
-                className={`px-2.5 py-1 rounded text-xs font-mono font-medium flex items-center gap-1.5 transition-all ${
+                className={`px-2 py-0.5 rounded text-[11px] font-mono font-medium flex items-center gap-1 transition-all ${
                   isSelected
-                    ? 'bg-panel dark:bg-panel-dark text-aerospace shadow-sm font-semibold border border-rule dark:border-rule-dark'
-                    : 'text-ink-secondary dark:text-ink-muted hover:text-ink dark:hover:text-ink-inverse'
+                    ? 'bg-[#68409A] text-white shadow-xs font-semibold'
+                    : 'text-[#718096] hover:bg-[#E2E8F0] hover:text-[#253746]'
                 }`}
                 aria-label={`View ${sig.label} signal`}
               >
                 <Icon className="w-3 h-3" />
-                <span className="hidden sm:inline">{sig.label}</span>
+                <span>{sig.label}</span>
               </button>
             );
           })}
@@ -200,234 +196,225 @@ export const TelemetryChart: React.FC<TelemetryChartProps> = ({
       </div>
 
       {/* Main SVG Graph */}
-      <div className="relative w-full aspect-[16/6] min-h-[220px] flex items-center justify-center">
-        {loading && (
-          <div className="absolute inset-0 bg-panel/70 dark:bg-panel-dark/70 backdrop-blur-sm flex items-center justify-center z-20">
-            <span className="font-mono text-xs text-ink-muted animate-pulse">
-              Buffering telemetry stream...
-            </span>
-          </div>
-        )}
+      <div className="p-4">
+        <div className="relative w-full aspect-[16/6] min-h-[200px] flex items-center justify-center bg-[#FAFCFE] rounded border border-[#EDF2F7]">
+          {loading && (
+            <div className="absolute inset-0 bg-white/70 backdrop-blur-xs flex items-center justify-center z-20">
+              <span className="font-mono text-xs text-[#718096] animate-pulse">
+                Buffering telemetry stream...
+              </span>
+            </div>
+          )}
 
-        {sortedPoints.length === 0 && !loading ? (
-          <div className="flex flex-col items-center justify-center text-center p-8 text-ink-muted">
-            <Activity className="w-8 h-8 opacity-40 mb-2" />
-            <p className="font-mono text-xs">No telemetry samples received yet.</p>
-            <p className="text-[11px] mt-1">Start the induction motor simulator to stream real-time data.</p>
-          </div>
-        ) : (
-          <svg
-            viewBox={`0 0 ${width} ${height}`}
-            className="w-full h-full select-none"
-            preserveAspectRatio="none"
-          >
-            {/* Horizontal Grid lines */}
-            {[0, 0.25, 0.5, 0.75, 1].map((ratio) => {
-              const y = paddingTop + ratio * plotHeight;
-              const tickVal = maxVal - ratio * (maxVal - minVal);
-              return (
-                <g key={`grid-y-${ratio}`}>
+          {sortedPoints.length === 0 && !loading ? (
+            <div className="flex flex-col items-center justify-center text-center p-8 text-[#718096]">
+              <Activity className="w-7 h-7 opacity-40 mb-2 text-[#355D8B]" />
+              <p className="font-mono text-xs text-[#253746] font-semibold">No telemetry samples received yet.</p>
+              <p className="text-[11px] text-[#718096] mt-0.5">Start the induction motor simulator to stream real-time data.</p>
+            </div>
+          ) : (
+            <svg
+              viewBox={`0 0 ${width} ${height}`}
+              className="w-full h-full select-none"
+              preserveAspectRatio="none"
+            >
+              {/* Horizontal Grid lines */}
+              {[0, 0.25, 0.5, 0.75, 1].map((ratio) => {
+                const y = paddingTop + ratio * plotHeight;
+                const tickVal = maxVal - ratio * (maxVal - minVal);
+                return (
+                  <g key={`grid-y-${ratio}`}>
+                    <line
+                      x1={paddingLeft}
+                      y1={y}
+                      x2={width - paddingRight}
+                      y2={y}
+                      stroke="#E2E8F0"
+                      strokeDasharray="3 3"
+                    />
+                    <text
+                      x={paddingLeft - 8}
+                      y={y + 3.5}
+                      textAnchor="end"
+                      fill="#718096"
+                      fontSize="9.5"
+                      fontFamily="JetBrains Mono"
+                    >
+                      {tickVal.toFixed(1)}
+                    </text>
+                  </g>
+                );
+              })}
+
+              {/* Reference Limit Line (e.g. ISO 10816 or Rated FLA) */}
+              {limitY !== null && (
+                <g>
                   <line
                     x1={paddingLeft}
-                    y1={y}
+                    y1={limitY}
                     x2={width - paddingRight}
-                    y2={y}
-                    stroke="currentColor"
-                    strokeOpacity="0.08"
-                    strokeDasharray="4 4"
+                    y2={limitY}
+                    stroke="#C94B50"
+                    strokeWidth="1.2"
+                    strokeDasharray="4 3"
                   />
                   <text
-                    x={paddingLeft - 8}
-                    y={y + 3.5}
+                    x={width - paddingRight}
+                    y={limitY - 5}
                     textAnchor="end"
-                    fill="currentColor"
-                    fillOpacity="0.5"
-                    fontSize="9.5"
+                    fill="#C94B50"
+                    fontSize="9"
                     fontFamily="JetBrains Mono"
+                    fontWeight="600"
                   >
-                    {tickVal.toFixed(1)}
+                    {activeConfig.limit?.label}
                   </text>
                 </g>
-              );
-            })}
+              )}
 
-            {/* Reference Limit Line (e.g. ISO 10816 or Rated FLA) */}
-            {limitY !== null && (
-              <g>
-                <line
-                  x1={paddingLeft}
-                  y1={limitY}
-                  x2={width - paddingRight}
-                  y2={limitY}
-                  stroke="#EF4444"
-                  strokeWidth="1.5"
-                  strokeDasharray="6 4"
-                  opacity="0.85"
-                />
-                <text
-                  x={width - paddingRight}
-                  y={limitY - 5}
-                  textAnchor="end"
-                  fill="#EF4444"
-                  fontSize="9.5"
-                  fontFamily="JetBrains Mono"
-                  fontWeight="bold"
-                >
-                  {activeConfig.limit?.label}
-                </text>
-              </g>
-            )}
+              {/* Area gradient under curve */}
+              {pointsString && (
+                <defs>
+                  <linearGradient id="telemetryGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={activeConfig.color} stopOpacity="0.22" />
+                    <stop offset="100%" stopColor={activeConfig.color} stopOpacity="0.01" />
+                  </linearGradient>
+                </defs>
+              )}
 
-            {/* Gradient Fill under Path */}
-            <defs>
-              <linearGradient id="chartAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={activeConfig.color} stopOpacity="0.25" />
-                <stop offset="100%" stopColor={activeConfig.color} stopOpacity="0.0" />
-              </linearGradient>
-            </defs>
-
-            {pointsString && (
-              <>
-                {/* Area under curve */}
+              {/* Area fill */}
+              {pointsString && (
                 <polygon
-                  points={`${paddingLeft},${height - paddingBottom} ${pointsString} ${
-                    width - paddingRight
-                  },${height - paddingBottom}`}
-                  fill="url(#chartAreaGrad)"
+                  points={`${paddingLeft},${height - paddingBottom} ${pointsString} ${width - paddingRight},${height - paddingBottom}`}
+                  fill="url(#telemetryGradient)"
                 />
+              )}
 
-                {/* Primary Telemetry Polyline */}
+              {/* Main signal polyline */}
+              {pointsString && (
                 <polyline
+                  points={pointsString}
                   fill="none"
                   stroke={activeConfig.color}
-                  strokeWidth="2.5"
+                  strokeWidth="2.0"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  points={pointsString}
                 />
-              </>
-            )}
+              )}
 
-            {/* Data point markers */}
-            {values.map((val, idx) => {
-              const x = paddingLeft + (idx / (values.length - 1 || 1)) * plotWidth;
-              const normalizedY = (val - minVal) / (maxVal - minVal || 1);
-              const y = height - paddingBottom - normalizedY * plotHeight;
-              const isHovered = hoverIndex === idx;
+              {/* Individual data point dots & hover targets */}
+              {values.map((val, idx) => {
+                const x = paddingLeft + (idx / (values.length - 1 || 1)) * plotWidth;
+                const normalizedY = (val - minVal) / (maxVal - minVal || 1);
+                const y = height - paddingBottom - normalizedY * plotHeight;
+                const isHovered = hoverIndex === idx;
 
-              return (
-                <g key={`pt-${idx}`}>
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r={isHovered ? 5 : 2.5}
-                    fill={isHovered ? '#FFFFFF' : activeConfig.color}
-                    stroke={activeConfig.color}
-                    strokeWidth={isHovered ? 2.5 : 1}
-                    className="transition-all"
-                  />
-                  {/* Invisible hit target for hover */}
-                  <rect
-                    x={x - 10}
-                    y={paddingTop}
-                    width={20}
-                    height={plotHeight}
-                    fill="transparent"
-                    className="cursor-crosshair"
+                return (
+                  <g
+                    key={`dot-${idx}`}
                     onMouseEnter={() => setHoverIndex(idx)}
                     onMouseLeave={() => setHoverIndex(null)}
-                  />
-                </g>
-              );
-            })}
-
-            {/* Hover Tooltip Overlay in SVG */}
-            {hoverIndex !== null && sortedPoints[hoverIndex] && (
-              <g>
-                {(() => {
-                  const pt = sortedPoints[hoverIndex];
-                  const val = activeConfig.getValue(pt);
-                  const x = paddingLeft + (hoverIndex / (values.length - 1 || 1)) * plotWidth;
-                  const normalizedY = (val - minVal) / (maxVal - minVal || 1);
-                  const y = height - paddingBottom - normalizedY * plotHeight;
-                  const timeStr = new Date(pt.timestamp).toLocaleTimeString();
-
-                  return (
-                    <g transform={`translate(${Math.min(x, width - 110)}, ${Math.max(y - 45, 10)})`}>
-                      {/* Vertical tracker line */}
-                      <line
-                        x1="0"
-                        y1={45}
-                        x2="0"
-                        y2={height - paddingBottom - Math.max(y - 45, 10)}
-                        stroke="#2458D3"
-                        strokeDasharray="2 2"
-                        strokeWidth="1"
-                        opacity="0.7"
+                    className="cursor-pointer"
+                  >
+                    {/* Hover hotspot */}
+                    <circle cx={x} cy={y} r="10" fill="transparent" />
+                    {/* Visual dot */}
+                    {(isHovered || idx === values.length - 1) && (
+                      <circle
+                        cx={x}
+                        cy={y}
+                        r={isHovered ? '4.5' : '3'}
+                        fill={activeConfig.color}
+                        stroke="#FFFFFF"
+                        strokeWidth="1.5"
                       />
-                      <rect
-                        x="-45"
-                        y="0"
-                        width="90"
-                        height="36"
-                        rx="4"
-                        fill="#101B2A"
-                        stroke="#2458D3"
-                        strokeWidth="1"
-                        opacity="0.95"
-                      />
-                      <text
-                        x="0"
-                        y="14"
-                        textAnchor="middle"
-                        fill="#F4F7FB"
-                        fontSize="9.5"
-                        fontFamily="JetBrains Mono"
-                        fontWeight="bold"
-                      >
-                        {val.toFixed(2)} {activeConfig.unit}
-                      </text>
-                      <text
-                        x="0"
-                        y="27"
-                        textAnchor="middle"
-                        fill="#7B8999"
-                        fontSize="8.5"
-                        fontFamily="JetBrains Mono"
-                      >
-                        {timeStr}
-                      </text>
-                    </g>
-                  );
-                })()}
-              </g>
-            )}
+                    )}
+                  </g>
+                );
+              })}
 
-            {/* Time Axis Labels (Bottom) */}
-            {sortedPoints.length > 0 && (
-              <g fill="currentColor" fillOpacity="0.5" fontSize="9" fontFamily="JetBrains Mono">
-                <text x={paddingLeft} y={height - 8} textAnchor="start">
-                  {new Date(sortedPoints[0].timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                </text>
-                <text x={paddingLeft + plotWidth / 2} y={height - 8} textAnchor="middle">
-                  {new Date(sortedPoints[Math.floor(sortedPoints.length / 2)].timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                </text>
-                <text x={width - paddingRight} y={height - 8} textAnchor="end">
-                  {new Date(sortedPoints[sortedPoints.length - 1].timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                </text>
-              </g>
-            )}
-          </svg>
-        )}
-      </div>
+              {/* X Axis Baseline */}
+              <line
+                x1={paddingLeft}
+                y1={height - paddingBottom}
+                x2={width - paddingRight}
+                y2={height - paddingBottom}
+                stroke="#CBD5E1"
+                strokeWidth="1"
+              />
 
-      {/* Chart Footer metadata */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-rule dark:border-rule-dark text-xs font-mono text-ink-muted">
-        <div>
-          Latest: <span className="font-bold text-ink dark:text-ink-inverse">{latestValue != null ? `${latestValue.toFixed(2)} ${activeConfig.unit}` : '–'}</span>
+              {/* X Axis Labels */}
+              <text
+                x={paddingLeft}
+                y={height - 10}
+                fill="#718096"
+                fontSize="9"
+                fontFamily="JetBrains Mono"
+              >
+                {sortedPoints.length > 0
+                  ? new Date(sortedPoints[0].timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+                  : 'Start'}
+              </text>
+              <text
+                x={width - paddingRight}
+                y={height - 10}
+                textAnchor="end"
+                fill="#718096"
+                fontSize="9"
+                fontFamily="JetBrains Mono"
+              >
+                {sortedPoints.length > 0
+                  ? new Date(sortedPoints[sortedPoints.length - 1].timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+                  : 'Latest'}
+              </text>
+            </svg>
+          )}
+
+          {/* Interactive Tooltip Card */}
+          {hoverIndex !== null && sortedPoints[hoverIndex] && (
+            <div
+              className="absolute pointer-events-none bg-white p-2 rounded shadow-md border border-[#E2E8F0] text-[11px] font-mono z-30"
+              style={{
+                left: `${(paddingLeft + (hoverIndex / (values.length - 1 || 1)) * plotWidth) / 8}%`,
+                top: '15px',
+              }}
+            >
+              <div className="font-bold text-[#253746]">
+                {values[hoverIndex].toFixed(2)} {activeConfig.unit}
+              </div>
+              <div className="text-[10px] text-[#718096]">
+                {new Date(sortedPoints[hoverIndex].timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+              </div>
+            </div>
+          )}
         </div>
-        <div>
-          Sampling: 10 kHz Decimated to 1 Hz · Provenance: Synthetic Simulation
+
+        {/* Compact Bottom Stats Strip */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-[#E2E8F0] mt-3">
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] font-mono uppercase text-[#718096] block">Latest Value</span>
+            <span className="font-mono text-sm font-bold text-[#253746] block mt-0.5">
+              {latestValue != null ? `${latestValue.toFixed(2)} ${activeConfig.unit}` : 'N/A'}
+            </span>
+          </div>
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] font-mono uppercase text-[#718096] block">Average</span>
+            <span className="font-mono text-sm font-semibold text-[#253746] block mt-0.5">
+              {values.length > 0 ? `${(values.reduce((a, b) => a + b, 0) / values.length).toFixed(2)} ${activeConfig.unit}` : 'N/A'}
+            </span>
+          </div>
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] font-mono uppercase text-[#718096] block">Peak Recorded</span>
+            <span className="font-mono text-sm font-semibold text-[#253746] block mt-0.5">
+              {values.length > 0 ? `${Math.max(...values).toFixed(2)} ${activeConfig.unit}` : 'N/A'}
+            </span>
+          </div>
+          <div className="p-2 rounded bg-[#F8FAFC] border border-[#E2E8F0]">
+            <span className="text-[9px] font-mono uppercase text-[#718096] block">Alert Limit</span>
+            <span className="font-mono text-sm font-semibold text-[#C94B50] block mt-0.5">
+              {activeConfig.limit ? `${activeConfig.limit.value} ${activeConfig.unit}` : 'None'}
+            </span>
+          </div>
         </div>
       </div>
     </div>
